@@ -37,6 +37,24 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Fonts\%(Filename).xpr</Outputs>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Resources\Textures\Textures.rdf">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">bundler "%(Fullpath)" -o "$(OutDir)Media\Textures\%(Filename).xpr"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Create a bundled resource file from %(Fullpath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Textures\%(Filename).xpr</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Resources\Shaders\Background.hlsl">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">fxc.exe "%(FullPath)" /nologo /Zi /Tvs_3_0 /EBackgroundVertex /DEntryPoint_BackgroundVertex /XZi /XFd"$(OutDir)Media\Shaders\Background.updb" /Fc "$(OutDir)Media\Shaders\Background.vsm" /Fo"$(OutDir)Media\Shaders\Background.xvu"
+fxc.exe "%(FullPath)" /nologo /Zi /Tps_3_0 /EBackgroundPixel /DEntryPoint_BackgroundPixel /XZi /XFd"$(OutDir)Media\Shaders\Background.updb" /Fc "$(OutDir)Media\Shaders\Background.psm" /Fo"$(OutDir)Media\Shaders\Background.xpu"
+</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Compile shaders in %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Shaders\Background.xvu;$(OutDir)Media\Shaders\Background.xpu</Outputs>
+    </CustomBuild>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1E25F9D7-36A3-4D1A-A0DC-1A520EDB2D55}</ProjectGuid>
     <Keyword>Xbox360Proj</Keyword>

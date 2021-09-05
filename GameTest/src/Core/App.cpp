@@ -6,6 +6,21 @@
 
 
 //--------------------------------------------------------------------------------------
+// Name: struct Vertex
+// Desc: Struct to describe a vertex
+//--------------------------------------------------------------------------------------
+struct Vertex
+{
+    Vertex() {}
+    Vertex(float x, float y, float z, float u, float v)
+        : Pos(x, y, z), TexCoord(u, v) {}
+
+    XMFLOAT3 Pos;
+    XMFLOAT2 TexCoord;
+};
+
+
+//--------------------------------------------------------------------------------------
 // Name: Initialize()
 // Desc: Initialize app-dependent objects
 //--------------------------------------------------------------------------------------
@@ -27,6 +42,18 @@ HRESULT App::Initialize()
 
     // Get the width and height for the font
     ATG::GetVideoSettings(&m_uiWidth, &m_uiHeight);
+
+    // Create the textures resource
+    hr = m_Textures.Create("game:\\Media\\Textures\\Textures.xpr");
+    if (FAILED(hr))
+    {
+        ATG_PrintError("Couldn't create textures\n");
+        return hr;
+    }
+
+    hr = InitBackground();
+    if (FAILED(hr))
+        return hr;
 
     return S_OK;
 }
@@ -64,7 +91,26 @@ HRESULT App::Update()
 HRESULT App::Render()
 {
     // Clear the viewport
-    m_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(255, 0, 0, 0), 1.0f, 0);
+    m_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+
+    // Initialize default device states at the start of the frame
+    m_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+    m_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+    m_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+    m_pd3dDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+    m_pd3dDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+    m_pd3dDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+    m_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+    m_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+    m_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSW, D3DTADDRESS_WRAP);
+
+    // Render the background
+    m_pd3dDevice->SetTexture(0, m_pBackgroundTexture);
+    m_pd3dDevice->SetVertexDeclaration(m_pBackgroundVertexDeclaration);
+    m_pd3dDevice->SetStreamSource(0, m_pBackgroundVertexBuffer, 0, sizeof(Vertex));
+    m_pd3dDevice->SetVertexShader(m_pBackgroundVertexShader);
+    m_pd3dDevice->SetPixelShader(m_pBackgroundPixelShader);
+    m_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 2);
 
     // Set the text
     LPCWSTR wszText = L"Press A, X, Y or B to change my color!";
@@ -81,6 +127,87 @@ HRESULT App::Render()
 
     // Present the scene
     m_pd3dDevice->Present(NULL, NULL, NULL, NULL);
+
+    return S_OK;
+}
+
+
+//--------------------------------------------------------------------------------------
+// Name: InitBackground()
+// Desc: Create the vertices, vertex buffer/declaration and shaders relative to
+//       the background.
+//--------------------------------------------------------------------------------------
+HRESULT App::InitBackground()
+{
+    HRESULT hr;
+
+    // Get the texture from the bundled resources
+    m_pBackgroundTexture = m_Textures.GetTexture("BackgroundTexture");
+
+    // Create the vertices
+    Vertex vertices[] =
+    {
+        Vertex(-1.0f, -1.0f, 0.0f, 0.0f, 1.0f ), // Bottom Left
+        Vertex(-1.0f,  1.0f, 0.0f, 0.0f, 0.0f ), // Top Left
+        Vertex( 1.0f,  1.0f, 0.0f, 1.0f, 0.0f ), // Top Right
+
+        Vertex(-1.0f, -1.0f, 0.0f, 0.0f, 1.0f ), // Bottom Left
+        Vertex( 1.0f,  1.0f, 0.0f, 1.0f, 0.0f ), // Top Right
+        Vertex( 1.0f, -1.0f, 0.0f, 1.0f, 1.0f )  // Bottom Right
+    };
+
+    // Create the vertex buffer
+    hr = m_pd3dDevice->CreateVertexBuffer(sizeof(vertices), D3DUSAGE_WRITEONLY, NULL, D3DPOOL_DEFAULT, &m_pBackgroundVertexBuffer, nullptr);
+    if (FAILED(hr))
+    {
+        ATG_PrintError("Couldn't create the background vertex buffer\n");
+        return hr;
+    }
+
+    // Copy the vertices into the vertex buffer
+    VOID* pVertices;
+
+    hr = m_pBackgroundVertexBuffer->Lock(0, sizeof(vertices), (VOID**)&pVertices, NULL);
+    if (FAILED(hr))
+    {
+        ATG_PrintError("Couldn't lock the background vertex buffer\n");
+        return hr;
+    }
+
+    memcpy(pVertices, vertices, sizeof(vertices));
+    m_pBackgroundVertexBuffer->Unlock();
+
+    // Define the vertex elements
+    D3DVERTEXELEMENT9 vertexElements[3] =
+    {
+        { 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+        { 0, sizeof(XMFLOAT3), D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
+        D3DDECL_END()
+    };
+    
+    // Create a vertex declaration from the element descriptions
+    hr = m_pd3dDevice->CreateVertexDeclaration(vertexElements, &m_pBackgroundVertexDeclaration);
+    if (FAILED(hr))
+    {
+        ATG_PrintError("Couldn't create the background vertex declaration\n");
+        return hr;
+    }
+
+    // Create the vertex shader
+    hr = ATG::LoadVertexShader("game:\\Media\\Shaders\\Background.xvu", &m_pBackgroundVertexShader);
+    if (FAILED(hr))
+    {
+        ATG_PrintError("Couldn't create the background vertex shader\n");
+        return hr;
+    }
+
+    // Create the pixel shader
+    hr = ATG::LoadPixelShader("game:\\Media\\Shaders\\Background.xpu", &m_pBackgroundPixelShader);
+    if (FAILED(hr))
+    {
+        ATG_PrintError("Couldn't create the background pixel shader\n");
+        return hr;
+    }
 
     return S_OK;
 }
