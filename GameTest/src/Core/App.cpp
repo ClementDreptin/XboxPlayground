@@ -12,10 +12,11 @@
 struct Vertex
 {
     Vertex() {}
-    Vertex(float x, float y, float z, float u, float v)
-        : Pos(x, y, z), TexCoord(u, v) {}
+    Vertex(float x, float y, float z, D3DCOLOR color, float u, float v)
+        : Pos(x, y, z), Color(color), TexCoord(u, v) {}
 
     XMFLOAT3 Pos;
+    D3DCOLOR Color;
     XMFLOAT2 TexCoord;
 };
 
@@ -71,13 +72,13 @@ HRESULT App::Update()
     // Allow the user to change the font color,
     // the font color is set to the button's color
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
-        m_dwFontColor = D3DCOLOR_ARGB(255, 0, 255, 0);
+        m_dwFontColor = D3DCOLOR_XRGB(0, 255, 0);
     else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_X)
-        m_dwFontColor = D3DCOLOR_ARGB(255, 0, 0, 255);
+        m_dwFontColor = D3DCOLOR_XRGB(0, 0, 255);
     else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_Y)
-        m_dwFontColor = D3DCOLOR_ARGB(255, 255, 255, 0);
+        m_dwFontColor = D3DCOLOR_XRGB(255, 255, 0);
     else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_B)
-        m_dwFontColor = D3DCOLOR_ARGB(255, 255, 0, 0);
+        m_dwFontColor = D3DCOLOR_XRGB(255, 0, 0);
 
     return S_OK;
 }
@@ -147,13 +148,13 @@ HRESULT App::InitBackground()
     // Create the vertices
     Vertex vertices[] =
     {
-        Vertex(-1.0f, -1.0f, 0.0f, 0.0f, 1.0f ), // Bottom Left
-        Vertex(-1.0f,  1.0f, 0.0f, 0.0f, 0.0f ), // Top Left
-        Vertex( 1.0f,  1.0f, 0.0f, 1.0f, 0.0f ), // Top Right
+        Vertex(-1.0f, -1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 0.0f, 1.0f ), // Bottom Left
+        Vertex(-1.0f,  1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 0.0f, 0.0f ), // Top Left
+        Vertex( 1.0f,  1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 1.0f, 0.0f ), // Top Right
 
-        Vertex(-1.0f, -1.0f, 0.0f, 0.0f, 1.0f ), // Bottom Left
-        Vertex( 1.0f,  1.0f, 0.0f, 1.0f, 0.0f ), // Top Right
-        Vertex( 1.0f, -1.0f, 0.0f, 1.0f, 1.0f )  // Bottom Right
+        Vertex(-1.0f, -1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 0.0f, 1.0f ), // Bottom Left
+        Vertex( 1.0f,  1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 1.0f, 0.0f ), // Top Right
+        Vertex( 1.0f, -1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 1.0f, 1.0f )  // Bottom Right
     };
 
     // Create the vertex buffer
@@ -178,10 +179,11 @@ HRESULT App::InitBackground()
     m_pBackgroundVertexBuffer->Unlock();
 
     // Define the vertex elements
-    D3DVERTEXELEMENT9 vertexElements[3] =
+    D3DVERTEXELEMENT9 vertexElements[4] =
     {
         { 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
-        { 0, sizeof(XMFLOAT3), D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
+        { 0, sizeof(XMFLOAT3), D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0 },
+        { 0, sizeof(XMFLOAT3) + sizeof(D3DCOLOR), D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
         D3DDECL_END()
     };
     
