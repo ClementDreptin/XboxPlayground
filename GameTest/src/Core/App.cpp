@@ -34,7 +34,7 @@ HRESULT App::Initialize()
     hr = m_Font.Create("game:\\Media\\Fonts\\Consolas_16.xpr");
     if (FAILED(hr))
     {
-        ATG_PrintError("Couldn't create font\n");
+        Log::Error("Couldn't create font");
         return hr;
     }
 
@@ -48,7 +48,7 @@ HRESULT App::Initialize()
     hr = m_Textures.Create("game:\\Media\\Textures\\Textures.xpr");
     if (FAILED(hr))
     {
-        ATG_PrintError("Couldn't create textures\n");
+        Log::Error("Couldn't create textures");
         return hr;
     }
 
@@ -161,7 +161,7 @@ HRESULT App::InitBackground()
     hr = m_pd3dDevice->CreateVertexBuffer(sizeof(vertices), D3DUSAGE_WRITEONLY, NULL, D3DPOOL_DEFAULT, &m_pBackgroundVertexBuffer, nullptr);
     if (FAILED(hr))
     {
-        ATG_PrintError("Couldn't create the background vertex buffer\n");
+        Log::Error("Couldn't create the background vertex buffer");
         return hr;
     }
 
@@ -171,7 +171,7 @@ HRESULT App::InitBackground()
     hr = m_pBackgroundVertexBuffer->Lock(0, sizeof(vertices), (VOID**)&pVertices, NULL);
     if (FAILED(hr))
     {
-        ATG_PrintError("Couldn't lock the background vertex buffer\n");
+        Log::Error("Couldn't lock the background vertex buffer");
         return hr;
     }
 
@@ -191,7 +191,7 @@ HRESULT App::InitBackground()
     hr = m_pd3dDevice->CreateVertexDeclaration(vertexElements, &m_pBackgroundVertexDeclaration);
     if (FAILED(hr))
     {
-        ATG_PrintError("Couldn't create the background vertex declaration\n");
+        Log::Error("Couldn't create the background vertex declaration");
         return hr;
     }
 
@@ -199,7 +199,7 @@ HRESULT App::InitBackground()
     hr = ATG::LoadVertexShader("game:\\Media\\Shaders\\Background.xvu", &m_pBackgroundVertexShader);
     if (FAILED(hr))
     {
-        ATG_PrintError("Couldn't create the background vertex shader\n");
+        Log::Error("Couldn't create the background vertex shader");
         return hr;
     }
 
@@ -207,7 +207,7 @@ HRESULT App::InitBackground()
     hr = ATG::LoadPixelShader("game:\\Media\\Shaders\\Background.xpu", &m_pBackgroundPixelShader);
     if (FAILED(hr))
     {
-        ATG_PrintError("Couldn't create the background pixel shader\n");
+        Log::Error("Couldn't create the background pixel shader");
         return hr;
     }
 
