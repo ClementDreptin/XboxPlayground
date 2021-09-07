@@ -9,15 +9,23 @@
   <ItemGroup>
     <ClCompile Include="src\Core\App.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
+    <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\PixelShader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\App.h" />
     <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\Renderer\PixelShader.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\Renderer\VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\AtgFramework\AtgFramework2010.vcxproj">
@@ -30,29 +38,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Resources\Fonts\Consolas_16.rdf">
+    <CustomBuild Include="Resources\Fonts\Arial_20.rdf">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">bundler "%(Fullpath)" -o "$(OutDir)Media\Fonts\%(Filename).xpr"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Create a bundled resource file from %(Fullpath)</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Fonts\%(Filename).xpr</Outputs>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Resources\Textures\Textures.rdf">
-      <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">bundler "%(Fullpath)" -o "$(OutDir)Media\Textures\%(Filename).xpr"</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Create a bundled resource file from %(Fullpath)</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Textures\%(Filename).xpr</Outputs>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Resources\Shaders\Background.hlsl">
-      <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">fxc.exe "%(FullPath)" /nologo /Zi /Tvs_3_0 /EBackgroundVertex /DEntryPoint_BackgroundVertex /XZi /XFd"$(OutDir)Media\Shaders\Background.updb" /Fc "$(OutDir)Media\Shaders\Background.vsm" /Fo"$(OutDir)Media\Shaders\Background.xvu"
-fxc.exe "%(FullPath)" /nologo /Zi /Tps_3_0 /EBackgroundPixel /DEntryPoint_BackgroundPixel /XZi /XFd"$(OutDir)Media\Shaders\Background.updb" /Fc "$(OutDir)Media\Shaders\Background.psm" /Fo"$(OutDir)Media\Shaders\Background.xpu"
-</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Compile shaders in %(FullPath)</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Shaders\Background.xvu;$(OutDir)Media\Shaders\Background.xpu</Outputs>
     </CustomBuild>
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -6,22 +6,6 @@
 
 
 //--------------------------------------------------------------------------------------
-// Name: struct Vertex
-// Desc: Struct to describe a vertex
-//--------------------------------------------------------------------------------------
-struct Vertex
-{
-    Vertex() {}
-    Vertex(float x, float y, float z, D3DCOLOR color, float u, float v)
-        : Pos(x, y, z), Color(color), TexCoord(u, v) {}
-
-    XMFLOAT3 Pos;
-    D3DCOLOR Color;
-    XMFLOAT2 TexCoord;
-};
-
-
-//--------------------------------------------------------------------------------------
 // Name: Initialize()
 // Desc: Initialize app-dependent objects
 //--------------------------------------------------------------------------------------
@@ -31,7 +15,7 @@ HRESULT App::Initialize()
     HRESULT hr;
 
     // Create the font
-    hr = m_Font.Create("game:\\Media\\Fonts\\Consolas_16.xpr");
+    hr = m_Font.Create("game:\\Media\\Fonts\\Arial_20.xpr");
     if (FAILED(hr))
     {
         Log::Error("Couldn't create font");
@@ -39,21 +23,44 @@ HRESULT App::Initialize()
     }
 
     // Set the default font color to white
-    m_dwFontColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+    m_dwFontColor = D3DCOLOR_XRGB(255, 255, 255);
 
     // Get the width and height for the font
     ATG::GetVideoSettings(&m_uiWidth, &m_uiHeight);
 
-    // Create the textures resource
-    hr = m_Textures.Create("game:\\Media\\Textures\\Textures.xpr");
-    if (FAILED(hr))
+    // Create the vertices
+    Vertex vertices[] =
     {
-        Log::Error("Couldn't create textures");
-        return hr;
-    }
+        Vertex(-0.5f, -0.5f, 0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Bottom Left
+        Vertex(-0.5f,  0.5f, 0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Top Left
+        Vertex( 0.5f,  0.5f, 0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Top Right
+        Vertex( 0.5f, -0.5f, 0.0f, D3DCOLOR_XRGB(128, 128, 128) )  // Bottom Right
+    };
 
-    // Initialize the background
-    hr = InitBackground();
+    // Create the vertex buffer
+    hr = m_VertexBuffer.Init(m_pd3dDevice, vertices, ARRAYSIZE(vertices));
+    if (FAILED(hr))
+        return hr;
+
+    // Create the indices
+    WORD indices[] =
+    {
+        0, 1, 2,
+        0, 2, 3
+    };
+
+    // Create an index buffer
+    hr = m_IndexBuffer.Init(m_pd3dDevice, indices, ARRAYSIZE(indices));
+    if (FAILED(hr))
+        return hr;
+
+    // Create the vertex shader
+    hr = m_VertexShader.Init(m_pd3dDevice);
+    if (FAILED(hr))
+        return hr;
+
+    // Create the pixel shader
+    hr = m_PixelShader.Init(m_pd3dDevice);
     if (FAILED(hr))
         return hr;
 
@@ -106,14 +113,12 @@ HRESULT App::Render()
     m_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
     m_pd3dDevice->SetSamplerState(0, D3DSAMP_ADDRESSW, D3DTADDRESS_WRAP);
 
-    // Render the background
-    m_pd3dDevice->SetTexture(0, m_pBackgroundTexture);
-    m_pd3dDevice->SetVertexDeclaration(m_pBackgroundVertexDeclaration);
-    m_pd3dDevice->SetStreamSource(0, m_pBackgroundVertexBuffer, 0, sizeof(Vertex));
-    m_pd3dDevice->SetVertexShader(m_pBackgroundVertexShader);
-    m_pd3dDevice->SetPixelShader(m_pBackgroundPixelShader);
-    m_pd3dDevice->SetIndices(m_pBackgroundIndexBuffer);
-    m_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_pBackgroundIndexBuffer->Size / sizeof(DWORD), 0, 2);
+    m_pd3dDevice->SetVertexDeclaration(m_VertexBuffer.GetVertexDeclaration());
+    m_pd3dDevice->SetStreamSource(0, m_VertexBuffer.Get(), 0, sizeof(Vertex));
+    m_pd3dDevice->SetVertexShader(m_VertexShader.Get());
+    m_pd3dDevice->SetPixelShader(m_PixelShader.Get());
+    m_pd3dDevice->SetIndices(m_IndexBuffer.Get());
+    m_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 
     // Set the text
     LPCWSTR wszText = L"Press A, X, Y or B to change my color!";
@@ -130,113 +135,6 @@ HRESULT App::Render()
 
     // Present the scene
     m_pd3dDevice->Present(NULL, NULL, NULL, NULL);
-
-    return S_OK;
-}
-
-
-//--------------------------------------------------------------------------------------
-// Name: InitBackground()
-// Desc: Create the vertices, vertex buffer/declaration and shaders relative to
-//       the background.
-//--------------------------------------------------------------------------------------
-HRESULT App::InitBackground()
-{
-    HRESULT hr;
-
-    // Get the texture from the bundled resources
-    m_pBackgroundTexture = m_Textures.GetTexture("BackgroundTexture");
-
-    // Create the vertices
-    Vertex vertices[] =
-    {
-        Vertex(-1.0f, -1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 0.0f, 1.0f ), // Bottom Left
-        Vertex(-1.0f,  1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 0.0f, 0.0f ), // Top Left
-        Vertex( 1.0f,  1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 1.0f, 0.0f ), // Top Right
-        Vertex( 1.0f, -1.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255), 1.0f, 1.0f )  // Bottom Right
-    };
-
-    // Create the vertex buffer
-    hr = m_pd3dDevice->CreateVertexBuffer(sizeof(vertices), D3DUSAGE_WRITEONLY, NULL, D3DPOOL_DEFAULT, &m_pBackgroundVertexBuffer, nullptr);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't create the background vertex buffer");
-        return hr;
-    }
-
-    // Copy the vertices into the vertex buffer
-    VOID* pVertices;
-
-    hr = m_pBackgroundVertexBuffer->Lock(0, sizeof(vertices), (VOID**)&pVertices, NULL);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't lock the background vertex buffer");
-        return hr;
-    }
-
-    memcpy(pVertices, vertices, sizeof(vertices));
-    m_pBackgroundVertexBuffer->Unlock();
-
-    // Define the vertex elements
-    D3DVERTEXELEMENT9 vertexElements[] =
-    {
-        { 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
-        { 0, sizeof(XMFLOAT3), D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0 },
-        { 0, sizeof(XMFLOAT3) + sizeof(D3DCOLOR), D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
-        D3DDECL_END()
-    };
-    
-    // Create a vertex declaration from the element descriptions
-    hr = m_pd3dDevice->CreateVertexDeclaration(vertexElements, &m_pBackgroundVertexDeclaration);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't create the background vertex declaration");
-        return hr;
-    }
-
-    // Create the indices
-    DWORD indices[] =
-    {
-        0, 1, 2,
-        0, 2, 3
-    };
-
-    // Create an index buffer
-    hr = m_pd3dDevice->CreateIndexBuffer(sizeof(indices), D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, NULL, &m_pBackgroundIndexBuffer, NULL);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't create the background index buffer");
-        return hr;
-    }
-
-    // Copy the vertices into the vertex buffer
-    VOID* pIndices;
-
-    hr = m_pBackgroundIndexBuffer->Lock(0, sizeof(indices), (VOID**)&pIndices, NULL);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't lock the background index buffer");
-        return hr;
-    }
-
-    memcpy(pIndices, indices, sizeof(indices));
-    m_pBackgroundIndexBuffer->Unlock();
-
-    // Create the vertex shader
-    hr = ATG::LoadVertexShader("game:\\Media\\Shaders\\Background.xvu", &m_pBackgroundVertexShader);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't create the background vertex shader");
-        return hr;
-    }
-
-    // Create the pixel shader
-    hr = ATG::LoadPixelShader("game:\\Media\\Shaders\\Background.xpu", &m_pBackgroundPixelShader);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't create the background pixel shader");
-        return hr;
-    }
 
     return S_OK;
 }

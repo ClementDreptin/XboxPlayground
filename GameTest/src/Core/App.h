@@ -3,6 +3,11 @@
 #include <AtgApp.h>
 #include <AtgFont.h>
 
+#include "Renderer\VertexBuffer.h"
+#include "Renderer\IndexBuffer.h"
+#include "Renderer\VertexShader.h"
+#include "Renderer\PixelShader.h"
+
 
 //--------------------------------------------------------------------------------------
 // Name: class App
@@ -22,14 +27,8 @@ private:
     UINT m_uiWidth;
     UINT m_uiHeight;
 
-    ATG::PackedResource m_Textures;
-
-    LPDIRECT3DTEXTURE9 m_pBackgroundTexture;
-    LPDIRECT3DVERTEXBUFFER9 m_pBackgroundVertexBuffer;
-    LPDIRECT3DVERTEXDECLARATION9 m_pBackgroundVertexDeclaration;
-    LPDIRECT3DINDEXBUFFER9 m_pBackgroundIndexBuffer;
-    LPDIRECT3DVERTEXSHADER9 m_pBackgroundVertexShader;
-    LPDIRECT3DPIXELSHADER9 m_pBackgroundPixelShader;
-
-    HRESULT InitBackground();
+    VertexBuffer m_VertexBuffer;
+    IndexBuffer m_IndexBuffer;
+    VertexShader m_VertexShader;
+    PixelShader m_PixelShader;
 };
