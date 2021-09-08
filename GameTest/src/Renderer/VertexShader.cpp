@@ -4,26 +4,28 @@
 
 // Vertex shader source code
 static LPCSTR g_strShaderSource =
-" struct VS_IN                                 "
-" {                                            "
-"     float4 inPos    : POSITION;              "
-"     float4 inColor  : COLOR;                 "
-" };                                           "
-"                                              "
-" struct VS_OUT                                "
-" {                                            "
-"     float4 outPos   : POSITION;              "
-"     float4 outColor : COLOR;                 "
-" };                                           "
-"                                              "
-" VS_OUT main(VS_IN input)                     "
-" {                                            "
+" float4x4 matT : register(c0);                 "
+"                                               "
+" struct VS_IN                                  "
+" {                                             "
+"     float4 inPos    : POSITION;               "
+"     float4 inColor  : COLOR;                  "
+" };                                            "
+"                                               "
+" struct VS_OUT                                 "
+" {                                             "
+"     float4 outPos   : POSITION;               "
+"     float4 outColor : COLOR;                  "
+" };                                            "
+"                                               "
+" VS_OUT main(VS_IN input)                      "
+" {                                             "
 "     VS_OUT output;                            "
-"     output.outPos = input.inPos;              "
+"     output.outPos = mul(matT, input.inPos);   "
 "     output.outColor = input.inColor;          "
-"                                              "
-"     return output;                           "
-" }                                            ";
+"                                               "
+"     return output;                            "
+" }                                             ";
 
 //--------------------------------------------------------------------------------------
 // Name: Init()

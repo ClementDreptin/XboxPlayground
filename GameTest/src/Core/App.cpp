@@ -118,6 +118,10 @@ HRESULT App::Render()
     m_pd3dDevice->SetVertexShader(m_VertexShader.Get());
     m_pd3dDevice->SetPixelShader(m_PixelShader.Get());
     m_pd3dDevice->SetIndices(m_IndexBuffer.Get());
+
+    XMMATRIX mat = XMMatrixTranslation(0.2f, 0.0f, 0.0f);
+    m_pd3dDevice->SetVertexShaderConstantF(0, (PFLOAT)&mat, 4);
+
     m_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 
     // Set the text
