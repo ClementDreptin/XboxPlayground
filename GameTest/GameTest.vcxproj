@@ -7,46 +7,41 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="Resources\Fonts\Arial_20.rdf">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">bundler "%(FullPath)" -o "$(OutDir)Media\Fonts\%(Filename).xpr"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Create a bundled resource file from %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Fonts\%(Filename).xpr</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\Core\App.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
-    <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
-    <ClCompile Include="src\Renderer\PixelShader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\PixelShader.cpp" />
     <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="src\Renderer\VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\App.h" />
     <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\Renderer\PixelShader.h" />
-    <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Renderer\VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\AtgFramework\AtgFramework2010.vcxproj">
       <Project>{91d208a6-9936-47fd-9659-67205c3eb0ab}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Resources\Fonts\Arial_20.rdf">
-      <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">bundler "%(Fullpath)" -o "$(OutDir)Media\Fonts\%(Filename).xpr"</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Create a bundled resource file from %(Fullpath)</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Fonts\%(Filename).xpr</Outputs>
-    </CustomBuild>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1E25F9D7-36A3-4D1A-A0DC-1A520EDB2D55}</ProjectGuid>
+    <ProjectGuid>{D65EA7DE-FBA2-441D-BE74-B376437D08E0}</ProjectGuid>
     <Keyword>Xbox360Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -66,9 +61,7 @@
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin-int\</IntDir>
     <RemoteRoot>hdd:\Games\$(ProjectName)</RemoteRoot>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <IncludePath>$(Xbox360TechPreviewInclude);$(XDKInstallDir)\include\xbox;</IncludePath>
-    <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
+    <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     <ImageXexOutput>$(OutDir)$(ProjectName).xex</ImageXexOutput>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">
@@ -85,10 +78,9 @@
       <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>NDEBUG;_XBOX</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\AtgFramework;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\AtgFramework</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

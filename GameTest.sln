@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameTest", "GameTest\GameTest.vcxproj", "{1E25F9D7-36A3-4D1A-A0DC-1A520EDB2D55}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameTest", "GameTest\GameTest.vcxproj", "{D65EA7DE-FBA2-441D-BE74-B376437D08E0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AtgFramework", "GameTest\vendor\AtgFramework\AtgFramework2010.vcxproj", "{91D208A6-9936-47FD-9659-67205C3EB0AB}"
 EndProject
@@ -10,8 +10,9 @@ Global
 		Release|Xbox 360 = Release|Xbox 360
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1E25F9D7-36A3-4D1A-A0DC-1A520EDB2D55}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
-		{1E25F9D7-36A3-4D1A-A0DC-1A520EDB2D55}.Release|Xbox 360.Build.0 = Release|Xbox 360
+		{D65EA7DE-FBA2-441D-BE74-B376437D08E0}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
+		{D65EA7DE-FBA2-441D-BE74-B376437D08E0}.Release|Xbox 360.Build.0 = Release|Xbox 360
+		{D65EA7DE-FBA2-441D-BE74-B376437D08E0}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
 		{91D208A6-9936-47FD-9659-67205C3EB0AB}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
 		{91D208A6-9936-47FD-9659-67205C3EB0AB}.Release|Xbox 360.Build.0 = Release|Xbox 360
 		{91D208A6-9936-47FD-9659-67205C3EB0AB}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
