@@ -4,7 +4,7 @@
 
 // Vertex shader source code
 static LPCSTR g_strShaderSource =
-" float4x4 matT : register(c0);                 "
+" float4x4 matWP : register(c0);                "
 "                                               "
 " struct VS_IN                                  "
 " {                                             "
@@ -21,7 +21,7 @@ static LPCSTR g_strShaderSource =
 " VS_OUT main(VS_IN input)                      "
 " {                                             "
 "     VS_OUT output;                            "
-"     output.outPos = mul(matT, input.inPos);   "
+"     output.outPos = mul(matWP, input.inPos);  "
 "     output.outColor = input.inColor;          "
 "                                               "
 "     return output;                            "

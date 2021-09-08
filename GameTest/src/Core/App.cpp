@@ -29,12 +29,17 @@ HRESULT App::Initialize()
     ATG::GetVideoSettings(&m_uiWidth, &m_uiHeight);
 
     // Create the vertices
+    FLOAT left = (FLOAT)m_uiWidth / 4.0f;
+    FLOAT right = 3.0f * ((FLOAT)m_uiWidth / 4.0f);
+    FLOAT bottom = (FLOAT)m_uiHeight / 4.0f;
+    FLOAT top = 3.0f * ((FLOAT)m_uiHeight / 4.0f);
+
     Vertex vertices[] =
     {
-        Vertex(-0.5f, -0.5f, 0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Bottom Left
-        Vertex(-0.5f,  0.5f, 0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Top Left
-        Vertex( 0.5f,  0.5f, 0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Top Right
-        Vertex( 0.5f, -0.5f, 0.0f, D3DCOLOR_XRGB(128, 128, 128) )  // Bottom Right
+        Vertex( left,  bottom, 0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Bottom Left
+        Vertex( left,  top,    0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Top Left
+        Vertex( right, top,    0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Top Right
+        Vertex( right, bottom, 0.0f, D3DCOLOR_XRGB(128, 128, 128) )  // Bottom Right
     };
 
     // Create the vertex buffer
@@ -119,8 +124,10 @@ HRESULT App::Render()
     m_pd3dDevice->SetPixelShader(m_PixelShader.Get());
     m_pd3dDevice->SetIndices(m_IndexBuffer.Get());
 
-    XMMATRIX mat = XMMatrixTranslation(0.2f, 0.0f, 0.0f);
-    m_pd3dDevice->SetVertexShaderConstantF(0, (PFLOAT)&mat, 4);
+    XMMATRIX matWorld = XMMatrixTranslation((FLOAT)m_uiWidth / 4.0f, 0.0f, 0.0f);
+    XMMATRIX matProj = XMMatrixOrthographicOffCenterLH(0.0f, (FLOAT)m_uiWidth, 0.0f, (FLOAT)m_uiHeight, 0.0f, 1000.0f);
+    XMMATRIX matWP = matWorld * matProj;
+    m_pd3dDevice->SetVertexShaderConstantF(0, (PFLOAT)&matWP, 4);
 
     m_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 
