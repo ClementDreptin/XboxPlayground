@@ -36,10 +36,10 @@ HRESULT App::Initialize()
 
     Vertex vertices[] =
     {
-        Vertex( left,  bottom, 0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Bottom Left
-        Vertex( left,  top,    0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Top Left
-        Vertex( right, top,    0.0f, D3DCOLOR_XRGB(128, 128, 128) ), // Top Right
-        Vertex( right, bottom, 0.0f, D3DCOLOR_XRGB(128, 128, 128) )  // Bottom Right
+        Vertex( left,  bottom, 0.0f ), // Bottom Left
+        Vertex( left,  top,    0.0f ), // Top Left
+        Vertex( right, top,    0.0f ), // Top Right
+        Vertex( right, bottom, 0.0f )  // Bottom Right
     };
 
     // Create the vertex buffer

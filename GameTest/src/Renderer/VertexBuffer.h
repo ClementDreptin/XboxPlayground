@@ -8,11 +8,10 @@
 struct Vertex
 {
     Vertex() {}
-    Vertex(float x, float y, float z, D3DCOLOR color)
-        : Pos(x, y, z), Color(color) {}
+    Vertex(float x, float y, float z)
+        : Pos(x, y, z) {}
 
     XMFLOAT3 Pos;
-    D3DCOLOR Color;
 };
 
 
