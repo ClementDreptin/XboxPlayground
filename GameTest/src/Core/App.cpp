@@ -124,11 +124,13 @@ HRESULT App::Render()
     m_pd3dDevice->SetPixelShader(m_PixelShader.Get());
     m_pd3dDevice->SetIndices(m_IndexBuffer.Get());
 
+    // Create the world-projection matrix and pass it to the vertex shader
     XMMATRIX matWorld = XMMatrixTranslation((FLOAT)m_uiWidth / 4.0f, 0.0f, 0.0f);
     XMMATRIX matProj = XMMatrixOrthographicOffCenterLH(0.0f, (FLOAT)m_uiWidth, 0.0f, (FLOAT)m_uiHeight, -1.0f, 1.0f);
     XMMATRIX matWP = matWorld * matProj;
     m_pd3dDevice->SetVertexShaderConstantF(0, (PFLOAT)&matWP, 4);
 
+    // Create a color and pass it to the pixel shader
     FLOAT vColor[4];
     vColor[0] = 1.0f;
     vColor[1] = 0.0f;
@@ -140,12 +142,12 @@ HRESULT App::Render()
     m_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 
     // Set the text
-    LPCWSTR wszText = L"Press A, X, Y or B to change my color!";
+    static LPCWSTR wszText = L"Press A, X, Y or B to change my color!";
 
     // Calculate the text position
-    FLOAT fTextWidth = m_Font.GetTextWidth(wszText);
-    FLOAT fTextX = (FLOAT)(m_uiWidth - fTextWidth) / 2.0f;
-    FLOAT fTextY = (FLOAT)(m_uiHeight - m_Font.GetFontHeight()) / 2.0f;
+    static FLOAT fTextWidth = m_Font.GetTextWidth(wszText);
+    static FLOAT fTextX = (FLOAT)(m_uiWidth - fTextWidth) / 2.0f;
+    static FLOAT fTextY = (FLOAT)(m_uiHeight - m_Font.GetFontHeight()) / 2.0f;
 
     // Draw the text
     m_Font.Begin();
