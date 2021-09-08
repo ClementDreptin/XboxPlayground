@@ -8,14 +8,14 @@ static CONST INT MAX_SIZE = 2048;
 // Name: Info()
 // Desc: Print an info message to the console.
 //--------------------------------------------------------------------------------------
-VOID Log::Info(const std::string& message, ...)
+VOID Log::Info(const std::string& strMessage, ...)
 {
     // Get the variadic arguments
     va_list pArgList;
-    va_start(pArgList, message);
+    va_start(pArgList, strMessage);
 
     // Print
-    Print("Info: " + message, pArgList);
+    Print("Info: " + strMessage, pArgList);
 
     // Free the variadic arguments
     va_end(pArgList);
@@ -26,14 +26,14 @@ VOID Log::Info(const std::string& message, ...)
 // Name: Error()
 // Desc: Print an error message to the console.
 //--------------------------------------------------------------------------------------
-VOID Log::Error(const std::string& message, ...)
+VOID Log::Error(const std::string& strMessage, ...)
 {
     // Get the variadic arguments
     va_list pArgList;
-    va_start(pArgList, message);
+    va_start(pArgList, strMessage);
 
     // Print
-    Print("Error: " + message, pArgList);
+    Print("Error: " + strMessage, pArgList);
 
     // Free the variadic arguments
     va_end(pArgList);

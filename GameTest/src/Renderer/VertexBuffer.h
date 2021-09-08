@@ -9,9 +9,9 @@ struct Vertex
 {
     Vertex() {}
     Vertex(float x, float y, float z)
-        : Pos(x, y, z) {}
+        : vPos(x, y, z) {}
 
-    XMFLOAT3 Pos;
+    XMFLOAT3 vPos;
 };
 
 

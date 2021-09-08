@@ -12,7 +12,7 @@ public:
 
     LPDIRECT3DINDEXBUFFER9 Get() const { return m_pBuffer; }
 
-    HRESULT Init(LPDIRECT3DDEVICE9 pDevice, LPWORD pData, UINT uiNumIndices);
+    HRESULT Init(LPDIRECT3DDEVICE9 pDevice, LPWORD pwData, UINT uiNumIndices);
 private:
     LPDIRECT3DINDEXBUFFER9 m_pBuffer;
 };

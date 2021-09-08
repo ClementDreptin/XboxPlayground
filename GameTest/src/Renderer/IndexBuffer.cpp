@@ -6,7 +6,7 @@
 // Name: Init()
 // Desc: Create the index buffer and copy data into it.
 //--------------------------------------------------------------------------------------
-HRESULT IndexBuffer::Init(LPDIRECT3DDEVICE9 pDevice, LPWORD pData, UINT uiNumIndices)
+HRESULT IndexBuffer::Init(LPDIRECT3DDEVICE9 pDevice, LPWORD pwData, UINT uiNumIndices)
 {
     HRESULT hr;
 
@@ -28,7 +28,7 @@ HRESULT IndexBuffer::Init(LPDIRECT3DDEVICE9 pDevice, LPWORD pData, UINT uiNumInd
         Log::Error("Couldn't lock the index buffer");
         return hr;
     }
-    memcpy(pIndices, pData, uiDataSize);
+    memcpy(pIndices, pwData, uiDataSize);
     m_pBuffer->Unlock();
 
     return hr;

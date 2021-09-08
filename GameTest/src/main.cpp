@@ -9,7 +9,7 @@
 // Name: main()
 // Desc: The application's entry point
 //-------------------------------------------------------------------------------------
-void __cdecl main()
+VOID __cdecl main()
 {
     App app;
     ATG::GetVideoSettings(&app.m_d3dpp.BackBufferWidth, &app.m_d3dpp.BackBufferHeight);
