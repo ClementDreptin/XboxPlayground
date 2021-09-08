@@ -125,7 +125,7 @@ HRESULT App::Render()
     m_pd3dDevice->SetIndices(m_IndexBuffer.Get());
 
     XMMATRIX matWorld = XMMatrixTranslation((FLOAT)m_uiWidth / 4.0f, 0.0f, 0.0f);
-    XMMATRIX matProj = XMMatrixOrthographicOffCenterLH(0.0f, (FLOAT)m_uiWidth, 0.0f, (FLOAT)m_uiHeight, 0.0f, 1000.0f);
+    XMMATRIX matProj = XMMatrixOrthographicOffCenterLH(0.0f, (FLOAT)m_uiWidth, 0.0f, (FLOAT)m_uiHeight, -1.0f, 1.0f);
     XMMATRIX matWP = matWorld * matProj;
     m_pd3dDevice->SetVertexShaderConstantF(0, (PFLOAT)&matWP, 4);
 
