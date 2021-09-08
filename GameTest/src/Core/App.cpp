@@ -129,6 +129,14 @@ HRESULT App::Render()
     XMMATRIX matWP = matWorld * matProj;
     m_pd3dDevice->SetVertexShaderConstantF(0, (PFLOAT)&matWP, 4);
 
+    FLOAT vColor[4];
+    vColor[0] = 1.0f;
+    vColor[1] = 0.0f;
+    vColor[2] = 1.0f;
+    vColor[3] = 1.0f;
+    m_pd3dDevice->SetPixelShaderConstantF(0, vColor, 1);
+
+    // Draw the rectangle
     m_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 
     // Set the text

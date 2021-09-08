@@ -4,6 +4,8 @@
 
 // Pixel shader source code
 static LPCSTR g_ShaderSource =
+" float4 c_color : register(c0);               "
+"                                              "
 " struct PS_IN                                 "
 " {                                            "
 "     float4 inColor : COLOR;                  "
@@ -11,7 +13,7 @@ static LPCSTR g_ShaderSource =
 "                                              "
 " float4 main(PS_IN input) : COLOR             "
 " {                                            "
-"     return input.inColor;                    "
+"     return c_color;                          "
 " }                                            "; 
 
 //--------------------------------------------------------------------------------------
