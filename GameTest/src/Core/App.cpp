@@ -3,6 +3,13 @@
 
 #include <AtgInput.h>
 
+//--------------------------------------------------------------------------------------
+// Option callbacks
+//--------------------------------------------------------------------------------------
+static VOID Option1Callback(LPVOID) { Log::Info("Option 1 clicked"); }
+
+static VOID Option2Callback(LPVOID) { Log::Info("Option 2 clicked"); }
+
 
 //--------------------------------------------------------------------------------------
 // Name: Initialize()
@@ -10,27 +17,27 @@
 //--------------------------------------------------------------------------------------
 HRESULT App::Initialize()
 {
-    // Result of operations
     HRESULT hr;
-
-    // Create the font
-    hr = m_Font.Create("game:\\Media\\Fonts\\Arial_20.xpr");
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't create font");
-        return hr;
-    }
-
-    // Set the default font color to white
-    m_dwFontColor = D3DCOLOR_XRGB(255, 255, 255);
 
     // Get the width and height for the font
     ATG::GetVideoSettings(&m_uiWidth, &m_uiHeight);
 
     // Create the rectangle
-    hr = m_Rectangle.Init(m_pd3dDevice, 100.0f, 100.0f, 200.0f, 200.0f, D3DCOLOR_XRGB(255, 255, 0));
+    hr = m_Rectangle.Init(m_pd3dDevice, 100.0f, 100.0f, 200.0f, 500.0f, D3DCOLOR_XRGB(0, 0, 128));
     if (FAILED(hr))
         return hr;
+
+    // Create the scroller
+    hr = m_Scroller.Init(m_pd3dDevice, 100.0f, 100.0f, 200.0f, 50.0f, D3DCOLOR_XRGB(128, 128, 128));
+    if (FAILED(hr))
+        return hr;
+
+    // Create the options
+    m_Options.emplace_back(Option(L"Option 1", 0, Option1Callback));
+    m_Options.emplace_back(Option(L"Option 2", 1, Option2Callback));
+
+    // Initialize the scroller position
+    m_iCurrentScrollerPos = 0;
 
     return S_OK;
 }
@@ -42,31 +49,34 @@ HRESULT App::Initialize()
 //--------------------------------------------------------------------------------------
 HRESULT App::Update()
 {
-    // Get the time elapsed
-    FLOAT fElapsedTime = (FLOAT)m_Timer.GetElapsedTime();
-
     // Get the current gamepad state
     ATG::GAMEPAD* pGamepad = ATG::Input::GetMergedInput();
 
-    // Allow the user to change the font color,
-    // the font color is set to the button's color
+    // Allow the user to select options with the DPAD
+    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP)
+    {
+        m_iCurrentScrollerPos--;
+
+        // If the scroller is already at the top, send it to the bottom
+        if (m_iCurrentScrollerPos < 0)
+            m_iCurrentScrollerPos = m_Options.size() - 1;
+
+        MoveScroller();
+    }
+    else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_DOWN)
+    {
+        m_iCurrentScrollerPos++;
+
+        // If the scroller is already at the bottom, send it to the top
+        if (m_iCurrentScrollerPos >= (INT)m_Options.size())
+            m_iCurrentScrollerPos = 0;
+
+        MoveScroller();
+    }
+
+    // Allow the user to click on an option
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
-        m_dwFontColor = D3DCOLOR_XRGB(0, 255, 0);
-    else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_X)
-        m_dwFontColor = D3DCOLOR_XRGB(0, 0, 255);
-    else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_Y)
-        m_dwFontColor = D3DCOLOR_XRGB(255, 255, 0);
-    else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_B)
-        m_dwFontColor = D3DCOLOR_XRGB(255, 0, 0);
-
-    // Allow the user to move the rectangle with the DPAD
-    FLOAT fRectangleX = m_Rectangle.GetX();
-    FLOAT fRectangleY = m_Rectangle.GetY();
-
-    fRectangleX += pGamepad->fX1 * fElapsedTime * 200.0f;
-    fRectangleY -= pGamepad->fY1 * fElapsedTime * 200.0f;
-
-    m_Rectangle.SetPosition(fRectangleX, fRectangleY);
+        m_Options[m_iCurrentScrollerPos].OnClick(nullptr);
 
     return S_OK;
 }
@@ -85,21 +95,28 @@ HRESULT App::Render()
     // Draw the rectangle
     m_Rectangle.Draw();
 
-    // Set the text
-    static LPCWSTR wszText = L"Press A, X, Y or B to change my color!";
+    // Draw the scroller
+    m_Scroller.Draw();
 
-    // Calculate the text position
-    static FLOAT fTextWidth = m_Font.GetTextWidth(wszText);
-    static FLOAT fTextX = (FLOAT)(m_uiWidth - fTextWidth) / 2.0f;
-    static FLOAT fTextY = (FLOAT)(m_uiHeight - m_Font.GetFontHeight()) / 2.0f;
-
-    // Draw the text
-    m_Font.Begin();
-    m_Font.DrawText(fTextX, fTextY, m_dwFontColor, wszText);
-    m_Font.End();
+    // Draw the options
+    Option::Begin();
+    for (UINT i = 0; i < m_Options.size(); i++)
+        m_Options[i].Draw(100.0f, 100.0f + i * 50.0f);
+    Option::End();
 
     // Present the scene
     m_pd3dDevice->Present(NULL, NULL, NULL, NULL);
 
     return S_OK;
+}
+
+
+//--------------------------------------------------------------------------------------
+// Name: MoveScroller()
+// Desc: Update the poition of the scroller according to the m_uiCurrentScrollerPos
+//       index.
+//--------------------------------------------------------------------------------------
+VOID App::MoveScroller()
+{
+    m_Scroller.SetY(100.0f + 50.0f * m_iCurrentScrollerPos);
 }

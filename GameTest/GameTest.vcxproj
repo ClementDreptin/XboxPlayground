@@ -17,6 +17,7 @@
   <ItemGroup>
     <ClCompile Include="src\Core\App.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
+    <ClCompile Include="src\Elements\Option.cpp" />
     <ClCompile Include="src\Elements\Rectangle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -30,6 +31,7 @@
   <ItemGroup>
     <ClInclude Include="src\Core\App.h" />
     <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Elements\Option.h" />
     <ClInclude Include="src\Elements\Rectangle.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />

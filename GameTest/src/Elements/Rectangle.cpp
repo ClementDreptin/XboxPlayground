@@ -74,7 +74,7 @@ HRESULT Rectangle::Init(LPDIRECT3DDEVICE9 pDevice, FLOAT fX, FLOAT fY, FLOAT fWi
 
 //--------------------------------------------------------------------------------------
 // Name: Draw()
-// Desc: Draw th rectangle.
+// Desc: Draw the rectangle.
 //--------------------------------------------------------------------------------------
 VOID Rectangle::Draw()
 {

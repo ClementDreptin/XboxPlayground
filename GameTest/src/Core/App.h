@@ -4,12 +4,8 @@
 #include <AtgFont.h>
 #include <AtgUtil.h>
 
-#include "Renderer\VertexBuffer.h"
-#include "Renderer\IndexBuffer.h"
-#include "Renderer\VertexShader.h"
-#include "Renderer\PixelShader.h"
-
 #include "Elements\Rectangle.h"
+#include "Elements\Option.h"
 
 
 //--------------------------------------------------------------------------------------
@@ -24,13 +20,14 @@ public:
     virtual HRESULT Update();
     virtual HRESULT Render();
 private:
-    ATG::Timer m_Timer;
-
-    ATG::Font m_Font;
-    D3DCOLOR m_dwFontColor;
-
     UINT m_uiWidth;
     UINT m_uiHeight;
 
     Rectangle m_Rectangle;
+    Rectangle m_Scroller;
+    INT m_iCurrentScrollerPos;
+
+    std::vector<Option> m_Options;
+
+    VOID MoveScroller();
 };

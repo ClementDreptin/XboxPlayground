@@ -6,6 +6,7 @@
 
 // C++ standard library
 #include <string>
+#include <vector>
 
 // Rarely changed headers
 #include "Core\Log.h"
