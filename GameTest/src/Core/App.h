@@ -8,6 +8,8 @@
 #include "Renderer\VertexShader.h"
 #include "Renderer\PixelShader.h"
 
+#include "Elements\Rectangle.h"
+
 
 //--------------------------------------------------------------------------------------
 // Name: class App
@@ -31,4 +33,6 @@ private:
     IndexBuffer m_IndexBuffer;
     VertexShader m_VertexShader;
     PixelShader m_PixelShader;
+
+    Rectangle m_Rectangle;
 };

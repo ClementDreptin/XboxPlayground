@@ -69,6 +69,11 @@ HRESULT App::Initialize()
     if (FAILED(hr))
         return hr;
 
+    // Create the rectangle
+    hr = m_Rectangle.Init(m_pd3dDevice, 100.0f, 100.0f, 200.0f, 200.0f, D3DCOLOR_XRGB(255, 255, 0));
+    if (FAILED(hr))
+        return hr;
+
     return S_OK;
 }
 
@@ -140,6 +145,9 @@ HRESULT App::Render()
 
     // Draw the rectangle
     m_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
+
+    // Draw the rectangle
+    m_Rectangle.Draw();
 
     // Set the text
     static LPCWSTR wszText = L"Press A, X, Y or B to change my color!";
