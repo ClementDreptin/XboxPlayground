@@ -13,16 +13,12 @@ HRESULT Rectangle::Init(LPDIRECT3DDEVICE9 pDevice, FLOAT fX, FLOAT fY, FLOAT fWi
 {
     HRESULT hr;
 
-    // Get the display dimensions
-    UINT uiWidth;
-    UINT uiHeight;
-    ATG::GetVideoSettings(&uiWidth, &uiHeight);
+    // Save the display dimensions
+    ATG::GetVideoSettings(&m_uiWidth, &m_uiHeight);
 
     // Save the position
-    // Direct3D uses an upwards Y axis system which is a bit unintuitive when dealing
-    // with 2D rendering, so we flip the Y axis before saving the position
     m_fX = fX;
-    m_fY = (FLOAT)uiHeight - fY;
+    m_fY = fY;
 
     // Save the color and the device
     m_dwColor = dwColor;
@@ -30,7 +26,7 @@ HRESULT Rectangle::Init(LPDIRECT3DDEVICE9 pDevice, FLOAT fX, FLOAT fY, FLOAT fWi
 
     // Set up the matrices for orthographic projection
     m_matView = XMMatrixIdentity();
-    m_matProjection = XMMatrixOrthographicOffCenterLH(0.0f, (FLOAT)uiWidth, 0.0f, (FLOAT)uiHeight, -1.0f, 1.0f);
+    m_matProjection = XMMatrixOrthographicOffCenterLH(0.0f, (FLOAT)m_uiWidth, 0.0f, (FLOAT)m_uiHeight, -1.0f, 1.0f);
     CalculateWorldViewProjectionMatrix();
 
     // Create the vertices
@@ -116,6 +112,8 @@ VOID Rectangle::Draw()
 //--------------------------------------------------------------------------------------
 VOID Rectangle::CalculateWorldViewProjectionMatrix()
 {
-    m_matWorld = XMMatrixTranslation(m_fX, m_fY, 0.0f);
+    // Direct3D uses an upwards Y axis system which is a bit unintuitive when dealing
+    // with 2D rendering, so we flip the Y axis
+    m_matWorld = XMMatrixTranslation(m_fX, (FLOAT)m_uiHeight - m_fY, 0.0f);
     m_matWVP = m_matWorld * m_matView * m_matProjection;
 }

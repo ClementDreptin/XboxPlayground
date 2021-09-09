@@ -17,6 +17,9 @@ public:
 
     HRESULT Init(LPDIRECT3DDEVICE9 pDevice, FLOAT fX, FLOAT fY, FLOAT fWidth, FLOAT fHeight, D3DCOLOR dwColor);
 
+    FLOAT GetX() CONST { return m_fX; }
+    FLOAT GetY() CONST { return m_fY; }
+
     VOID SetPosition(FLOAT fX, FLOAT fY) { m_fX = fX; m_fY = fY; CalculateWorldViewProjectionMatrix(); }
     VOID SetX(FLOAT fX) { m_fX = fX; CalculateWorldViewProjectionMatrix(); }
     VOID SetY(FLOAT fY) { m_fY = fY; CalculateWorldViewProjectionMatrix(); }
@@ -31,6 +34,8 @@ private:
 
     FLOAT m_fX;
     FLOAT m_fY;
+    UINT m_uiWidth;
+    UINT m_uiHeight;
 
     D3DCOLOR m_dwColor;
 

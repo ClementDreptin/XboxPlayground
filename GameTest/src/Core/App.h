@@ -2,6 +2,7 @@
 
 #include <AtgApp.h>
 #include <AtgFont.h>
+#include <AtgUtil.h>
 
 #include "Renderer\VertexBuffer.h"
 #include "Renderer\IndexBuffer.h"
@@ -23,16 +24,13 @@ public:
     virtual HRESULT Update();
     virtual HRESULT Render();
 private:
+    ATG::Timer m_Timer;
+
     ATG::Font m_Font;
     D3DCOLOR m_dwFontColor;
 
     UINT m_uiWidth;
     UINT m_uiHeight;
-
-    VertexBuffer m_VertexBuffer;
-    IndexBuffer m_IndexBuffer;
-    VertexShader m_VertexShader;
-    PixelShader m_PixelShader;
 
     Rectangle m_Rectangle;
 };
