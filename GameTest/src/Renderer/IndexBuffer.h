@@ -1,18 +1,16 @@
 #pragma once
 
 
-//--------------------------------------------------------------------------------------
-// Name: class IndexBuffer
-// Desc: Class to wrap common index buffer operations.
-//--------------------------------------------------------------------------------------
+// Class to wrap common index buffer operations.
 class IndexBuffer
 {
 public:
     IndexBuffer() {}
 
-    LPDIRECT3DINDEXBUFFER9 Get() const { return m_pBuffer; }
+    D3DIndexBuffer *Get() const { return m_pBuffer; }
 
-    HRESULT Init(LPDIRECT3DDEVICE9 pDevice, LPWORD pwData, UINT uiNumIndices);
+    // Create the index buffer and copy data into it.
+    HRESULT Init(D3DDevice *pDevice, WORD *pwData, uint32_t uiNumIndices);
 private:
-    LPDIRECT3DINDEXBUFFER9 m_pBuffer;
+    D3DIndexBuffer *m_pBuffer;
 };

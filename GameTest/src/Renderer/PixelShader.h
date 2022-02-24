@@ -1,18 +1,16 @@
 #pragma once
 
 
-//--------------------------------------------------------------------------------------
-// Name: class PixelShader
-// Desc: Class to wrap common pixel shader operations.
-//--------------------------------------------------------------------------------------
+// Class to wrap common pixel shader operations.
 class PixelShader
 {
 public:
     PixelShader() {}
 
-    LPDIRECT3DPIXELSHADER9 Get() const { return m_pShader; }
+    D3DPixelShader *Get() const { return m_pShader; }
 
-    HRESULT Init(LPDIRECT3DDEVICE9 pDevice);
+    // Compile the pixel shader source and create the pixel shader.
+    HRESULT Init(D3DDevice *pDevice);
 private:
-    LPDIRECT3DPIXELSHADER9 m_pShader;
+    D3DPixelShader *m_pShader;
 };

@@ -3,7 +3,7 @@
 
 
 // Vertex shader source code
-static LPCSTR g_strShaderSource =
+static const char *g_strShaderSource =
 " float4x4 c_matWP : register(c0);                  "
 "                                                   "
 " struct VS_IN                                      "
@@ -24,20 +24,16 @@ static LPCSTR g_strShaderSource =
 "     return output;                                "
 " }                                                 ";
 
-//--------------------------------------------------------------------------------------
-// Name: Init()
-// Desc: Compile the vertex shader source and create the vertex shader.
-//--------------------------------------------------------------------------------------
-HRESULT VertexShader::Init(LPDIRECT3DDEVICE9 pDevice)
+HRESULT VertexShader::Init(D3DDevice *pDevice)
 {
     HRESULT hr;
 
     // Compile the shader source code
-    ID3DXBuffer* pShaderCode;
-    ID3DXBuffer* pErrorMsg;
+    ID3DXBuffer *pShaderCode;
+    ID3DXBuffer *pErrorMsg;
     hr = D3DXCompileShader(
         g_strShaderSource,
-        (UINT)strlen(g_strShaderSource),
+        strlen(g_strShaderSource),
         nullptr,
         nullptr,
         "main",
@@ -53,13 +49,13 @@ HRESULT VertexShader::Init(LPDIRECT3DDEVICE9 pDevice)
         Log::Error("Couldn't compile the vertex shader");
         
         if (pErrorMsg)
-            OutputDebugString((LPSTR)pErrorMsg->GetBufferPointer());
+            OutputDebugString(reinterpret_cast<char *>(pErrorMsg->GetBufferPointer()));
 
         return hr;
     }
 
     // Create the shader
-    hr = pDevice->CreateVertexShader((LPDWORD)pShaderCode->GetBufferPointer(), &m_pShader);
+    hr = pDevice->CreateVertexShader(reinterpret_cast<DWORD *>(pShaderCode->GetBufferPointer()), &m_pShader);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the vertex shader");

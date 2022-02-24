@@ -6,25 +6,25 @@
 #include "Renderer\PixelShader.h"
 
 
-//--------------------------------------------------------------------------------------
-// Name: class Rectangle
-// Desc: Class to create a 2D rectangle, inherits from HudElem.
-//--------------------------------------------------------------------------------------
+// Class to create a 2D rectangle, inherits from HudElem.
 class Rectangle
 {
 public:
     Rectangle() {}
 
-    HRESULT Init(LPDIRECT3DDEVICE9 pDevice, FLOAT fX, FLOAT fY, FLOAT fWidth, FLOAT fHeight, D3DCOLOR dwColor);
+    // Create the vertex and index buffers needed to create a rectangle. Set up the
+    // matrices to project to rectangle.
+    HRESULT Init(D3DDevice *pDevice, float fX, float fY, float fWidth, float fHeight, D3DCOLOR dwColor);
 
-    FLOAT GetX() CONST { return m_fX; }
-    FLOAT GetY() CONST { return m_fY; }
+    float GetX() const { return m_fX; }
+    float GetY() const { return m_fY; }
 
-    VOID SetPosition(FLOAT fX, FLOAT fY) { m_fX = fX; m_fY = fY; CalculateWorldViewProjectionMatrix(); }
-    VOID SetX(FLOAT fX) { m_fX = fX; CalculateWorldViewProjectionMatrix(); }
-    VOID SetY(FLOAT fY) { m_fY = fY; CalculateWorldViewProjectionMatrix(); }
+    void SetPosition(float fX, float fY) { m_fX = fX; m_fY = fY; CalculateWorldViewProjectionMatrix(); }
+    void SetX(float fX) { m_fX = fX; CalculateWorldViewProjectionMatrix(); }
+    void SetY(float fY) { m_fY = fY; CalculateWorldViewProjectionMatrix(); }
 
-    VOID Draw();
+    // Draw the rectangle.
+    void Draw();
 private:
     VertexBuffer m_VertexBuffer;
     IndexBuffer m_IndexBuffer;
@@ -32,19 +32,21 @@ private:
     VertexShader m_VertexShader;
     PixelShader m_PixelShader;
 
-    FLOAT m_fX;
-    FLOAT m_fY;
-    UINT m_uiWidth;
-    UINT m_uiHeight;
+    float m_fX;
+    float m_fY;
+    uint32_t m_uiWidth;
+    uint32_t m_uiHeight;
 
     D3DCOLOR m_dwColor;
 
-    LPDIRECT3DDEVICE9 m_pDevice;
+    D3DDevice *m_pDevice;
 
     XMMATRIX m_matWorld;
     XMMATRIX m_matView;
     XMMATRIX m_matProjection;
     XMMATRIX m_matWVP;
 
-    VOID CalculateWorldViewProjectionMatrix();
+    // Apply a translation from the position andrecalculate the world view
+    // projection matrix.
+    void CalculateWorldViewProjectionMatrix();
 };

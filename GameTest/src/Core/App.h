@@ -8,26 +8,30 @@
 #include "Elements\Option.h"
 
 
-//--------------------------------------------------------------------------------------
-// Name: class App
-// Desc: Main class to run this application. Most functionality is inherited
-//       from the ATG::Application base class.
-//--------------------------------------------------------------------------------------
+// Main class to run this application. Most functionality is inherited
+// from the ATG::Application base class.
 class App : public ATG::Application
 {
 public:
+    // Initialize app-dependent objects.
     virtual HRESULT Initialize();
+
+    // Called once per frame, the call is the entry point for animating the scene.
     virtual HRESULT Update();
+
+    // Called once per frame, the call is the entry point for 3D rendering. This 
+    // function sets up render states, clears the viewport, and renders the scene.
     virtual HRESULT Render();
 private:
-    UINT m_uiWidth;
-    UINT m_uiHeight;
+    uint32_t m_uiWidth;
+    uint32_t m_uiHeight;
 
     Rectangle m_Rectangle;
     Rectangle m_Scroller;
-    INT m_iCurrentScrollerPos;
+    int m_iCurrentScrollerPos;
 
     std::vector<Option> m_Options;
 
-    VOID MoveScroller();
+    // Update the poition of the scroller according to the m_iCurrentScrollerPos index.
+    void MoveScroller();
 };

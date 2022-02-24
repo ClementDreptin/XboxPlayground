@@ -1,18 +1,16 @@
 #pragma once
 
 
-//--------------------------------------------------------------------------------------
-// Name: class VertexShader
-// Desc: Class to wrap common vertex shader operations.
-//--------------------------------------------------------------------------------------
+// Class to wrap common vertex shader operations.
 class VertexShader
 {
 public:
     VertexShader() {}
 
-    LPDIRECT3DVERTEXSHADER9 Get() const { return m_pShader; }
+    D3DVertexShader *Get() const { return m_pShader; }
 
-    HRESULT Init(LPDIRECT3DDEVICE9 pDevice);
+    // Compile the vertex shader source and create the vertex shader.
+    HRESULT Init(D3DDevice *pDevice);
 private:
-    LPDIRECT3DVERTEXSHADER9 m_pShader;
+    D3DVertexShader *m_pShader;
 };

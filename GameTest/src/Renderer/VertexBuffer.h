@@ -1,10 +1,7 @@
 #pragma once
 
 
-//--------------------------------------------------------------------------------------
-// Name: struct Vertex
-// Desc: Struct to describe a vertex.
-//--------------------------------------------------------------------------------------
+// Struct to describe a vertex.
 struct Vertex
 {
     Vertex() {}
@@ -14,21 +11,18 @@ struct Vertex
     XMFLOAT3 vPos;
 };
 
-
-//--------------------------------------------------------------------------------------
-// Name: class VertexBuffer
-// Desc: Class to wrap common vertex buffer operations.
-//--------------------------------------------------------------------------------------
+// Class to wrap common vertex buffer operations.
 class VertexBuffer
 {
 public:
     VertexBuffer() {}
 
-    LPDIRECT3DVERTEXBUFFER9 Get() const { return m_pBuffer; }
-    LPDIRECT3DVERTEXDECLARATION9 GetVertexDeclaration() const { return m_pVertexDeclaration; }
+    D3DVertexBuffer *Get() const { return m_pBuffer; }
+    D3DVertexDeclaration *GetVertexDeclaration() const { return m_pVertexDeclaration; }
 
-    HRESULT Init(LPDIRECT3DDEVICE9 pDevice, Vertex* pData, UINT uiNumVertices);
+    // Create the vertex buffer, copy data into it and set the vertex declaration.
+    HRESULT Init(D3DDevice *pDevice, Vertex *pData, uint32_t uiNumVertices);
 private:
-    LPDIRECT3DVERTEXBUFFER9 m_pBuffer;
-    LPDIRECT3DVERTEXDECLARATION9 m_pVertexDeclaration;
+    D3DVertexBuffer *m_pBuffer;
+    D3DVertexDeclaration *m_pVertexDeclaration;
 };

@@ -3,18 +3,12 @@
 
 #include <AtgInput.h>
 
-//--------------------------------------------------------------------------------------
+
 // Option callbacks
-//--------------------------------------------------------------------------------------
-static VOID Option1Callback(LPVOID) { Log::Info("Option 1 clicked"); }
-
-static VOID Option2Callback(LPVOID) { Log::Info("Option 2 clicked"); }
+static void Option1Callback(void *) { Log::Info("Option 1 clicked"); }
+static void Option2Callback(void *) { Log::Info("Option 2 clicked"); }
 
 
-//--------------------------------------------------------------------------------------
-// Name: Initialize()
-// Desc: Initialize app-dependent objects
-//--------------------------------------------------------------------------------------
 HRESULT App::Initialize()
 {
     HRESULT hr;
@@ -42,11 +36,6 @@ HRESULT App::Initialize()
     return S_OK;
 }
 
-
-//--------------------------------------------------------------------------------------
-// Name: Update()
-// Desc: Called once per frame, the call is the entry point for animating the scene.
-//--------------------------------------------------------------------------------------
 HRESULT App::Update()
 {
     // Get the current gamepad state
@@ -81,16 +70,10 @@ HRESULT App::Update()
     return S_OK;
 }
 
-
-//--------------------------------------------------------------------------------------
-// Name: Render()
-// Desc: Called once per frame, the call is the entry point for 3D rendering. This 
-//       function sets up render states, clears the viewport, and renders the scene.
-//--------------------------------------------------------------------------------------
 HRESULT App::Render()
 {
     // Clear the viewport
-    m_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+    m_pd3dDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
     // Draw the rectangle
     m_Rectangle.Draw();
@@ -100,22 +83,16 @@ HRESULT App::Render()
 
     // Draw the options
     Option::Begin();
-    for (UINT i = 0; i < m_Options.size(); i++)
+    for (size_t i = 0; i < m_Options.size(); i++)
         m_Options[i].Draw(100.0f, 100.0f + i * 50.0f);
     Option::End();
 
     // Present the scene
-    m_pd3dDevice->Present(NULL, NULL, NULL, NULL);
+    m_pd3dDevice->Present(nullptr, nullptr, nullptr, nullptr);
 
     return S_OK;
 }
 
-
-//--------------------------------------------------------------------------------------
-// Name: MoveScroller()
-// Desc: Update the poition of the scroller according to the m_uiCurrentScrollerPos
-//       index.
-//--------------------------------------------------------------------------------------
 VOID App::MoveScroller()
 {
     m_Scroller.SetY(100.0f + 50.0f * m_iCurrentScrollerPos);

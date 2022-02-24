@@ -3,7 +3,7 @@
 
 
 // Pixel shader source code
-static LPCSTR g_ShaderSource =
+static const char *g_ShaderSource =
 " float4 c_color : register(c0);    "
 "                                   "
 " float4 main() : COLOR             "
@@ -11,11 +11,7 @@ static LPCSTR g_ShaderSource =
 "     return c_color;               "
 " }                                 "; 
 
-//--------------------------------------------------------------------------------------
-// Name: Init()
-// Desc: Compile the pixel shader source and create the pixel shader.
-//--------------------------------------------------------------------------------------
-HRESULT PixelShader::Init(LPDIRECT3DDEVICE9 pDevice)
+HRESULT PixelShader::Init(D3DDevice *pDevice)
 {
     HRESULT hr;
 
@@ -24,7 +20,7 @@ HRESULT PixelShader::Init(LPDIRECT3DDEVICE9 pDevice)
     ID3DXBuffer* pErrorMsg;
     hr = D3DXCompileShader(
         g_ShaderSource,
-        (UINT)strlen(g_ShaderSource),
+        strlen(g_ShaderSource),
         nullptr,
         nullptr,
         "main",
@@ -40,13 +36,13 @@ HRESULT PixelShader::Init(LPDIRECT3DDEVICE9 pDevice)
         Log::Error("Couldn't compile the pixel shader");
         
         if (pErrorMsg)
-            OutputDebugString((LPSTR)pErrorMsg->GetBufferPointer());
+            OutputDebugString(reinterpret_cast<char *>(pErrorMsg->GetBufferPointer()));
 
         return hr;
     }
 
     // Create the shader
-    hr = pDevice->CreatePixelShader((LPDWORD)pShaderCode->GetBufferPointer(), &m_pShader);
+    hr = pDevice->CreatePixelShader(reinterpret_cast<DWORD *>(pShaderCode->GetBufferPointer()), &m_pShader);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the pixel shader");

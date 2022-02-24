@@ -4,12 +4,7 @@
 #include <AtgUtil.h>
 
 
-//--------------------------------------------------------------------------------------
-// Name: Init()
-// Desc: Create the vertex and index buffers needed to create a rectangle. Set up the
-//       matrices to project to rectangle.
-//--------------------------------------------------------------------------------------
-HRESULT Rectangle::Init(LPDIRECT3DDEVICE9 pDevice, FLOAT fX, FLOAT fY, FLOAT fWidth, FLOAT fHeight, D3DCOLOR dwColor)
+HRESULT Rectangle::Init(D3DDevice *pDevice, float fX, float fY, float fWidth, float fHeight, D3DCOLOR dwColor)
 {
     HRESULT hr;
 
@@ -26,7 +21,7 @@ HRESULT Rectangle::Init(LPDIRECT3DDEVICE9 pDevice, FLOAT fX, FLOAT fY, FLOAT fWi
 
     // Set up the matrices for orthographic projection
     m_matView = XMMatrixIdentity();
-    m_matProjection = XMMatrixOrthographicOffCenterLH(0.0f, (FLOAT)m_uiWidth, 0.0f, (FLOAT)m_uiHeight, -1.0f, 1.0f);
+    m_matProjection = XMMatrixOrthographicOffCenterLH(0.0f, static_cast<float>(m_uiWidth), 0.0f, static_cast<float>(m_uiHeight), -1.0f, 1.0f);
     CalculateWorldViewProjectionMatrix();
 
     // Create the vertices
@@ -71,12 +66,7 @@ HRESULT Rectangle::Init(LPDIRECT3DDEVICE9 pDevice, FLOAT fX, FLOAT fY, FLOAT fWi
     return S_OK;
 }
 
-
-//--------------------------------------------------------------------------------------
-// Name: Draw()
-// Desc: Draw the rectangle.
-//--------------------------------------------------------------------------------------
-VOID Rectangle::Draw()
+void Rectangle::Draw()
 {
     // Initialize default device states
     m_pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
@@ -90,10 +80,10 @@ VOID Rectangle::Draw()
     m_pDevice->SetIndices(m_IndexBuffer.Get());
 
     // Pass the world view projection matrix to the vertex shader
-    m_pDevice->SetVertexShaderConstantF(0, (PFLOAT)&m_matWVP, 4);
+    m_pDevice->SetVertexShaderConstantF(0, reinterpret_cast<float *>(&m_matWVP), 4);
 
     // Turn the color into a float array and pass it to the pixel shader
-    FLOAT vColor[4];
+    float vColor[4];
     vColor[0] = ((m_dwColor & 0x00ff0000) >> 16) / 255.0f;
     vColor[1] = ((m_dwColor & 0x0000ff00) >> 8 ) / 255.0f;
     vColor[2] = ((m_dwColor & 0x000000ff) >> 0 ) / 255.0f;
@@ -104,16 +94,10 @@ VOID Rectangle::Draw()
     m_pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 }
 
-
-//--------------------------------------------------------------------------------------
-// Name: CalculateWorldViewProjectionMatrix()
-// Desc: Apply a translation from the position and recalculate the world view
-//       projection matrix.
-//--------------------------------------------------------------------------------------
-VOID Rectangle::CalculateWorldViewProjectionMatrix()
+void Rectangle::CalculateWorldViewProjectionMatrix()
 {
     // Direct3D uses an upwards Y axis system which is a bit unintuitive when dealing
     // with 2D rendering, so we flip the Y axis
-    m_matWorld = XMMatrixTranslation(m_fX, (FLOAT)m_uiHeight - m_fY, 0.0f);
+    m_matWorld = XMMatrixTranslation(m_fX, (float)m_uiHeight - m_fY, 0.0f);
     m_matWVP = m_matWorld * m_matView * m_matProjection;
 }

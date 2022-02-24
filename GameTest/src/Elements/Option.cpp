@@ -2,28 +2,17 @@
 #include "Elements\Option.h"
 
 
-//--------------------------------------------------------------------------------------
-// Declarations of static members
-//--------------------------------------------------------------------------------------
-BOOL Option::s_bFontInitialized = FALSE;
+bool Option::s_bFontInitialized = false;
 ATG::Font Option::s_Font;
 
 
-//--------------------------------------------------------------------------------------
-// Name: Option()
-// Desc: Constructor.
-//--------------------------------------------------------------------------------------
 Option::Option(CONST std::wstring& wstrText, UINT uiIndex, Callback fnCallback, D3DCOLOR dwColor)
     : m_wstrText(wstrText), m_uiIndex(uiIndex), m_fnCallback(fnCallback), m_dwColor(dwColor)
 {
-    if (!s_bFontInitialized) InitFont();
+    if (!s_bFontInitialized)
+        InitFont();
 }
 
-
-//--------------------------------------------------------------------------------------
-// Name: InitFont()
-// Desc: Creates the font used to render the text of all options.
-//--------------------------------------------------------------------------------------
 HRESULT Option::InitFont()
 {
     HRESULT hr;
