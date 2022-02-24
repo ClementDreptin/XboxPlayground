@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\App.cpp" />
+    <ClCompile Include="src\Core\Callbacks.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
     <ClCompile Include="src\Elements\Option.cpp" />
     <ClCompile Include="src\Elements\Rectangle.cpp" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\App.h" />
+    <ClInclude Include="src\Core\Callbacks.h" />
     <ClInclude Include="src\Core\Log.h" />
     <ClInclude Include="src\Elements\Option.h" />
     <ClInclude Include="src\Elements\Rectangle.h" />

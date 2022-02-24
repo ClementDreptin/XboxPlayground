@@ -1,12 +1,9 @@
 #include "pch.h"
-#include "App.h"
+#include "Core\App.h"
 
 #include <AtgInput.h>
 
-
-// Option callbacks
-static void Option1Callback(void *) { Log::Info("Option 1 clicked"); }
-static void Option2Callback(void *) { Log::Info("Option 2 clicked"); }
+#include "Core\Callbacks.h"
 
 
 HRESULT App::Initialize()
@@ -27,8 +24,7 @@ HRESULT App::Initialize()
         return hr;
 
     // Create the options
-    m_Options.emplace_back(Option(L"Option 1", 0, Option1Callback));
-    m_Options.emplace_back(Option(L"Option 2", 1, Option2Callback));
+    m_Options.emplace_back(Option(L"Option 1", 0, Callback::Option1Callback));
 
     // Initialize the scroller position
     m_iCurrentScrollerPos = 0;
