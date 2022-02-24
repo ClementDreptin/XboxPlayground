@@ -57,7 +57,7 @@ HRESULT App::Update()
         m_iCurrentScrollerPos++;
 
         // If the scroller is already at the bottom, send it to the top
-        if (m_iCurrentScrollerPos >= (INT)m_Options.size())
+        if (m_iCurrentScrollerPos >= static_cast<int>(m_Options.size()))
             m_iCurrentScrollerPos = 0;
 
         MoveScroller();
@@ -93,7 +93,7 @@ HRESULT App::Render()
     return S_OK;
 }
 
-VOID App::MoveScroller()
+void App::MoveScroller()
 {
     m_Scroller.SetY(100.0f + 50.0f * m_iCurrentScrollerPos);
 }
