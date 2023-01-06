@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "Core\Log.h"
 
-
 static const size_t MAX_SIZE = 2048;
-
 
 void Log::Info(const std::string &strMessage, ...)
 {

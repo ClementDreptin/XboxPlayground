@@ -3,7 +3,6 @@
 
 #include <AtgUtil.h>
 
-
 HRESULT Rectangle::Init(D3DDevice *pDevice, float fX, float fY, float fWidth, float fHeight, D3DCOLOR dwColor)
 {
     HRESULT hr;
@@ -28,12 +27,11 @@ HRESULT Rectangle::Init(D3DDevice *pDevice, float fX, float fY, float fWidth, fl
     // Since the Y axis goes upwards, if we want a height increase to make our
     // rectangle grow downwards along the Y axis, we need to substract its height
     // to the Y coordinate of each vertex.
-    Vertex vertices[] =
-    {
-        Vertex( 0.0f,   0.0f    - fHeight, 0.0f ), // Bottom Left
-        Vertex( 0.0f,   fHeight - fHeight, 0.0f ), // Top Left
-        Vertex( fWidth, fHeight - fHeight, 0.0f ), // Top Right
-        Vertex( fWidth, 0.0f    - fHeight, 0.0f )  // Bottom Right
+    Vertex vertices[] = {
+        Vertex(0.0f, 0.0f - fHeight, 0.0f),      // Bottom Left
+        Vertex(0.0f, fHeight - fHeight, 0.0f),   // Top Left
+        Vertex(fWidth, fHeight - fHeight, 0.0f), // Top Right
+        Vertex(fWidth, 0.0f - fHeight, 0.0f)     // Bottom Right
     };
 
     // Create the vertex buffer
@@ -42,8 +40,7 @@ HRESULT Rectangle::Init(D3DDevice *pDevice, float fX, float fY, float fWidth, fl
         return hr;
 
     // Create the indices
-    WORD indices[] =
-    {
+    WORD indices[] = {
         0, 1, 2,
         0, 2, 3
     };
@@ -85,8 +82,8 @@ void Rectangle::Draw()
     // Turn the color into a float array and pass it to the pixel shader
     float vColor[4];
     vColor[0] = ((m_dwColor & 0x00ff0000) >> 16) / 255.0f;
-    vColor[1] = ((m_dwColor & 0x0000ff00) >> 8 ) / 255.0f;
-    vColor[2] = ((m_dwColor & 0x000000ff) >> 0 ) / 255.0f;
+    vColor[1] = ((m_dwColor & 0x0000ff00) >> 8) / 255.0f;
+    vColor[2] = ((m_dwColor & 0x000000ff) >> 0) / 255.0f;
     vColor[3] = ((m_dwColor & 0xff000000) >> 24) / 255.0f;
     m_pDevice->SetPixelShaderConstantF(0, vColor, 1);
 

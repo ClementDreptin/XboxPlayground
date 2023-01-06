@@ -1,6 +1,5 @@
 #pragma once
 
-
 // Class to wrap common pixel shader operations.
 class PixelShader
 {
@@ -11,6 +10,7 @@ public:
 
     // Compile the pixel shader source and create the pixel shader.
     HRESULT Init(D3DDevice *pDevice);
+
 private:
     D3DPixelShader *m_pShader;
 };

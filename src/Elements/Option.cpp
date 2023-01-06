@@ -1,12 +1,10 @@
 #include "pch.h"
 #include "Elements\Option.h"
 
-
 bool Option::s_bFontInitialized = false;
 ATG::Font Option::s_Font;
 
-
-Option::Option(CONST std::wstring& wstrText, uint32_t uiIndex, Callback fnCallback, D3DCOLOR dwColor)
+Option::Option(CONST std::wstring &wstrText, uint32_t uiIndex, Callback fnCallback, D3DCOLOR dwColor)
     : m_wstrText(wstrText), m_uiIndex(uiIndex), m_fnCallback(fnCallback), m_dwColor(dwColor)
 {
     if (!s_bFontInitialized)

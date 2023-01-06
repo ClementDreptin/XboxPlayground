@@ -1,6 +1,5 @@
 #pragma once
 
-
 // Class to wrap common vertex shader operations.
 class VertexShader
 {
@@ -11,6 +10,7 @@ public:
 
     // Compile the vertex shader source and create the vertex shader.
     HRESULT Init(D3DDevice *pDevice);
+
 private:
     D3DVertexShader *m_pShader;
 };

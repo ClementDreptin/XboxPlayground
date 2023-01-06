@@ -5,7 +5,6 @@
 
 #include "Core\Callbacks.h"
 
-
 HRESULT App::Initialize()
 {
     HRESULT hr;
@@ -35,7 +34,7 @@ HRESULT App::Initialize()
 HRESULT App::Update()
 {
     // Get the current gamepad state
-    ATG::GAMEPAD* pGamepad = ATG::Input::GetMergedInput();
+    ATG::GAMEPAD *pGamepad = ATG::Input::GetMergedInput();
 
     // Allow the user to select options with the DPAD
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP)

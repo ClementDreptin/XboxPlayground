@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "Renderer\VertexBuffer.h"
 
-
-HRESULT VertexBuffer::Init(D3DDevice *pDevice, Vertex* pData, uint32_t uiNumVertices)
+HRESULT VertexBuffer::Init(D3DDevice *pDevice, Vertex *pData, uint32_t uiNumVertices)
 {
     HRESULT hr;
 
@@ -28,12 +27,11 @@ HRESULT VertexBuffer::Init(D3DDevice *pDevice, Vertex* pData, uint32_t uiNumVert
     m_pBuffer->Unlock();
 
     // Define the vertex elements
-    D3DVERTEXELEMENT9 VertexElements[] =
-    {
+    D3DVERTEXELEMENT9 VertexElements[] = {
         { 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
         D3DDECL_END()
     };
-    
+
     // Create a vertex declaration from the element descriptions
     hr = pDevice->CreateVertexDeclaration(VertexElements, &m_pVertexDeclaration);
     if (FAILED(hr))

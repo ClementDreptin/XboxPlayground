@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Core\Callbacks.h"
 
-
 namespace Callback
 {
 

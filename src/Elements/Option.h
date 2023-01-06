@@ -2,7 +2,6 @@
 
 #include <AtgFont.h>
 
-
 // Class describing a clickable option in a menu.
 class Option
 {
@@ -10,6 +9,7 @@ public:
     typedef void (*Callback)(void *pParameters);
 
     Option() {}
+
     Option(const std::wstring &wstrText, uint32_t uiIndex, Callback fnCallback, D3DCOLOR dwColor = D3DCOLOR_XRGB(255, 255, 255));
 
     // Initialize the font.
@@ -27,6 +27,7 @@ public:
 
     // Call the Option's callback.
     void OnClick(void *pParameters) { m_fnCallback(pParameters); }
+
 private:
     std::wstring m_wstrText;
     uint32_t m_uiIndex;

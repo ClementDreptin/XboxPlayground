@@ -1,6 +1,5 @@
 #pragma once
 
-
 // Class to wrap common index buffer operations.
 class IndexBuffer
 {
@@ -11,6 +10,7 @@ public:
 
     // Create the index buffer and copy data into it.
     HRESULT Init(D3DDevice *pDevice, WORD *pwData, uint32_t uiNumIndices);
+
 private:
     D3DIndexBuffer *m_pBuffer;
 };

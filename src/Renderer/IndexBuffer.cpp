@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Renderer\IndexBuffer.h"
 
-
 HRESULT IndexBuffer::Init(D3DDevice *pDevice, WORD *pwData, uint32_t uiNumIndices)
 {
     HRESULT hr;

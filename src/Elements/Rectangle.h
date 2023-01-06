@@ -5,7 +5,6 @@
 #include "Renderer\VertexShader.h"
 #include "Renderer\PixelShader.h"
 
-
 // Class to create a 2D rectangle, inherits from HudElem.
 class Rectangle
 {
@@ -17,14 +16,31 @@ public:
     HRESULT Init(D3DDevice *pDevice, float fX, float fY, float fWidth, float fHeight, D3DCOLOR dwColor);
 
     float GetX() const { return m_fX; }
+
     float GetY() const { return m_fY; }
 
-    void SetPosition(float fX, float fY) { m_fX = fX; m_fY = fY; CalculateWorldViewProjectionMatrix(); }
-    void SetX(float fX) { m_fX = fX; CalculateWorldViewProjectionMatrix(); }
-    void SetY(float fY) { m_fY = fY; CalculateWorldViewProjectionMatrix(); }
+    void SetPosition(float fX, float fY)
+    {
+        m_fX = fX;
+        m_fY = fY;
+        CalculateWorldViewProjectionMatrix();
+    }
+
+    void SetX(float fX)
+    {
+        m_fX = fX;
+        CalculateWorldViewProjectionMatrix();
+    }
+
+    void SetY(float fY)
+    {
+        m_fY = fY;
+        CalculateWorldViewProjectionMatrix();
+    }
 
     // Draw the rectangle.
     void Draw();
+
 private:
     VertexBuffer m_VertexBuffer;
     IndexBuffer m_IndexBuffer;

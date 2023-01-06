@@ -7,7 +7,6 @@
 #include "Elements\Rectangle.h"
 #include "Elements\Option.h"
 
-
 // Main class to run this application. Most functionality is inherited
 // from the ATG::Application base class.
 class App : public ATG::Application
@@ -19,9 +18,10 @@ public:
     // Called once per frame, the call is the entry point for animating the scene.
     virtual HRESULT Update();
 
-    // Called once per frame, the call is the entry point for 3D rendering. This 
+    // Called once per frame, the call is the entry point for 3D rendering. This
     // function sets up render states, clears the viewport, and renders the scene.
     virtual HRESULT Render();
+
 private:
     uint32_t m_uiWidth;
     uint32_t m_uiHeight;
