@@ -6,9 +6,9 @@ struct Vertex
     Vertex() {}
 
     Vertex(float x, float y, float z)
-        : vPos(x, y, z) {}
+        : Pos(x, y, z) {}
 
-    XMFLOAT3 vPos;
+    XMFLOAT3 Pos;
 };
 
 // Class to wrap common vertex buffer operations.
@@ -22,7 +22,7 @@ public:
     D3DVertexDeclaration *GetVertexDeclaration() const { return m_pVertexDeclaration; }
 
     // Create the vertex buffer, copy data into it and set the vertex declaration.
-    HRESULT Init(D3DDevice *pDevice, Vertex *pData, uint32_t uiNumVertices);
+    HRESULT Init(D3DDevice *pDevice, Vertex *pData, uint32_t numVertices);
 
 private:
     D3DVertexBuffer *m_pBuffer;

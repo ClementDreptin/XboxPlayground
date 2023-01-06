@@ -23,15 +23,15 @@ public:
     virtual HRESULT Render();
 
 private:
-    uint32_t m_uiWidth;
-    uint32_t m_uiHeight;
+    uint32_t m_Width;
+    uint32_t m_Height;
 
     Rectangle m_Rectangle;
     Rectangle m_Scroller;
-    int m_iCurrentScrollerPos;
+    int m_CurrentScrollerPos;
 
     std::vector<Option> m_Options;
 
-    // Update the poition of the scroller according to the m_iCurrentScrollerPos index.
+    // Update the poition of the scroller according to the m_CurrentScrollerPos index.
     void MoveScroller();
 };

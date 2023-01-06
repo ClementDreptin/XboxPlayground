@@ -10,7 +10,7 @@ public:
 
     Option() {}
 
-    Option(const std::wstring &wstrText, uint32_t uiIndex, Callback fnCallback, D3DCOLOR dwColor = D3DCOLOR_XRGB(255, 255, 255));
+    Option(const std::wstring &text, uint32_t index, Callback callback, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
 
     // Initialize the font.
     static void Begin() { s_Font.Begin(); };
@@ -18,23 +18,23 @@ public:
     // Clean up the font.
     static void End() { s_Font.End(); };
 
-    D3DCOLOR GetColor() const { return m_dwColor; }
+    D3DCOLOR GetColor() const { return m_Color; }
 
-    void SetColor(D3DCOLOR dwColor) { m_dwColor = dwColor; }
+    void SetColor(D3DCOLOR dwColor) { m_Color = dwColor; }
 
     // Draw the text.
-    void Draw(float fX, float fY) { s_Font.DrawText(fX, fY, m_dwColor, m_wstrText.c_str()); }
+    void Draw(float x, float y) { s_Font.DrawText(x, y, m_Color, m_Text.c_str()); }
 
     // Call the Option's callback.
-    void OnClick(void *pParameters) { m_fnCallback(pParameters); }
+    void OnClick(void *pParameters) { m_Callback(pParameters); }
 
 private:
-    std::wstring m_wstrText;
-    uint32_t m_uiIndex;
-    Callback m_fnCallback;
-    D3DCOLOR m_dwColor;
+    std::wstring m_Text;
+    uint32_t m_Index;
+    Callback m_Callback;
+    D3DCOLOR m_Color;
 
-    static bool s_bFontInitialized;
+    static bool s_FontInitialized;
     static ATG::Font s_Font;
 
     // Creates the font used to render the text of all options.

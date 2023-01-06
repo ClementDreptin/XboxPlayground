@@ -2,7 +2,7 @@
 #include "Renderer\VertexShader.h"
 
 // Vertex shader source code
-static const char *g_strShaderSource =
+static const char shaderSource[] =
     " float4x4 c_matWP : register(c0);                  "
     "                                                   "
     " struct VS_IN                                      "
@@ -25,14 +25,14 @@ static const char *g_strShaderSource =
 
 HRESULT VertexShader::Init(D3DDevice *pDevice)
 {
-    HRESULT hr;
+    HRESULT hr = S_OK;
 
     // Compile the shader source code
-    ID3DXBuffer *pShaderCode;
-    ID3DXBuffer *pErrorMsg;
+    ID3DXBuffer *pShaderCode = nullptr;
+    ID3DXBuffer *pErrorMsg = nullptr;
     hr = D3DXCompileShader(
-        g_strShaderSource,
-        strlen(g_strShaderSource),
+        shaderSource,
+        sizeof(shaderSource),
         nullptr,
         nullptr,
         "main",
@@ -48,7 +48,7 @@ HRESULT VertexShader::Init(D3DDevice *pDevice)
         Log::Error("Couldn't compile the vertex shader");
 
         if (pErrorMsg)
-            OutputDebugString(reinterpret_cast<char *>(pErrorMsg->GetBufferPointer()));
+            Log::Error(reinterpret_cast<char *>(pErrorMsg->GetBufferPointer()));
 
         return hr;
     }

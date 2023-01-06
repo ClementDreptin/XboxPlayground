@@ -2,7 +2,7 @@
 #include "Renderer\PixelShader.h"
 
 // Pixel shader source code
-static const char *g_ShaderSource =
+static const char shaderSource[] =
     " float4 c_color : register(c0);    "
     "                                   "
     " float4 main() : COLOR             "
@@ -12,14 +12,14 @@ static const char *g_ShaderSource =
 
 HRESULT PixelShader::Init(D3DDevice *pDevice)
 {
-    HRESULT hr;
+    HRESULT hr = S_OK;
 
     // Compile the shader source code
-    ID3DXBuffer *pShaderCode;
-    ID3DXBuffer *pErrorMsg;
+    ID3DXBuffer *pShaderCode = nullptr;
+    ID3DXBuffer *pErrorMsg = nullptr;
     hr = D3DXCompileShader(
-        g_ShaderSource,
-        strlen(g_ShaderSource),
+        shaderSource,
+        sizeof(shaderSource),
         nullptr,
         nullptr,
         "main",
@@ -35,7 +35,7 @@ HRESULT PixelShader::Init(D3DDevice *pDevice)
         Log::Error("Couldn't compile the pixel shader");
 
         if (pErrorMsg)
-            OutputDebugString(reinterpret_cast<char *>(pErrorMsg->GetBufferPointer()));
+            Log::Error(reinterpret_cast<char *>(pErrorMsg->GetBufferPointer()));
 
         return hr;
     }

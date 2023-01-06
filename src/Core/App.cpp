@@ -7,10 +7,10 @@
 
 HRESULT App::Initialize()
 {
-    HRESULT hr;
+    HRESULT hr = S_OK;
 
     // Get the width and height for the font
-    ATG::GetVideoSettings(&m_uiWidth, &m_uiHeight);
+    ATG::GetVideoSettings(&m_Width, &m_Height);
 
     // Create the rectangle
     hr = m_Rectangle.Init(m_pd3dDevice, 100.0f, 100.0f, 200.0f, 500.0f, D3DCOLOR_XRGB(0, 0, 128));
@@ -26,7 +26,7 @@ HRESULT App::Initialize()
     m_Options.emplace_back(Option(L"Option 1", 0, Callback::Option1Callback));
 
     // Initialize the scroller position
-    m_iCurrentScrollerPos = 0;
+    m_CurrentScrollerPos = 0;
 
     return S_OK;
 }
@@ -39,28 +39,28 @@ HRESULT App::Update()
     // Allow the user to select options with the DPAD
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP)
     {
-        m_iCurrentScrollerPos--;
+        m_CurrentScrollerPos--;
 
         // If the scroller is already at the top, send it to the bottom
-        if (m_iCurrentScrollerPos < 0)
-            m_iCurrentScrollerPos = m_Options.size() - 1;
+        if (m_CurrentScrollerPos < 0)
+            m_CurrentScrollerPos = m_Options.size() - 1;
 
         MoveScroller();
     }
     else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_DOWN)
     {
-        m_iCurrentScrollerPos++;
+        m_CurrentScrollerPos++;
 
         // If the scroller is already at the bottom, send it to the top
-        if (m_iCurrentScrollerPos >= static_cast<int>(m_Options.size()))
-            m_iCurrentScrollerPos = 0;
+        if (m_CurrentScrollerPos >= static_cast<int>(m_Options.size()))
+            m_CurrentScrollerPos = 0;
 
         MoveScroller();
     }
 
     // Allow the user to click on an option
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
-        m_Options[m_iCurrentScrollerPos].OnClick(nullptr);
+        m_Options[m_CurrentScrollerPos].OnClick(nullptr);
 
     return S_OK;
 }
@@ -90,5 +90,5 @@ HRESULT App::Render()
 
 void App::MoveScroller()
 {
-    m_Scroller.SetY(100.0f + 50.0f * m_iCurrentScrollerPos);
+    m_Scroller.SetY(100.0f + 50.0f * m_CurrentScrollerPos);
 }

@@ -1,43 +1,42 @@
 #include "pch.h"
 #include "Core\Log.h"
 
-static const size_t MAX_SIZE = 2048;
-
-void Log::Info(const std::string &strMessage, ...)
+void Log::Info(const char *message, ...)
 {
     // Get the variadic arguments
-    va_list pArgList;
-    va_start(pArgList, strMessage);
+    va_list args;
+    va_start(args, message);
 
     // Print
-    Print("Info: " + strMessage, pArgList);
+    std::string fullMessage = "Info: ";
+    fullMessage += message;
+    Print(fullMessage.c_str(), args, std::cout);
 
     // Free the variadic arguments
-    va_end(pArgList);
+    va_end(args);
 }
 
-void Log::Error(const std::string &strMessage, ...)
+void Log::Error(const char *message, ...)
 {
     // Get the variadic arguments
-    va_list pArgList;
-    va_start(pArgList, strMessage);
+    va_list args;
+    va_start(args, message);
 
     // Print
-    Print("Error: " + strMessage, pArgList);
+    std::string fullMessage = "Error: ";
+    fullMessage += message;
+    Print(fullMessage.c_str(), args, std::cerr);
 
     // Free the variadic arguments
-    va_end(pArgList);
+    va_end(args);
 }
 
-void Log::Print(const std::string &strFormat, const va_list pArgList)
+void Log::Print(const char *format, const va_list args, std::ostream &outputStream)
 {
     // Build the string with the format
-    CHAR szBuffer[MAX_SIZE] = { 0 };
-    vsnprintf_s(szBuffer, _TRUNCATE, strFormat.c_str(), pArgList);
-
-    // Append \n to the string
-    strcat_s(szBuffer, MAX_SIZE, "\n");
+    char buffer[2048] = { 0 };
+    vsnprintf_s(buffer, _TRUNCATE, format, args);
 
     // Print
-    OutputDebugString(szBuffer);
+    outputStream << buffer << '\n';
 }

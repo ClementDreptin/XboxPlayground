@@ -4,13 +4,19 @@
 class Log
 {
 public:
-    // Print an info message to the console.
-    static void Info(const std::string &strMessage, ...);
+    // Print an info message to stdout.
+    static void Info(const char *message, ...);
 
-    // Print an error message to the console.
-    static void Error(const std::string &strMessage, ...);
+    // Print an info message to stdout.
+    inline static void Info(const std::string &message) { Info(message.c_str()); }
+
+    // Print an error message to stderr.
+    static void Error(const char *message, ...);
+
+    // Print an error message to stderr.
+    inline static void Error(const std::string &message) { Error(message.c_str()); }
 
 private:
-    // Print a formatted message to the console.
-    static void Print(const std::string &strFormat, const va_list pArgList);
+    // Print a formatted message to an output stream.
+    static void Print(const char *format, const va_list args, std::ostream &outputStream);
 };

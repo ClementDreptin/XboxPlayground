@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "Renderer\IndexBuffer.h"
 
-HRESULT IndexBuffer::Init(D3DDevice *pDevice, WORD *pwData, uint32_t uiNumIndices)
+HRESULT IndexBuffer::Init(D3DDevice *pDevice, WORD *pData, uint32_t numIndices)
 {
-    HRESULT hr;
+    HRESULT hr = S_OK;
 
-    uint32_t uiDataSize = sizeof(DWORD) * uiNumIndices;
+    uint32_t dataSize = sizeof(DWORD) * numIndices;
 
     // Create the index buffer
-    hr = pDevice->CreateIndexBuffer(uiDataSize, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, NULL, &m_pBuffer, nullptr);
+    hr = pDevice->CreateIndexBuffer(dataSize, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, NULL, &m_pBuffer, nullptr);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the index buffer");
@@ -16,14 +16,14 @@ HRESULT IndexBuffer::Init(D3DDevice *pDevice, WORD *pwData, uint32_t uiNumIndice
     }
 
     // Copy the data into the index buffer
-    void *pIndices;
-    hr = m_pBuffer->Lock(0, uiDataSize, reinterpret_cast<void **>(&pIndices), NULL);
+    void *pIndices = nullptr;
+    hr = m_pBuffer->Lock(0, dataSize, reinterpret_cast<void **>(&pIndices), NULL);
     if (FAILED(hr))
     {
         Log::Error("Couldn't lock the index buffer");
         return hr;
     }
-    memcpy(pIndices, pwData, uiDataSize);
+    memcpy(pIndices, pData, dataSize);
     m_pBuffer->Unlock();
 
     return hr;

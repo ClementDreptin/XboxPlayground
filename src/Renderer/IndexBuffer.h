@@ -9,7 +9,7 @@ public:
     D3DIndexBuffer *Get() const { return m_pBuffer; }
 
     // Create the index buffer and copy data into it.
-    HRESULT Init(D3DDevice *pDevice, WORD *pwData, uint32_t uiNumIndices);
+    HRESULT Init(D3DDevice *pDevice, WORD *pData, uint32_t numIndices);
 
 private:
     D3DIndexBuffer *m_pBuffer;

@@ -13,28 +13,28 @@ public:
 
     // Create the vertex and index buffers needed to create a rectangle. Set up the
     // matrices to project to rectangle.
-    HRESULT Init(D3DDevice *pDevice, float fX, float fY, float fWidth, float fHeight, D3DCOLOR dwColor);
+    HRESULT Init(D3DDevice *pDevice, float x, float y, float width, float height, D3DCOLOR color);
 
-    float GetX() const { return m_fX; }
+    float GetX() const { return m_X; }
 
-    float GetY() const { return m_fY; }
+    float GetY() const { return m_Y; }
 
-    void SetPosition(float fX, float fY)
+    void SetPosition(float x, float y)
     {
-        m_fX = fX;
-        m_fY = fY;
+        m_X = x;
+        m_Y = y;
         CalculateWorldViewProjectionMatrix();
     }
 
-    void SetX(float fX)
+    void SetX(float x)
     {
-        m_fX = fX;
+        m_X = x;
         CalculateWorldViewProjectionMatrix();
     }
 
-    void SetY(float fY)
+    void SetY(float y)
     {
-        m_fY = fY;
+        m_Y = y;
         CalculateWorldViewProjectionMatrix();
     }
 
@@ -48,19 +48,19 @@ private:
     VertexShader m_VertexShader;
     PixelShader m_PixelShader;
 
-    float m_fX;
-    float m_fY;
-    uint32_t m_uiWidth;
-    uint32_t m_uiHeight;
+    float m_X;
+    float m_Y;
+    uint32_t m_Width;
+    uint32_t m_Height;
 
-    D3DCOLOR m_dwColor;
+    D3DCOLOR m_Color;
 
     D3DDevice *m_pDevice;
 
-    XMMATRIX m_matWorld;
-    XMMATRIX m_matView;
-    XMMATRIX m_matProjection;
-    XMMATRIX m_matWVP;
+    XMMATRIX m_WorldMatrix;
+    XMMATRIX m_ViewMatrix;
+    XMMATRIX m_ProjectionMatrix;
+    XMMATRIX m_WVPMatrix;
 
     // Apply a translation from the position andrecalculate the world view
     // projection matrix.
