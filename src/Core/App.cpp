@@ -23,8 +23,10 @@ HRESULT App::Initialize()
         return hr;
 
     // Create the options
-    m_Options.emplace_back(Option(L"Option 1", Callback::Option1Callback));
-    m_Options.emplace_back(Option(L"Option 2", Callback::Option1Callback));
+    std::vector<Option> options;
+    options.emplace_back(Option(L"Option 1", Callback::Option1Callback));
+    options.emplace_back(Option(L"Option 2", Callback::Option1Callback));
+    m_OptionGroup = OptionGroup("cat1", options);
 
     // Initialize the scroller position
     m_CurrentScrollerPos = 0;
@@ -44,7 +46,7 @@ HRESULT App::Update()
 
         // If the scroller is already at the top, send it to the bottom
         if (m_CurrentScrollerPos < 0)
-            m_CurrentScrollerPos = m_Options.size() - 1;
+            m_CurrentScrollerPos = m_OptionGroup.GetOptions().size() - 1;
 
         MoveScroller();
     }
@@ -53,14 +55,14 @@ HRESULT App::Update()
         m_CurrentScrollerPos++;
 
         // If the scroller is already at the bottom, send it to the top
-        if (m_CurrentScrollerPos >= static_cast<int>(m_Options.size()))
+        if (m_CurrentScrollerPos >= static_cast<int>(m_OptionGroup.GetOptions().size()))
             m_CurrentScrollerPos = 0;
 
         MoveScroller();
     }
 
     // Update the currently selected option
-    m_Options[m_CurrentScrollerPos].Update(pGamepad);
+    m_OptionGroup.Update(pGamepad);
 
     return S_OK;
 }
@@ -78,8 +80,7 @@ HRESULT App::Render()
 
     // Render the options
     Option::Begin();
-    for (size_t i = 0; i < m_Options.size(); i++)
-        m_Options[i].Render(100.0f, 100.0f + i * 50.0f);
+    m_OptionGroup.Render();
     Option::End();
 
     // Present the scene

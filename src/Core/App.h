@@ -5,7 +5,7 @@
 #include <AtgUtil.h>
 
 #include "UI\Rectangle.h"
-#include "Elements\Option.h"
+#include "Elements\OptionGroup.h"
 
 // Main class to run this application. Most functionality is inherited
 // from the ATG::Application base class.
@@ -30,7 +30,7 @@ private:
     Rectangle m_Scroller;
     int m_CurrentScrollerPos;
 
-    std::vector<Option> m_Options;
+    OptionGroup m_OptionGroup;
 
     // Update the poition of the scroller according to the m_CurrentScrollerPos index.
     void MoveScroller();

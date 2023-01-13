@@ -19,6 +19,7 @@
     <ClCompile Include="src\Core\Callbacks.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
     <ClCompile Include="src\Elements\Option.cpp" />
+    <ClCompile Include="src\Elements\OptionGroup.cpp" />
     <ClCompile Include="src\UI\Rectangle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -34,6 +35,7 @@
     <ClInclude Include="src\Core\Callbacks.h" />
     <ClInclude Include="src\Core\Log.h" />
     <ClInclude Include="src\Elements\Option.h" />
+    <ClInclude Include="src\Elements\OptionGroup.h" />
     <ClInclude Include="src\UI\Rectangle.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />
