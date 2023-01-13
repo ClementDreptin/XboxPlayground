@@ -28,7 +28,7 @@ private:
 
     Rectangle m_Rectangle;
     Rectangle m_Scroller;
-    int m_CurrentScrollerPos;
+    size_t m_CurrentScrollerPos;
 
     OptionGroup m_OptionGroup;
 

@@ -42,24 +42,22 @@ HRESULT App::Update()
     // Allow the user to select options with the DPAD
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP)
     {
-        m_CurrentScrollerPos--;
-
         // If the scroller is already at the top, send it to the bottom
-        if (m_CurrentScrollerPos < 0)
+        if (m_CurrentScrollerPos == 0)
             m_CurrentScrollerPos = m_OptionGroup.GetOptions().size() - 1;
-
-        MoveScroller();
+        else
+            m_CurrentScrollerPos--;
     }
     else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_DOWN)
     {
-        m_CurrentScrollerPos++;
-
         // If the scroller is already at the bottom, send it to the top
-        if (m_CurrentScrollerPos >= static_cast<int>(m_OptionGroup.GetOptions().size()))
+        if (m_CurrentScrollerPos == m_OptionGroup.GetOptions().size())
             m_CurrentScrollerPos = 0;
-
-        MoveScroller();
+        else
+            m_CurrentScrollerPos++;
     }
+
+    MoveScroller();
 
     // Update the currently selected option
     m_OptionGroup.Update(pGamepad);
