@@ -40,7 +40,7 @@ HRESULT Rectangle::Init(D3DDevice *pDevice, float x, float y, float width, float
         return hr;
 
     // Create the indices
-    WORD indices[] = {
+    uint16_t indices[] = {
         0, 1, 2,
         0, 2, 3
     };
