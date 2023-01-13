@@ -58,9 +58,8 @@ HRESULT App::Update()
         MoveScroller();
     }
 
-    // Allow the user to click on an option
-    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
-        m_Options[m_CurrentScrollerPos].OnClick(nullptr);
+    // Update the currently selected option
+    m_Options[m_CurrentScrollerPos].Update(pGamepad);
 
     return S_OK;
 }

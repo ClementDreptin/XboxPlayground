@@ -11,6 +11,13 @@ Option::Option(const std::wstring &text, uint32_t index, Callback callback, D3DC
         InitFont();
 }
 
+void Option::Update(ATG::GAMEPAD *pGamepad)
+{
+    // Allow the user to click on the option
+    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
+        m_Callback(nullptr);
+}
+
 HRESULT Option::InitFont()
 {
     HRESULT hr = S_OK;

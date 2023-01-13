@@ -1,6 +1,7 @@
 #pragma once
 
 #include <AtgFont.h>
+#include <AtgInput.h>
 
 // Class describing a clickable option in a menu.
 class Option
@@ -22,11 +23,11 @@ public:
 
     void SetColor(D3DCOLOR dwColor) { m_Color = dwColor; }
 
+    // Update the option
+    void Update(ATG::GAMEPAD *pGamepad);
+
     // Render the text.
     void Render(float x, float y) { s_Font.DrawText(x, y, m_Color, m_Text.c_str()); }
-
-    // Call the Option's callback.
-    void OnClick(void *pParameters) { m_Callback(pParameters); }
 
 private:
     std::wstring m_Text;
