@@ -11,7 +11,7 @@ public:
 
     Option() {}
 
-    Option(const std::wstring &text, uint32_t index, Callback callback, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
+    Option(const std::wstring &text, Callback callback, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
 
     // Initialize the font.
     static void Begin() { s_Font.Begin(); };
@@ -23,7 +23,7 @@ public:
 
     void SetColor(D3DCOLOR dwColor) { m_Color = dwColor; }
 
-    // Update the option
+    // Update the option.
     void Update(ATG::GAMEPAD *pGamepad);
 
     // Render the text.
@@ -31,7 +31,6 @@ public:
 
 private:
     std::wstring m_Text;
-    uint32_t m_Index;
     Callback m_Callback;
     D3DCOLOR m_Color;
 

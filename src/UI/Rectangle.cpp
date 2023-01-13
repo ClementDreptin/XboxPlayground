@@ -8,11 +8,13 @@ HRESULT Rectangle::Init(D3DDevice *pDevice, float x, float y, float width, float
     HRESULT hr = S_OK;
 
     // Save the display dimensions
-    ATG::GetVideoSettings(&m_Width, &m_Height);
+    ATG::GetVideoSettings(&m_DisplayWidth, &m_DisplayHeight);
 
-    // Save the position
+    // Save the position and dimensions
     m_X = x;
     m_Y = y;
+    m_Width = width;
+    m_Height = height;
 
     // Save the color and the device
     m_Color = color;
@@ -20,7 +22,7 @@ HRESULT Rectangle::Init(D3DDevice *pDevice, float x, float y, float width, float
 
     // Set up the matrices for orthographic projection
     m_ViewMatrix = XMMatrixIdentity();
-    m_ProjectionMatrix = XMMatrixOrthographicOffCenterLH(0.0f, static_cast<float>(m_Width), 0.0f, static_cast<float>(m_Height), -1.0f, 1.0f);
+    m_ProjectionMatrix = XMMatrixOrthographicOffCenterLH(0.0f, static_cast<float>(m_DisplayWidth), 0.0f, static_cast<float>(m_DisplayHeight), -1.0f, 1.0f);
     CalculateWorldViewProjectionMatrix();
 
     // Create the vertices
@@ -97,6 +99,6 @@ void Rectangle::CalculateWorldViewProjectionMatrix()
 {
     // Direct3D uses an upwards Y axis system which is a bit unintuitive when dealing
     // with 2D rendering, so we flip the Y axis
-    m_WorldMatrix = XMMatrixTranslation(static_cast<float>(m_X), static_cast<float>(m_Height - m_Y), 0.0f);
+    m_WorldMatrix = XMMatrixTranslation(static_cast<float>(m_X), static_cast<float>(m_DisplayHeight - m_Y), 0.0f);
     m_WVPMatrix = m_WorldMatrix * m_ViewMatrix * m_ProjectionMatrix;
 }

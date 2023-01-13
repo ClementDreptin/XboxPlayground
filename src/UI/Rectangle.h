@@ -50,8 +50,11 @@ private:
 
     float m_X;
     float m_Y;
-    uint32_t m_Width;
-    uint32_t m_Height;
+    float m_Width;
+    float m_Height;
+
+    uint32_t m_DisplayWidth;
+    uint32_t m_DisplayHeight;
 
     D3DCOLOR m_Color;
 

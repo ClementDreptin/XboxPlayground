@@ -23,7 +23,8 @@ HRESULT App::Initialize()
         return hr;
 
     // Create the options
-    m_Options.emplace_back(Option(L"Option 1", 0, Callback::Option1Callback));
+    m_Options.emplace_back(Option(L"Option 1", Callback::Option1Callback));
+    m_Options.emplace_back(Option(L"Option 2", Callback::Option1Callback));
 
     // Initialize the scroller position
     m_CurrentScrollerPos = 0;
