@@ -25,7 +25,7 @@ HRESULT App::Initialize()
     // Create the options
     std::vector<Option> options;
     options.emplace_back(Option(L"Option 1", Callback::Option1Callback));
-    options.emplace_back(Option(L"Option 2", Callback::Option1Callback));
+    options.emplace_back(Option(L"Option 2", Callback::Option2Callback));
     m_OptionGroup = OptionGroup("cat1", options);
 
     // Initialize the scroller position
@@ -51,7 +51,7 @@ HRESULT App::Update()
     else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_DOWN)
     {
         // If the scroller is already at the bottom, send it to the top
-        if (m_CurrentScrollerPos == m_OptionGroup.GetOptions().size())
+        if (m_CurrentScrollerPos == m_OptionGroup.GetOptions().size() - 1)
             m_CurrentScrollerPos = 0;
         else
             m_CurrentScrollerPos++;
