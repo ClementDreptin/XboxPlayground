@@ -63,7 +63,7 @@ HRESULT Rectangle::Init(D3DDevice *pDevice, float x, float y, float width, float
     return S_OK;
 }
 
-void Rectangle::Draw()
+void Rectangle::Render()
 {
     // Initialize default device states
     m_pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);

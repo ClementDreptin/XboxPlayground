@@ -38,8 +38,8 @@ public:
         CalculateWorldViewProjectionMatrix();
     }
 
-    // Draw the rectangle.
-    void Draw();
+    // Render the rectangle.
+    void Render();
 
 private:
     VertexBuffer m_VertexBuffer;

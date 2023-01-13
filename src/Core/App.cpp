@@ -70,16 +70,16 @@ HRESULT App::Render()
     // Clear the viewport
     m_pd3dDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
-    // Draw the rectangle
-    m_Rectangle.Draw();
+    // Render the rectangle
+    m_Rectangle.Render();
 
-    // Draw the scroller
-    m_Scroller.Draw();
+    // Render the scroller
+    m_Scroller.Render();
 
-    // Draw the options
+    // Render the options
     Option::Begin();
     for (size_t i = 0; i < m_Options.size(); i++)
-        m_Options[i].Draw(100.0f, 100.0f + i * 50.0f);
+        m_Options[i].Render(100.0f, 100.0f + i * 50.0f);
     Option::End();
 
     // Present the scene

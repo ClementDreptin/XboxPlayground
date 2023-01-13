@@ -22,8 +22,8 @@ public:
 
     void SetColor(D3DCOLOR dwColor) { m_Color = dwColor; }
 
-    // Draw the text.
-    void Draw(float x, float y) { s_Font.DrawText(x, y, m_Color, m_Text.c_str()); }
+    // Render the text.
+    void Render(float x, float y) { s_Font.DrawText(x, y, m_Color, m_Text.c_str()); }
 
     // Call the Option's callback.
     void OnClick(void *pParameters) { m_Callback(pParameters); }
