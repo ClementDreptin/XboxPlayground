@@ -4,7 +4,7 @@
 #include <AtgFont.h>
 #include <AtgUtil.h>
 
-#include "Elements\Rectangle.h"
+#include "UI\Rectangle.h"
 #include "Elements\Option.h"
 
 // Main class to run this application. Most functionality is inherited
