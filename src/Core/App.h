@@ -1,8 +1,6 @@
 #pragma once
 
 #include <AtgApp.h>
-#include <AtgFont.h>
-#include <AtgUtil.h>
 
 #include "UI\Rectangle.h"
 #include "Elements\OptionGroup.h"
@@ -27,11 +25,6 @@ private:
     uint32_t m_Height;
 
     Rectangle m_Rectangle;
-    Rectangle m_Scroller;
-    size_t m_CurrentScrollerPos;
 
     OptionGroup m_OptionGroup;
-
-    // Update the poition of the scroller according to the m_CurrentScrollerPos index.
-    void MoveScroller();
 };

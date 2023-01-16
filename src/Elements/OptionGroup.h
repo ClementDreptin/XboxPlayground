@@ -23,4 +23,10 @@ public:
 private:
     std::string m_Name;
     std::vector<Option> m_Options;
+
+    Rectangle m_Scroller;
+    size_t m_CurrentScrollerPos;
+
+    // Update the poition of the scroller according to the m_CurrentScrollerPos index.
+    void MoveScroller();
 };
