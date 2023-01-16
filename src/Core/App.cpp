@@ -18,11 +18,26 @@ HRESULT App::Initialize()
     if (FAILED(hr))
         return hr;
 
-    // Create the options
-    std::vector<Option> options;
-    options.emplace_back(Option(L"Option 1", Callback::Option1Callback));
-    options.emplace_back(Option(L"Option 2", Callback::Option2Callback));
-    m_OptionGroup = OptionGroup("cat1", options);
+    // Create menu structure
+
+    // First group
+    {
+        std::vector<Option> options;
+        options.emplace_back(Option(L"Option 1", Callback::Option1Callback));
+        options.emplace_back(Option(L"Option 2", Callback::Option2Callback));
+        m_OptionGroups.emplace_back(OptionGroup("cat1", options));
+    }
+
+    // Second group
+    {
+        std::vector<Option> options;
+        options.emplace_back(Option(L"Option 3", Callback::Option3Callback));
+        options.emplace_back(Option(L"Option 4", Callback::Option4Callback));
+        m_OptionGroups.emplace_back(OptionGroup("cat2", options));
+    }
+
+    // Set the default option group to be the first one
+    m_CurrentOptionGroupIndex = 0;
 
     return S_OK;
 }
@@ -32,8 +47,20 @@ HRESULT App::Update()
     // Get the current gamepad state
     ATG::GAMEPAD *pGamepad = ATG::Input::GetMergedInput();
 
-    // Update the currently selected option
-    m_OptionGroup.Update(pGamepad);
+    // Allow the user to change the current option group with LB/RB
+    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+    {
+        if (m_CurrentOptionGroupIndex > 0)
+            m_CurrentOptionGroupIndex--;
+    }
+    else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+    {
+        if (m_CurrentOptionGroupIndex < m_OptionGroups.size() - 1)
+            m_CurrentOptionGroupIndex++;
+    }
+
+    // Update the currently selected option group
+    m_OptionGroups[m_CurrentOptionGroupIndex].Update(pGamepad);
 
     return S_OK;
 }
@@ -43,11 +70,11 @@ HRESULT App::Render()
     // Clear the viewport
     m_pd3dDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
-    // Render the rectangle
+    // Render the background
     m_Background.Render();
 
-    // Render the options
-    m_OptionGroup.Render();
+    // Render the currently selected option group
+    m_OptionGroups[m_CurrentOptionGroupIndex].Render();
 
     // Present the scene
     m_pd3dDevice->Present(nullptr, nullptr, nullptr, nullptr);

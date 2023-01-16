@@ -26,5 +26,6 @@ private:
 
     Rectangle m_Background;
 
-    OptionGroup m_OptionGroup;
+    std::vector<OptionGroup> m_OptionGroups;
+    size_t m_CurrentOptionGroupIndex;
 };
