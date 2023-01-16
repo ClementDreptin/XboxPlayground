@@ -9,6 +9,8 @@
 #include <vector>
 #include <cstdint>
 #include <iostream>
+#include <memory>
+#include <utility>
 
 // Rarely changed headers
 #include "Core\Log.h"

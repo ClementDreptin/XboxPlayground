@@ -4,18 +4,16 @@
 bool Option::s_FontInitialized = false;
 ATG::Font Option::s_Font;
 
-Option::Option(const std::wstring &text, Callback callback, D3DCOLOR color)
-    : m_Text(text), m_Callback(callback), m_Color(color)
+Option::Option(const std::wstring &text, Callback callback)
+    : m_Text(text), m_Callback(callback)
 {
     if (!s_FontInitialized)
         InitFont();
 }
 
-void Option::Update(ATG::GAMEPAD *pGamepad)
+void Option::Render(float x, float y, D3DCOLOR color)
 {
-    // Allow the user to click on the option
-    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
-        m_Callback(nullptr);
+    s_Font.DrawText(x, y, color, m_Text.c_str());
 }
 
 HRESULT Option::InitFont()

@@ -3,7 +3,7 @@
 #include <AtgFont.h>
 #include <AtgInput.h>
 
-// Class describing a clickable option in a menu.
+// Abstract class describing an option in a menu (need to be derived to be instantiated).
 class Option
 {
 public:
@@ -11,7 +11,9 @@ public:
 
     Option() {}
 
-    Option(const std::wstring &text, Callback callback, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255));
+    virtual ~Option() {}
+
+    Option(const std::wstring &text, Callback callback);
 
     // Initialize the font.
     static void Begin() { s_Font.Begin(); };
@@ -19,24 +21,24 @@ public:
     // Clean up the font.
     static void End() { s_Font.End(); };
 
-    D3DCOLOR GetColor() const { return m_Color; }
-
-    void SetColor(D3DCOLOR dwColor) { m_Color = dwColor; }
-
     // Update the option.
-    void Update(ATG::GAMEPAD *pGamepad);
+    virtual void Update(ATG::GAMEPAD *pGamepad) = 0;
 
     // Render the text.
-    void Render(float x, float y) { s_Font.DrawText(x, y, m_Color, m_Text.c_str()); }
+    virtual void Render(float x, float y, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255)) = 0;
 
-private:
+protected:
     std::wstring m_Text;
     Callback m_Callback;
-    D3DCOLOR m_Color;
 
+private:
     static bool s_FontInitialized;
     static ATG::Font s_Font;
 
     // Creates the font used to render the text of all options.
     static HRESULT InitFont();
 };
+
+// Macro to create a shared pointer of an option. Being able to use templated arguments and std::forward
+// would be much nicer but they were never implemented for the Xbox 360 compiler.
+#define MakeOption(OptionType, ...) std::make_shared<OptionType>(__VA_ARGS__)

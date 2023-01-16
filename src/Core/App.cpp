@@ -4,6 +4,7 @@
 #include <AtgInput.h>
 
 #include "Core\Callbacks.h"
+#include "Elements\ClickableOption.h"
 
 HRESULT App::Initialize()
 {
@@ -18,17 +19,17 @@ HRESULT App::Initialize()
 
     // First group
     {
-        std::vector<Option> options;
-        options.emplace_back(Option(L"Option 1", Callback::Option1Callback));
-        options.emplace_back(Option(L"Option 2", Callback::Option2Callback));
+        std::vector<std::shared_ptr<Option>> options;
+        options.emplace_back(MakeOption(ClickableOption, L"Option 1", Callback::Option1Callback));
+        options.emplace_back(MakeOption(ClickableOption, L"Option 2", Callback::Option2Callback));
         m_OptionGroups.emplace_back(OptionGroup("cat1", options));
     }
 
     // Second group
     {
-        std::vector<Option> options;
-        options.emplace_back(Option(L"Option 3", Callback::Option3Callback));
-        options.emplace_back(Option(L"Option 4", Callback::Option4Callback));
+        std::vector<std::shared_ptr<Option>> options;
+        options.emplace_back(MakeOption(ClickableOption, L"Option 3", Callback::Option3Callback));
+        options.emplace_back(MakeOption(ClickableOption, L"Option 4", Callback::Option4Callback));
         m_OptionGroups.emplace_back(OptionGroup("cat2", options));
     }
 
