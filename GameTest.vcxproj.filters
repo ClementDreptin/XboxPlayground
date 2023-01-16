@@ -82,6 +82,9 @@
     <ClInclude Include="src\Elements\OptionGroup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\D3DDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\Resources\Fonts\Arial_20.rdf" />

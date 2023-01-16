@@ -1,18 +1,11 @@
 #include "pch.h"
 #include "Elements\OptionGroup.h"
 
-#include <AtgDevice.h>
-
-namespace ATG
-{
-extern D3DDevice *g_pd3dDevice;
-}
-
 OptionGroup::OptionGroup(const std::string &name, const std::vector<Option> &options)
     : m_Name(name), m_Options(options), m_CurrentScrollerPos(0)
 {
     // Create the scroller
-    m_Scroller.Init(ATG::g_pd3dDevice, 100.0f, 100.0f, 200.0f, 50.0f, D3DCOLOR_XRGB(128, 128, 128));
+    m_Scroller.Init(100.0f, 100.0f, 200.0f, 50.0f, D3DCOLOR_XRGB(128, 128, 128));
 }
 
 void OptionGroup::Update(ATG::GAMEPAD *pGamepad)

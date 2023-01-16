@@ -1,14 +1,16 @@
 #include "pch.h"
 #include "Renderer\VertexBuffer.h"
 
-HRESULT VertexBuffer::Init(D3DDevice *pDevice, Vertex *pData, uint32_t numVertices)
+#include "Renderer\D3DDevice.h"
+
+HRESULT VertexBuffer::Init(Vertex *pData, uint32_t numVertices)
 {
     HRESULT hr = S_OK;
 
     uint32_t dataSize = sizeof(Vertex) * numVertices;
 
     // Create the vertex buffer
-    hr = pDevice->CreateVertexBuffer(dataSize, D3DUSAGE_WRITEONLY, NULL, D3DPOOL_DEFAULT, &m_pBuffer, nullptr);
+    hr = g_pd3dDevice->CreateVertexBuffer(dataSize, D3DUSAGE_WRITEONLY, NULL, D3DPOOL_DEFAULT, &m_pBuffer, nullptr);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the vertex buffer");
@@ -33,7 +35,7 @@ HRESULT VertexBuffer::Init(D3DDevice *pDevice, Vertex *pData, uint32_t numVertic
     };
 
     // Create a vertex declaration from the element descriptions
-    hr = pDevice->CreateVertexDeclaration(vertexElements, &m_pVertexDeclaration);
+    hr = g_pd3dDevice->CreateVertexDeclaration(vertexElements, &m_pVertexDeclaration);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the vertex declaration");

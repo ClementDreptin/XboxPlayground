@@ -13,7 +13,7 @@ public:
 
     // Create the vertex and index buffers needed to create a rectangle. Set up the
     // matrices to project to rectangle.
-    HRESULT Init(D3DDevice *pDevice, float x, float y, float width, float height, D3DCOLOR color);
+    HRESULT Init(float x, float y, float width, float height, D3DCOLOR color);
 
     float GetX() const { return m_X; }
 
@@ -57,8 +57,6 @@ private:
     uint32_t m_DisplayHeight;
 
     D3DCOLOR m_Color;
-
-    D3DDevice *m_pDevice;
 
     XMMATRIX m_WorldMatrix;
     XMMATRIX m_ViewMatrix;

@@ -36,6 +36,7 @@
     <ClInclude Include="src\Core\Log.h" />
     <ClInclude Include="src\Elements\Option.h" />
     <ClInclude Include="src\Elements\OptionGroup.h" />
+    <ClInclude Include="src\Renderer\D3DDevice.h" />
     <ClInclude Include="src\UI\Rectangle.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />

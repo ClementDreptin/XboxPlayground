@@ -14,7 +14,7 @@ HRESULT App::Initialize()
     ATG::GetVideoSettings(&m_Width, &m_Height);
 
     // Create the rectangle
-    hr = m_Background.Init(m_pd3dDevice, 100.0f, 100.0f, 200.0f, 500.0f, D3DCOLOR_XRGB(0, 0, 128));
+    hr = m_Background.Init(100.0f, 100.0f, 200.0f, 500.0f, D3DCOLOR_XRGB(0, 0, 128));
     if (FAILED(hr))
         return hr;
 

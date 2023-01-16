@@ -9,7 +9,7 @@ public:
     D3DPixelShader *Get() const { return m_pShader; }
 
     // Compile the pixel shader source and create the pixel shader.
-    HRESULT Init(D3DDevice *pDevice);
+    HRESULT Init();
 
 private:
     D3DPixelShader *m_pShader;

@@ -22,7 +22,7 @@ public:
     D3DVertexDeclaration *GetVertexDeclaration() const { return m_pVertexDeclaration; }
 
     // Create the vertex buffer, copy data into it and set the vertex declaration.
-    HRESULT Init(D3DDevice *pDevice, Vertex *pData, uint32_t numVertices);
+    HRESULT Init(Vertex *pData, uint32_t numVertices);
 
 private:
     D3DVertexBuffer *m_pBuffer;

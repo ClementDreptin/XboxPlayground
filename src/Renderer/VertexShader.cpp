@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Renderer\VertexShader.h"
 
+#include "Renderer\D3DDevice.h"
+
 // Vertex shader source code
 static const char shaderSource[] =
     " float4x4 c_matWP : register(c0);                  "
@@ -23,7 +25,7 @@ static const char shaderSource[] =
     "     return output;                                "
     " }                                                 ";
 
-HRESULT VertexShader::Init(D3DDevice *pDevice)
+HRESULT VertexShader::Init()
 {
     HRESULT hr = S_OK;
 
@@ -54,7 +56,7 @@ HRESULT VertexShader::Init(D3DDevice *pDevice)
     }
 
     // Create the shader
-    hr = pDevice->CreateVertexShader(reinterpret_cast<DWORD *>(pShaderCode->GetBufferPointer()), &m_pShader);
+    hr = g_pd3dDevice->CreateVertexShader(reinterpret_cast<DWORD *>(pShaderCode->GetBufferPointer()), &m_pShader);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the vertex shader");

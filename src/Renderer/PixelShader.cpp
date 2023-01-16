@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Renderer\PixelShader.h"
 
+#include "Renderer\D3DDevice.h"
+
 // Pixel shader source code
 static const char shaderSource[] =
     " float4 c_color : register(c0);    "
@@ -10,7 +12,7 @@ static const char shaderSource[] =
     "     return c_color;               "
     " }                                 ";
 
-HRESULT PixelShader::Init(D3DDevice *pDevice)
+HRESULT PixelShader::Init()
 {
     HRESULT hr = S_OK;
 
@@ -41,7 +43,7 @@ HRESULT PixelShader::Init(D3DDevice *pDevice)
     }
 
     // Create the shader
-    hr = pDevice->CreatePixelShader(reinterpret_cast<DWORD *>(pShaderCode->GetBufferPointer()), &m_pShader);
+    hr = g_pd3dDevice->CreatePixelShader(reinterpret_cast<DWORD *>(pShaderCode->GetBufferPointer()), &m_pShader);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the pixel shader");

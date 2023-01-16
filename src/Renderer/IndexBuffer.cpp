@@ -1,14 +1,16 @@
 #include "pch.h"
 #include "Renderer\IndexBuffer.h"
 
-HRESULT IndexBuffer::Init(D3DDevice *pDevice, uint16_t *pData, uint32_t numIndices)
+#include "Renderer\D3DDevice.h"
+
+HRESULT IndexBuffer::Init(uint16_t *pData, uint32_t numIndices)
 {
     HRESULT hr = S_OK;
 
     uint32_t dataSize = sizeof(uint16_t) * numIndices;
 
     // Create the index buffer
-    hr = pDevice->CreateIndexBuffer(dataSize, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, NULL, &m_pBuffer, nullptr);
+    hr = g_pd3dDevice->CreateIndexBuffer(dataSize, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, NULL, &m_pBuffer, nullptr);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the index buffer");

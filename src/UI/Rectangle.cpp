@@ -3,22 +3,21 @@
 
 #include <AtgUtil.h>
 
-HRESULT Rectangle::Init(D3DDevice *pDevice, float x, float y, float width, float height, D3DCOLOR color)
+#include "Renderer\D3DDevice.h"
+
+HRESULT Rectangle::Init(float x, float y, float width, float height, D3DCOLOR color)
 {
     HRESULT hr = S_OK;
 
     // Save the display dimensions
     ATG::GetVideoSettings(&m_DisplayWidth, &m_DisplayHeight);
 
-    // Save the position and dimensions
+    // Save the position, dimensions and color
     m_X = x;
     m_Y = y;
     m_Width = width;
     m_Height = height;
-
-    // Save the color and the device
     m_Color = color;
-    m_pDevice = pDevice;
 
     // Set up the matrices for orthographic projection
     m_ViewMatrix = XMMatrixIdentity();
@@ -37,7 +36,7 @@ HRESULT Rectangle::Init(D3DDevice *pDevice, float x, float y, float width, float
     };
 
     // Create the vertex buffer
-    hr = m_VertexBuffer.Init(pDevice, vertices, ARRAYSIZE(vertices));
+    hr = m_VertexBuffer.Init(vertices, ARRAYSIZE(vertices));
     if (FAILED(hr))
         return hr;
 
@@ -48,17 +47,17 @@ HRESULT Rectangle::Init(D3DDevice *pDevice, float x, float y, float width, float
     };
 
     // Create an index buffer
-    hr = m_IndexBuffer.Init(pDevice, indices, ARRAYSIZE(indices));
+    hr = m_IndexBuffer.Init(indices, ARRAYSIZE(indices));
     if (FAILED(hr))
         return hr;
 
     // Create the vertex shader
-    hr = m_VertexShader.Init(pDevice);
+    hr = m_VertexShader.Init();
     if (FAILED(hr))
         return hr;
 
     // Create the pixel shader
-    hr = m_PixelShader.Init(pDevice);
+    hr = m_PixelShader.Init();
     if (FAILED(hr))
         return hr;
 
@@ -68,18 +67,18 @@ HRESULT Rectangle::Init(D3DDevice *pDevice, float x, float y, float width, float
 void Rectangle::Render()
 {
     // Initialize default device states
-    m_pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-    m_pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-    m_pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+    g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+    g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+    g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-    m_pDevice->SetVertexDeclaration(m_VertexBuffer.GetVertexDeclaration());
-    m_pDevice->SetStreamSource(0, m_VertexBuffer.Get(), 0, sizeof(Vertex));
-    m_pDevice->SetVertexShader(m_VertexShader.Get());
-    m_pDevice->SetPixelShader(m_PixelShader.Get());
-    m_pDevice->SetIndices(m_IndexBuffer.Get());
+    g_pd3dDevice->SetVertexDeclaration(m_VertexBuffer.GetVertexDeclaration());
+    g_pd3dDevice->SetStreamSource(0, m_VertexBuffer.Get(), 0, sizeof(Vertex));
+    g_pd3dDevice->SetVertexShader(m_VertexShader.Get());
+    g_pd3dDevice->SetPixelShader(m_PixelShader.Get());
+    g_pd3dDevice->SetIndices(m_IndexBuffer.Get());
 
     // Pass the world view projection matrix to the vertex shader
-    m_pDevice->SetVertexShaderConstantF(0, reinterpret_cast<float *>(&m_WVPMatrix), 4);
+    g_pd3dDevice->SetVertexShaderConstantF(0, reinterpret_cast<float *>(&m_WVPMatrix), 4);
 
     // Turn the color into a float array and pass it to the pixel shader
     float color[4] = {
@@ -89,10 +88,10 @@ void Rectangle::Render()
         ((m_Color & 0xff000000) >> 24) / 255.0f,
     };
 
-    m_pDevice->SetPixelShaderConstantF(0, color, 1);
+    g_pd3dDevice->SetPixelShaderConstantF(0, color, 1);
 
     // Draw the rectangle
-    m_pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
+    g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 }
 
 void Rectangle::CalculateWorldViewProjectionMatrix()
