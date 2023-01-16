@@ -2,16 +2,12 @@
 #include "Core\App.h"
 
 #include <AtgInput.h>
-#include <AtgUtil.h>
 
 #include "Core\Callbacks.h"
 
 HRESULT App::Initialize()
 {
     HRESULT hr = S_OK;
-
-    // Get the width and height for the font
-    ATG::GetVideoSettings(&m_Width, &m_Height);
 
     // Create the rectangle
     hr = m_Background.Init(100.0f, 100.0f, 200.0f, 500.0f, D3DCOLOR_XRGB(0, 0, 128));

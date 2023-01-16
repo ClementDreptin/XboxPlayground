@@ -30,6 +30,7 @@ void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
 
     MoveScroller();
 
+    // Update the currently selected option
     m_Options[m_CurrentScrollerPos].Update(pGamepad);
 }
 
@@ -38,6 +39,7 @@ void OptionGroup::Render()
     // Render the scroller
     m_Scroller.Render();
 
+    // Rendern the options
     Option::Begin();
     for (size_t i = 0; i < m_Options.size(); i++)
         m_Options[i].Render(100.0f, 100.0f + i * 50.0f);

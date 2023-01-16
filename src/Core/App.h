@@ -21,9 +21,6 @@ public:
     virtual HRESULT Render();
 
 private:
-    uint32_t m_Width;
-    uint32_t m_Height;
-
     Rectangle m_Background;
 
     std::vector<OptionGroup> m_OptionGroups;
