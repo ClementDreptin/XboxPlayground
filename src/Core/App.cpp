@@ -14,7 +14,7 @@ HRESULT App::Initialize()
     ATG::GetVideoSettings(&m_Width, &m_Height);
 
     // Create the rectangle
-    hr = m_Rectangle.Init(m_pd3dDevice, 100.0f, 100.0f, 200.0f, 500.0f, D3DCOLOR_XRGB(0, 0, 128));
+    hr = m_Background.Init(m_pd3dDevice, 100.0f, 100.0f, 200.0f, 500.0f, D3DCOLOR_XRGB(0, 0, 128));
     if (FAILED(hr))
         return hr;
 
@@ -44,7 +44,7 @@ HRESULT App::Render()
     m_pd3dDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
     // Render the rectangle
-    m_Rectangle.Render();
+    m_Background.Render();
 
     // Render the options
     m_OptionGroup.Render();

@@ -24,7 +24,7 @@ private:
     uint32_t m_Width;
     uint32_t m_Height;
 
-    Rectangle m_Rectangle;
+    Rectangle m_Background;
 
     OptionGroup m_OptionGroup;
 };
