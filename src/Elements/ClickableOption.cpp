@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "Elements\ClickableOption.h"
 
+ClickableOption::ClickableOption()
+    : Option()
+{
+}
+
 ClickableOption::ClickableOption(const std::wstring &text, Callback callback)
     : Option(text, callback)
 {

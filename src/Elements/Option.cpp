@@ -4,6 +4,11 @@
 bool Option::s_FontInitialized = false;
 ATG::Font Option::s_Font;
 
+Option::Option()
+    : m_Callback(nullptr)
+{
+}
+
 Option::Option(const std::wstring &text, Callback callback)
     : m_Text(text), m_Callback(callback)
 {

@@ -5,6 +5,7 @@
 
 #include "Core\Callbacks.h"
 #include "Elements\ClickableOption.h"
+#include "Elements\RangeOption.h"
 
 HRESULT App::Initialize()
 {
@@ -20,7 +21,7 @@ HRESULT App::Initialize()
     // First group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ClickableOption, L"Option 1", Callback::Option1Callback));
+        options.emplace_back(MakeOption(RangeOption, L"Option 1", Callback::Option1Callback, 2.2f, 4.0f, 0.2f));
         options.emplace_back(MakeOption(ClickableOption, L"Option 2", Callback::Option2Callback));
         m_OptionGroups.emplace_back(OptionGroup("cat1", options));
     }

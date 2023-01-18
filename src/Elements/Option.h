@@ -9,7 +9,7 @@ class Option
 public:
     typedef void (*Callback)(void *pParameters);
 
-    Option() {}
+    Option();
 
     virtual ~Option() {}
 
@@ -31,9 +31,10 @@ protected:
     std::wstring m_Text;
     Callback m_Callback;
 
+    static ATG::Font s_Font;
+
 private:
     static bool s_FontInitialized;
-    static ATG::Font s_Font;
 
     // Creates the font used to render the text of all options.
     static HRESULT InitFont();
