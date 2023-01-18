@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "Elements\OptionGroup.h"
 
+OptionGroup::OptionGroup()
+    : m_CurrentScrollerPos(0)
+{
+}
+
 OptionGroup::OptionGroup(const std::string &name, const std::vector<std::shared_ptr<Option>> &options)
     : m_Name(name), m_Options(options), m_CurrentScrollerPos(0)
 {

@@ -3,6 +3,11 @@
 
 #include "Renderer\D3DDevice.h"
 
+IndexBuffer::IndexBuffer()
+    : m_pBuffer(nullptr)
+{
+}
+
 HRESULT IndexBuffer::Init(uint16_t *pData, uint32_t numIndices)
 {
     HRESULT hr = S_OK;

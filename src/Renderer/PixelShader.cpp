@@ -12,6 +12,11 @@ static const char shaderSource[] =
     "     return c_color;               "
     " }                                 ";
 
+PixelShader::PixelShader()
+    : m_pShader(nullptr)
+{
+}
+
 HRESULT PixelShader::Init()
 {
     HRESULT hr = S_OK;

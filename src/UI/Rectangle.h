@@ -9,7 +9,7 @@
 class Rectangle
 {
 public:
-    Rectangle() {}
+    Rectangle();
 
     // Create the vertex and index buffers needed to create a rectangle. Set up the
     // matrices to project to rectangle.

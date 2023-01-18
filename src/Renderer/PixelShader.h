@@ -4,7 +4,7 @@
 class PixelShader
 {
 public:
-    PixelShader() {}
+    PixelShader();
 
     D3DPixelShader *Get() const { return m_pShader; }
 

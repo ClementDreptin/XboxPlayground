@@ -10,6 +10,8 @@
 class App : public ATG::Application
 {
 public:
+    App();
+
     // Initialize app-dependent objects.
     virtual HRESULT Initialize();
 

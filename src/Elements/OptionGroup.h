@@ -9,7 +9,7 @@
 class OptionGroup
 {
 public:
-    OptionGroup() {}
+    OptionGroup();
 
     OptionGroup(const std::string &name, const std::vector<std::shared_ptr<Option>> &options);
 

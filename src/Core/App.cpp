@@ -7,6 +7,11 @@
 #include "Elements\ClickableOption.h"
 #include "Elements\RangeOption.h"
 
+App::App()
+    : m_CurrentOptionGroupIndex(0)
+{
+}
+
 HRESULT App::Initialize()
 {
     HRESULT hr = S_OK;

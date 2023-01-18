@@ -25,6 +25,11 @@ static const char shaderSource[] =
     "     return output;                                "
     " }                                                 ";
 
+VertexShader::VertexShader()
+    : m_pShader(nullptr)
+{
+}
+
 HRESULT VertexShader::Init()
 {
     HRESULT hr = S_OK;

@@ -4,7 +4,7 @@
 class VertexShader
 {
 public:
-    VertexShader() {}
+    VertexShader();
 
     D3DVertexShader *Get() const { return m_pShader; }
 

@@ -5,6 +5,11 @@
 
 #include "Renderer\D3DDevice.h"
 
+Rectangle::Rectangle()
+    : m_X(0.0f), m_Y(0.0f), m_Width(0.0f), m_Height(0.0f), m_DisplayWidth(0), m_DisplayHeight(0), m_Color(0)
+{
+}
+
 HRESULT Rectangle::Init(float x, float y, float width, float height, D3DCOLOR color)
 {
     HRESULT hr = S_OK;
@@ -29,10 +34,10 @@ HRESULT Rectangle::Init(float x, float y, float width, float height, D3DCOLOR co
     // rectangle grow downwards along the Y axis, we need to substract its height
     // to the Y coordinate of each vertex.
     Vertex vertices[] = {
-        Vertex(0.0f, 0.0f - height, 0.0f),     // Bottom Left
-        Vertex(0.0f, height - height, 0.0f),   // Top Left
-        Vertex(width, height - height, 0.0f),  // Top Right
-        Vertex(width, 0.0f - height, 0.0f)     // Bottom Right
+        Vertex(0.0f, 0.0f - height, 0.0f),    // Bottom Left
+        Vertex(0.0f, height - height, 0.0f),  // Top Left
+        Vertex(width, height - height, 0.0f), // Top Right
+        Vertex(width, 0.0f - height, 0.0f)    // Bottom Right
     };
 
     // Create the vertex buffer

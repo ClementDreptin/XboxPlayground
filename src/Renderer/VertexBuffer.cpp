@@ -3,6 +3,11 @@
 
 #include "Renderer\D3DDevice.h"
 
+VertexBuffer::VertexBuffer()
+    : m_pBuffer(nullptr), m_pVertexDeclaration(nullptr)
+{
+}
+
 HRESULT VertexBuffer::Init(Vertex *pData, uint32_t numVertices)
 {
     HRESULT hr = S_OK;

@@ -15,7 +15,7 @@ struct Vertex
 class VertexBuffer
 {
 public:
-    VertexBuffer() {}
+    VertexBuffer();
 
     D3DVertexBuffer *Get() const { return m_pBuffer; }
 

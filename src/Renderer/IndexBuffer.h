@@ -4,7 +4,7 @@
 class IndexBuffer
 {
 public:
-    IndexBuffer() {}
+    IndexBuffer();
 
     D3DIndexBuffer *Get() const { return m_pBuffer; }
 
