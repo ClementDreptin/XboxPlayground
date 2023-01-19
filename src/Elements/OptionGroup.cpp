@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Elements\OptionGroup.h"
 
+#include "UI\Layout.h"
+
 OptionGroup::OptionGroup()
     : m_CurrentScrollerPos(0)
 {
@@ -10,7 +12,7 @@ OptionGroup::OptionGroup(const std::string &name, const std::vector<std::shared_
     : m_Name(name), m_Options(options), m_CurrentScrollerPos(0)
 {
     // Create the scroller
-    m_Scroller.Init(100.0f, 100.0f, 200.0f, 50.0f, D3DCOLOR_XRGB(128, 128, 128));
+    m_Scroller.Init(Layout::X, Layout::Y, Layout::Width, 50.0f, D3DCOLOR_ARGB(204, D3DCOLOR_GETRED(Layout::Color), D3DCOLOR_GETGREEN(Layout::Color), D3DCOLOR_GETBLUE(Layout::Color)));
 }
 
 void OptionGroup::Update(ATG::GAMEPAD *pGamepad)

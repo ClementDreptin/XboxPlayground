@@ -53,6 +53,9 @@
     <ClCompile Include="src\Elements\RangeOption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\UI\Layout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Log.h">
@@ -95,6 +98,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Elements\RangeOption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

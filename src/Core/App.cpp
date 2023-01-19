@@ -6,6 +6,7 @@
 #include "Core\Callbacks.h"
 #include "Elements\ClickableOption.h"
 #include "Elements\RangeOption.h"
+#include "UI\Layout.h"
 
 App::App()
     : m_CurrentOptionGroupIndex(0)
@@ -17,7 +18,7 @@ HRESULT App::Initialize()
     HRESULT hr = S_OK;
 
     // Create the rectangle
-    hr = m_Background.Init(100.0f, 100.0f, 200.0f, 500.0f, D3DCOLOR_XRGB(0, 0, 128));
+    hr = m_Background.Init(Layout::X, Layout::Y, Layout::Width, Layout::Height, Layout::BackgroundColor);
     if (FAILED(hr))
         return hr;
 
