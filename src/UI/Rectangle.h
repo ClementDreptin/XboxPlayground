@@ -45,8 +45,9 @@ private:
     VertexBuffer m_VertexBuffer;
     IndexBuffer m_IndexBuffer;
 
-    VertexShader m_VertexShader;
-    PixelShader m_PixelShader;
+    static VertexShader s_VertexShader;
+    static PixelShader s_PixelShader;
+    static bool s_ShadersInitialized;
 
     float m_X;
     float m_Y;

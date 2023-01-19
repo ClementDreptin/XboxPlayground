@@ -5,6 +5,10 @@
 
 #include "Renderer\D3DDevice.h"
 
+VertexShader Rectangle::s_VertexShader;
+PixelShader Rectangle::s_PixelShader;
+bool Rectangle::s_ShadersInitialized = false;
+
 Rectangle::Rectangle()
     : m_X(0.0f), m_Y(0.0f), m_Width(0.0f), m_Height(0.0f), m_DisplayWidth(0), m_DisplayHeight(0), m_Color(0)
 {
@@ -40,6 +44,22 @@ HRESULT Rectangle::Init(float x, float y, float width, float height, D3DCOLOR co
         Vertex(width, 0.0f - height, 0.0f)    // Bottom Right
     };
 
+    // Create the shaders when the first rectangle is instantiated
+    if (!s_ShadersInitialized)
+    {
+        // Create the vertex shader
+        hr = s_VertexShader.Init();
+        if (FAILED(hr))
+            return hr;
+
+        // Create the pixel shader
+        hr = s_PixelShader.Init();
+        if (FAILED(hr))
+            return hr;
+
+        s_ShadersInitialized = true;
+    }
+
     // Create the vertex buffer
     hr = m_VertexBuffer.Init(vertices, ARRAYSIZE(vertices));
     if (FAILED(hr))
@@ -56,16 +76,6 @@ HRESULT Rectangle::Init(float x, float y, float width, float height, D3DCOLOR co
     if (FAILED(hr))
         return hr;
 
-    // Create the vertex shader
-    hr = m_VertexShader.Init();
-    if (FAILED(hr))
-        return hr;
-
-    // Create the pixel shader
-    hr = m_PixelShader.Init();
-    if (FAILED(hr))
-        return hr;
-
     return S_OK;
 }
 
@@ -78,8 +88,8 @@ void Rectangle::Render()
 
     g_pd3dDevice->SetVertexDeclaration(m_VertexBuffer.GetVertexDeclaration());
     g_pd3dDevice->SetStreamSource(0, m_VertexBuffer.Get(), 0, sizeof(Vertex));
-    g_pd3dDevice->SetVertexShader(m_VertexShader.Get());
-    g_pd3dDevice->SetPixelShader(m_PixelShader.Get());
+    g_pd3dDevice->SetVertexShader(s_VertexShader.Get());
+    g_pd3dDevice->SetPixelShader(s_PixelShader.Get());
     g_pd3dDevice->SetIndices(m_IndexBuffer.Get());
 
     // Pass the world view projection matrix to the vertex shader
