@@ -8,7 +8,7 @@ float X = 100.0f;
 
 float Y = 100.0f;
 
-const float Width = 200.0f;
+const float Width = 400.0f;
 
 const float Height = 500.0f;
 

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Elements\RangeOption.h"
 
+#include "UI\Layout.h"
+
 RangeOption::RangeOption()
     : Option(), m_Min(0), m_Max(0), m_Current(0)
 {
@@ -42,5 +44,5 @@ void RangeOption::Render(float x, float y, D3DCOLOR color)
     float textWidth = s_Font.GetTextWidth(text.c_str());
 
     // Draw the wide string of the number value
-    s_Font.DrawText(x + 200.0f - textWidth, y, color, text.c_str());
+    s_Font.DrawText(x + Layout::Width - textWidth, y, color, text.c_str());
 }
