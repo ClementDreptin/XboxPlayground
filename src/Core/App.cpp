@@ -3,6 +3,11 @@
 
 #include <AtgInput.h>
 
+App::App()
+    : m_MenuOpen(false)
+{
+}
+
 HRESULT App::Initialize()
 {
     HRESULT hr = S_OK;
@@ -17,13 +22,23 @@ HRESULT App::Initialize()
 
 HRESULT App::Update()
 {
+    HRESULT hr = S_OK;
+
     // Get the current gamepad state
     ATG::GAMEPAD *pGamepad = ATG::Input::GetMergedInput();
 
-    // Update the menu
-    m_Menu.Update(pGamepad);
+    // Toggle the menu by pressing LT and DPAD LEFT
+    if (pGamepad->bLastLeftTrigger && pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)
+    {
+        m_MenuOpen = !m_MenuOpen;
+        return hr;
+    }
 
-    return S_OK;
+    // Update the menu if it's open
+    if (m_MenuOpen)
+        m_Menu.Update(pGamepad);
+
+    return hr;
 }
 
 HRESULT App::Render()
@@ -31,8 +46,9 @@ HRESULT App::Render()
     // Clear the viewport
     m_pd3dDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
-    // Render the menu
-    m_Menu.Render();
+    // Render the menu if it's open
+    if (m_MenuOpen)
+        m_Menu.Render();
 
     // Present the scene
     m_pd3dDevice->Present(nullptr, nullptr, nullptr, nullptr);

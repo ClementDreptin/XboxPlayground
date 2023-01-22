@@ -9,7 +9,7 @@
 class App : public ATG::Application
 {
 public:
-    App() {}
+    App();
 
     // Initialize app-dependent objects.
     virtual HRESULT Initialize();
@@ -23,4 +23,5 @@ public:
 
 private:
     Menu m_Menu;
+    bool m_MenuOpen;
 };
