@@ -2,15 +2,14 @@
 
 #include <AtgApp.h>
 
-#include "UI\Rectangle.h"
-#include "Elements\OptionGroup.h"
+#include "Elements\Menu.h"
 
 // Main class to run this application. Most functionality is inherited
 // from the ATG::Application base class.
 class App : public ATG::Application
 {
 public:
-    App();
+    App() {}
 
     // Initialize app-dependent objects.
     virtual HRESULT Initialize();
@@ -23,8 +22,5 @@ public:
     virtual HRESULT Render();
 
 private:
-    Rectangle m_Background;
-
-    std::vector<OptionGroup> m_OptionGroups;
-    size_t m_CurrentOptionGroupIndex;
+    Menu m_Menu;
 };
