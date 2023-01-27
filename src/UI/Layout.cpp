@@ -4,9 +4,9 @@
 namespace Layout
 {
 
-float X = 100.0f;
+float X = 400.0f;
 
-float Y = 100.0f;
+float Y = 150.0f;
 
 const float Width = 400.0f;
 

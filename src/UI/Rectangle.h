@@ -10,6 +10,16 @@
 class Rectangle
 {
 public:
+    typedef enum _Border
+    {
+        Border_None = 0,
+        Border_Left = 1 << 0,
+        Border_Right = 1 << 1,
+        Border_Top = 1 << 2,
+        Border_Bottom = 1 << 3,
+        Border_All = Border_Left | Border_Right | Border_Top | Border_Bottom,
+    } Border;
+
     struct Props
     {
         float X;
@@ -19,6 +29,7 @@ public:
         D3DCOLOR Color;
         float BorderWidth;
         D3DCOLOR BorderColor;
+        Border Border;
     };
 
     Rectangle();

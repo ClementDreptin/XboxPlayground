@@ -76,48 +76,60 @@ HRESULT Rectangle::Init(const Props &props)
     if (FAILED(hr))
         return hr;
 
-    // Create the border if needed
-    if (m_Props.BorderWidth > 0)
+    // Create the borders if needed
+    if (m_Props.Border != Border_None && m_Props.BorderWidth > 0)
     {
-        Line::Props leftBorderProps = { 0 };
-        leftBorderProps.X = m_Props.X - m_Props.BorderWidth;
-        leftBorderProps.Y = m_Props.Y;
-        leftBorderProps.Width = m_Props.BorderWidth;
-        leftBorderProps.Height = m_Props.Height + m_Props.BorderWidth;
-        leftBorderProps.Color = m_Props.BorderColor;
-        hr = m_LeftBorder.Init(leftBorderProps);
-        if (FAILED(hr))
-            return hr;
+        if (m_Props.Border & Border_Left)
+        {
+            Line::Props leftBorderProps = { 0 };
+            leftBorderProps.X = m_Props.X - m_Props.BorderWidth;
+            leftBorderProps.Y = m_Props.Y;
+            leftBorderProps.Width = m_Props.BorderWidth;
+            leftBorderProps.Height = m_Props.Height + (m_Props.Border & Border_Bottom ? m_Props.BorderWidth : 0.0f);
+            leftBorderProps.Color = m_Props.BorderColor;
+            hr = m_LeftBorder.Init(leftBorderProps);
+            if (FAILED(hr))
+                return hr;
+        }
 
-        Line::Props rightBorderProps = { 0 };
-        rightBorderProps.X = m_Props.X + m_Props.Width;
-        rightBorderProps.Y = m_Props.Y - m_Props.BorderWidth;
-        rightBorderProps.Width = m_Props.BorderWidth;
-        rightBorderProps.Height = m_Props.Height + m_Props.BorderWidth;
-        rightBorderProps.Color = m_Props.BorderColor;
-        hr = m_RightBorder.Init(rightBorderProps);
-        if (FAILED(hr))
-            return hr;
+        if (m_Props.Border & Border_Right)
+        {
+            Line::Props rightBorderProps = { 0 };
+            rightBorderProps.X = m_Props.X + m_Props.Width;
+            rightBorderProps.Y = m_Props.Y - (m_Props.Border & Border_Top ? m_Props.BorderWidth : 0.0f);
+            rightBorderProps.Width = m_Props.BorderWidth;
+            rightBorderProps.Height = m_Props.Height + (m_Props.Border & Border_Top ? m_Props.BorderWidth : 0.0f);
+            rightBorderProps.Color = m_Props.BorderColor;
+            hr = m_RightBorder.Init(rightBorderProps);
+            if (FAILED(hr))
+                return hr;
+        }
 
-        Line::Props topBorderProps = { 0 };
-        topBorderProps.X = m_Props.X - m_Props.BorderWidth;
-        topBorderProps.Y = m_Props.Y - m_Props.BorderWidth;
-        topBorderProps.Width = m_Props.Width + m_Props.BorderWidth;
-        topBorderProps.Height = m_Props.BorderWidth;
-        topBorderProps.Color = m_Props.BorderColor;
-        hr = m_TopBorder.Init(topBorderProps);
-        if (FAILED(hr))
-            return hr;
+        if (m_Props.Border & Border_Top)
+        {
+            Line::Props topBorderProps = { 0 };
+            topBorderProps.X = m_Props.X - (m_Props.Border & Border_Left ? m_Props.BorderWidth : 0.0f);
+            topBorderProps.Y = m_Props.Y - m_Props.BorderWidth;
+            topBorderProps.Width = m_Props.Width + (m_Props.Border & Border_Left ? m_Props.BorderWidth : 0.0f);
+            topBorderProps.Height = m_Props.BorderWidth;
+            topBorderProps.Color = m_Props.BorderColor;
+            hr = m_TopBorder.Init(topBorderProps);
+            if (FAILED(hr))
+                return hr;
+        }
 
-        Line::Props bottomBorderProps = { 0 };
-        bottomBorderProps.X = m_Props.X;
-        bottomBorderProps.Y = m_Props.Y + m_Props.Height;
-        bottomBorderProps.Width = m_Props.Width + m_Props.BorderWidth;
-        bottomBorderProps.Height = m_Props.BorderWidth;
-        bottomBorderProps.Color = m_Props.BorderColor;
-        hr = m_BottomBorder.Init(bottomBorderProps);
-        if (FAILED(hr))
-            return hr;
+        if (m_Props.Border & Border_Bottom)
+        {
+            Line::Props bottomBorderProps = { 0 };
+            bottomBorderProps.X = m_Props.X;
+            bottomBorderProps.Y = m_Props.Y + m_Props.Height;
+            bottomBorderProps.Width = m_Props.Width + (m_Props.Border & Border_Right ? m_Props.BorderWidth : 0.0f);
+            bottomBorderProps.Height = m_Props.BorderWidth;
+            bottomBorderProps.Color = m_Props.BorderColor;
+            hr = m_BottomBorder.Init(bottomBorderProps);
+            if (FAILED(hr))
+                return hr;
+        }
     }
 
     return hr;
@@ -152,13 +164,20 @@ void Rectangle::Render()
     // Draw the rectangle
     g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 
-    // Draw the border if needed
-    if (m_Props.BorderWidth > 0)
+    // Draw the borders if needed
+    if (m_Props.Border != Border_None && m_Props.BorderWidth > 0)
     {
-        m_LeftBorder.Render();
-        m_RightBorder.Render();
-        m_TopBorder.Render();
-        m_BottomBorder.Render();
+        if (m_Props.Border & Border_Left)
+            m_LeftBorder.Render();
+
+        if (m_Props.Border & Border_Right)
+            m_RightBorder.Render();
+
+        if (m_Props.Border & Border_Top)
+            m_TopBorder.Render();
+
+        if (m_Props.Border & Border_Bottom)
+            m_BottomBorder.Render();
     }
 }
 

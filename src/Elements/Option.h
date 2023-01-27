@@ -45,6 +45,6 @@ private:
     static HRESULT InitFont();
 };
 
-// Macro to create a shared pointer of an option. Being able to use templated arguments and std::forward
+// Macro to create a shared pointer to an option. Being able to use templated arguments and std::forward
 // would be much nicer but they were never implemented for the Xbox 360 compiler.
 #define MakeOption(OptionType, ...) std::make_shared<OptionType>(__VA_ARGS__)
