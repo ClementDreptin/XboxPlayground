@@ -3,6 +3,7 @@
 #include <AtgApp.h>
 
 #include "Elements\Menu.h"
+#include "UI\Text.h"
 
 // Main class to run this application. Most functionality is inherited
 // from the ATG::Application base class.
@@ -24,4 +25,6 @@ public:
 private:
     Menu m_Menu;
     bool m_MenuOpen;
+
+    Text m_ControlsText;
 };

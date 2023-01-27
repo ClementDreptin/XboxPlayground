@@ -23,6 +23,21 @@ HRESULT App::Initialize()
         return hr;
     }
 
+    // Create the controls text
+    Text::Props controlsTextProps = { 0 };
+    controlsTextProps.X = 10.0f;
+    controlsTextProps.Y = 10.0f;
+    controlsTextProps.Text = L"Press LT + DPAD_LEFT to Open/Close";
+    controlsTextProps.Color = Layout::TextColor;
+    controlsTextProps.BackgroundColor = Layout::BackgroundColor;
+    controlsTextProps.BorderWidth = 5.0f;
+    controlsTextProps.BorderColor = Layout::Color;
+    controlsTextProps.BorderPosition = Border::Border_All;
+
+    hr = m_ControlsText.Init(controlsTextProps);
+    if (FAILED(hr))
+        return hr;
+
     // Create the menu
     hr = m_Menu.Init();
     if (FAILED(hr))
@@ -60,6 +75,9 @@ HRESULT App::Render()
     // Render the menu if it's open
     if (m_MenuOpen)
         m_Menu.Render();
+
+    // Render the controls text
+    m_ControlsText.Render();
 
     // Present the scene
     m_pd3dDevice->Present(nullptr, nullptr, nullptr, nullptr);
