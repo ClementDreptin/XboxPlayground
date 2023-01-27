@@ -57,6 +57,7 @@ public:
 private:
     Props m_Props;
     Border m_Border;
+    bool m_HasBorder;
 
     float m_DisplayWidth;
     float m_DisplayHeight;

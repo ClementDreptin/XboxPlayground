@@ -10,7 +10,7 @@ PixelShader Rectangle::s_PixelShader;
 bool Rectangle::s_ShadersInitialized = false;
 
 Rectangle::Rectangle()
-    : m_Props(), m_DisplayWidth(0.0f), m_DisplayHeight(0.0f)
+    : m_Props(), m_HasBorder(false), m_DisplayWidth(0.0f), m_DisplayHeight(0.0f)
 {
 }
 
@@ -77,7 +77,8 @@ HRESULT Rectangle::Init(const Props &props)
         return hr;
 
     // Initialize the border if needed
-    if (m_Props.BorderPosition != Border::Border_None && m_Props.BorderWidth > 0)
+    m_HasBorder = m_Props.BorderPosition != Border::Border_None && m_Props.BorderWidth > 0;
+    if (m_HasBorder)
     {
         Border::Props borderProps = { 0 };
         borderProps.X = m_Props.X;
@@ -87,6 +88,7 @@ HRESULT Rectangle::Init(const Props &props)
         borderProps.Position = m_Props.BorderPosition;
         borderProps.Width = m_Props.Width;
         borderProps.Height = m_Props.Height;
+
         hr = m_Border.Init(borderProps);
         if (FAILED(hr))
             return hr;
@@ -125,7 +127,7 @@ void Rectangle::Render()
     g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 
     // Render the border if needed
-    if (m_Props.BorderPosition != Border::Border_None && m_Props.BorderWidth > 0)
+    if (m_HasBorder)
         m_Border.Render();
 }
 

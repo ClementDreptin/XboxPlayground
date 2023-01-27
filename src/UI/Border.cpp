@@ -26,6 +26,7 @@ HRESULT Border::Init(const Props &props)
         leftBorderProps.Width = m_Props.Thickness;
         leftBorderProps.Height = m_Props.Height + (m_Props.Position & Border_Bottom ? m_Props.Thickness : 0.0f);
         leftBorderProps.Color = m_Props.Color;
+
         hr = m_Left.Init(leftBorderProps);
         if (FAILED(hr))
             return hr;
@@ -40,6 +41,7 @@ HRESULT Border::Init(const Props &props)
         rightBorderProps.Width = m_Props.Thickness;
         rightBorderProps.Height = m_Props.Height + (m_Props.Position & Border_Top ? m_Props.Thickness : 0.0f);
         rightBorderProps.Color = m_Props.Color;
+
         hr = m_Right.Init(rightBorderProps);
         if (FAILED(hr))
             return hr;
@@ -54,6 +56,7 @@ HRESULT Border::Init(const Props &props)
         topBorderProps.Width = m_Props.Width + (m_Props.Position & Border_Left ? m_Props.Thickness : 0.0f);
         topBorderProps.Height = m_Props.Thickness;
         topBorderProps.Color = m_Props.Color;
+
         hr = m_Top.Init(topBorderProps);
         if (FAILED(hr))
             return hr;
@@ -68,6 +71,7 @@ HRESULT Border::Init(const Props &props)
         bottomBorderProps.Width = m_Props.Width + (m_Props.Position & Border_Right ? m_Props.Thickness : 0.0f);
         bottomBorderProps.Height = m_Props.Thickness;
         bottomBorderProps.Color = m_Props.Color;
+
         hr = m_Bottom.Init(bottomBorderProps);
         if (FAILED(hr))
             return hr;
