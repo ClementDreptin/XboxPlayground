@@ -9,14 +9,14 @@ OptionGroup::OptionGroup()
 }
 
 OptionGroup::OptionGroup(const std::string &name, const std::vector<std::shared_ptr<Option>> &options)
-    : m_Name(name), m_Options(options), m_CurrentScrollerPos(0)
+    : m_Name(name), m_Options(options), m_CurrentScrollerPos(0), m_LineHeight(Option::GetFontHeight() + Layout::Padding * 2)
 {
     // Create the scroller
     Rectangle::Props props = { 0 };
-    props.X = Layout::X;
-    props.Y = Layout::Y;
-    props.Width = Layout::Width;
-    props.Height = 50.0f;
+    props.X = Layout::X + Layout::Gap;
+    props.Y = Layout::Y + Layout::Gap;
+    props.Width = Layout::Width - Layout::Gap * 2;
+    props.Height = m_LineHeight - Layout::Gap * 2;
     props.Color = D3DCOLOR_ARGB(204, D3DCOLOR_GETRED(Layout::Color), D3DCOLOR_GETGREEN(Layout::Color), D3DCOLOR_GETBLUE(Layout::Color));
     m_Scroller.Init(props);
 }
@@ -55,11 +55,11 @@ void OptionGroup::Render()
     // Rendern the options
     Option::Begin();
     for (size_t i = 0; i < m_Options.size(); i++)
-        m_Options[i]->Render(100.0f, 100.0f + i * 50.0f);
+        m_Options[i]->Render(Layout::X, Layout::Y + i * m_LineHeight);
     Option::End();
 }
 
 void OptionGroup::MoveScroller()
 {
-    m_Scroller.SetY(100.0f + 50.0f * m_CurrentScrollerPos);
+    m_Scroller.SetY(Layout::Y + Layout::Gap + m_LineHeight * m_CurrentScrollerPos);
 }

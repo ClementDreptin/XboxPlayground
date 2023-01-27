@@ -30,6 +30,8 @@ private:
     Rectangle m_Scroller;
     size_t m_CurrentScrollerPos;
 
+    float m_LineHeight;
+
     // Update the poition of the scroller according to the m_CurrentScrollerPos index.
     void MoveScroller();
 };

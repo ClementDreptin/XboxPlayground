@@ -23,6 +23,9 @@ public:
     // Clean up the font.
     static void End() { s_Font.End(); };
 
+    // Get the font height.
+    static float GetFontHeight() { return s_Font.GetFontHeight(); }
+
     // Update the option.
     virtual void Update(ATG::GAMEPAD *pGamepad) = 0;
 

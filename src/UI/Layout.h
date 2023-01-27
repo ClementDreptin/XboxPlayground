@@ -17,4 +17,8 @@ extern D3DCOLOR BackgroundColor;
 
 extern D3DCOLOR TextColor;
 
+extern float Padding;
+
+extern float Gap;
+
 }

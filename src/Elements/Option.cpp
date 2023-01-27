@@ -18,7 +18,7 @@ Option::Option(const std::wstring &text, Callback callback)
 
 void Option::Render(float x, float y, D3DCOLOR color)
 {
-    s_Font.DrawText(x, y, color, m_Text.c_str());
+    s_Font.DrawText(x + Layout::Padding, y + Layout::Padding, color, m_Text.c_str());
 }
 
 HRESULT Option::InitFont()

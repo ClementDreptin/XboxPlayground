@@ -18,4 +18,8 @@ D3DCOLOR BackgroundColor = D3DCOLOR_XRGB(20, 20, 20);
 
 D3DCOLOR TextColor = D3DCOLOR_XRGB(255, 255, 255);
 
+float Padding = 5.0f;
+
+float Gap = 2.0f;
+
 }
