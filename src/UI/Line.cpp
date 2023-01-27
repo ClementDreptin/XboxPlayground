@@ -1,20 +1,20 @@
 #include "pch.h"
-#include "UI\Rectangle.h"
+#include "UI\Line.h"
 
 #include <AtgUtil.h>
 
 #include "Renderer\D3DDevice.h"
 
-VertexShader Rectangle::s_VertexShader;
-PixelShader Rectangle::s_PixelShader;
-bool Rectangle::s_ShadersInitialized = false;
+VertexShader Line::s_VertexShader;
+PixelShader Line::s_PixelShader;
+bool Line::s_ShadersInitialized = false;
 
-Rectangle::Rectangle()
+Line::Line()
     : m_Props(), m_DisplayWidth(0.0f), m_DisplayHeight(0.0f)
 {
 }
 
-HRESULT Rectangle::Init(const Props &props)
+HRESULT Line::Init(const Props &props)
 {
     HRESULT hr = S_OK;
 
@@ -35,7 +35,7 @@ HRESULT Rectangle::Init(const Props &props)
 
     // Create the vertices
     // Since the Y axis goes upwards, if we want a height increase to make our
-    // rectangle grow downwards along the Y axis, we need to substract its height
+    // line grow downwards along the Y axis, we need to substract its height
     // to the Y coordinate of each vertex.
     Vertex vertices[] = {
         Vertex(0.0f, 0.0f - m_Props.Height, 0.0f),                    // Bottom Left
@@ -44,7 +44,7 @@ HRESULT Rectangle::Init(const Props &props)
         Vertex(m_Props.Width, 0.0f - m_Props.Height, 0.0f)            // Bottom Right
     };
 
-    // Create the shaders when the first rectangle is instantiated
+    // Create the shaders when the first line is instantiated
     if (!s_ShadersInitialized)
     {
         // Create the vertex shader
@@ -76,54 +76,10 @@ HRESULT Rectangle::Init(const Props &props)
     if (FAILED(hr))
         return hr;
 
-    // Create the border if needed
-    if (m_Props.BorderWidth > 0)
-    {
-        Line::Props leftBorderProps = { 0 };
-        leftBorderProps.X = m_Props.X - m_Props.BorderWidth;
-        leftBorderProps.Y = m_Props.Y;
-        leftBorderProps.Width = m_Props.BorderWidth;
-        leftBorderProps.Height = m_Props.Height + m_Props.BorderWidth;
-        leftBorderProps.Color = m_Props.BorderColor;
-        hr = m_LeftBorder.Init(leftBorderProps);
-        if (FAILED(hr))
-            return hr;
-
-        Line::Props rightBorderProps = { 0 };
-        rightBorderProps.X = m_Props.X + m_Props.Width;
-        rightBorderProps.Y = m_Props.Y - m_Props.BorderWidth;
-        rightBorderProps.Width = m_Props.BorderWidth;
-        rightBorderProps.Height = m_Props.Height + m_Props.BorderWidth;
-        rightBorderProps.Color = m_Props.BorderColor;
-        hr = m_RightBorder.Init(rightBorderProps);
-        if (FAILED(hr))
-            return hr;
-
-        Line::Props topBorderProps = { 0 };
-        topBorderProps.X = m_Props.X - m_Props.BorderWidth;
-        topBorderProps.Y = m_Props.Y - m_Props.BorderWidth;
-        topBorderProps.Width = m_Props.Width + m_Props.BorderWidth;
-        topBorderProps.Height = m_Props.BorderWidth;
-        topBorderProps.Color = m_Props.BorderColor;
-        hr = m_TopBorder.Init(topBorderProps);
-        if (FAILED(hr))
-            return hr;
-
-        Line::Props bottomBorderProps = { 0 };
-        bottomBorderProps.X = m_Props.X;
-        bottomBorderProps.Y = m_Props.Y + m_Props.Height;
-        bottomBorderProps.Width = m_Props.Width + m_Props.BorderWidth;
-        bottomBorderProps.Height = m_Props.BorderWidth;
-        bottomBorderProps.Color = m_Props.BorderColor;
-        hr = m_BottomBorder.Init(bottomBorderProps);
-        if (FAILED(hr))
-            return hr;
-    }
-
     return hr;
 }
 
-void Rectangle::Render()
+void Line::Render()
 {
     // Initialize default device states
     g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
@@ -149,20 +105,11 @@ void Rectangle::Render()
 
     g_pd3dDevice->SetPixelShaderConstantF(0, color, 1);
 
-    // Draw the rectangle
+    // Draw the line
     g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
-
-    // Draw the border if needed
-    if (m_Props.BorderWidth > 0)
-    {
-        m_LeftBorder.Render();
-        m_RightBorder.Render();
-        m_TopBorder.Render();
-        m_BottomBorder.Render();
-    }
 }
 
-void Rectangle::CalculateWorldViewProjectionMatrix()
+void Line::CalculateWorldViewProjectionMatrix()
 {
     // Direct3D uses an upwards Y axis system which is a bit unintuitive when dealing
     // with 2D rendering, so we flip the Y axis

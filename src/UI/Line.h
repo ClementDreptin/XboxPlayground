@@ -4,10 +4,9 @@
 #include "Renderer\IndexBuffer.h"
 #include "Renderer\VertexShader.h"
 #include "Renderer\PixelShader.h"
-#include "UI\Line.h"
 
-// Class to create a 2D rectangle.
-class Rectangle
+// Class that represents a line.
+class Line
 {
 public:
     struct Props
@@ -17,14 +16,12 @@ public:
         float Width;
         float Height;
         D3DCOLOR Color;
-        float BorderWidth;
-        D3DCOLOR BorderColor;
     };
 
-    Rectangle();
+    Line();
 
-    // Create the vertex and index buffers needed to create a rectangle. Set up the
-    // matrices to project the rectangle.
+    // Create the vertex and index buffers needed to create a line. Set up the
+    // matrices to project the line.
     HRESULT Init(const Props &props);
 
     float GetX() const { return m_Props.X; }
@@ -55,11 +52,6 @@ public:
 
 private:
     Props m_Props;
-
-    Line m_LeftBorder;
-    Line m_RightBorder;
-    Line m_TopBorder;
-    Line m_BottomBorder;
 
     float m_DisplayWidth;
     float m_DisplayHeight;

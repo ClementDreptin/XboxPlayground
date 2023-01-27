@@ -22,6 +22,8 @@ HRESULT Menu::Init()
     props.Width = Layout::Width;
     props.Height = Layout::Height;
     props.Color = Layout::BackgroundColor;
+    props.BorderWidth = 5.0f;
+    props.BorderColor = Layout::Color;
     hr = m_Background.Init(props);
     if (FAILED(hr))
         return hr;

@@ -24,6 +24,7 @@
     <ClCompile Include="src\Elements\OptionGroup.cpp" />
     <ClCompile Include="src\Elements\RangeOption.cpp" />
     <ClCompile Include="src\UI\Layout.cpp" />
+    <ClCompile Include="src\UI\Line.cpp" />
     <ClCompile Include="src\UI\Rectangle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -45,6 +46,7 @@
     <ClInclude Include="src\Elements\RangeOption.h" />
     <ClInclude Include="src\Renderer\D3DDevice.h" />
     <ClInclude Include="src\UI\Layout.h" />
+    <ClInclude Include="src\UI\Line.h" />
     <ClInclude Include="src\UI\Rectangle.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />
