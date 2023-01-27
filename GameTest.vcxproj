@@ -34,6 +34,7 @@
     <ClCompile Include="src\Renderer\PixelShader.cpp" />
     <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="src\Renderer\VertexShader.cpp" />
+    <ClCompile Include="src\UI\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\App.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="src\Elements\OptionGroup.h" />
     <ClInclude Include="src\Elements\RangeOption.h" />
     <ClInclude Include="src\Renderer\D3DDevice.h" />
+    <ClInclude Include="src\UI\Font.h" />
     <ClInclude Include="src\UI\Layout.h" />
     <ClInclude Include="src\UI\Line.h" />
     <ClInclude Include="src\UI\Rectangle.h" />
@@ -53,6 +55,7 @@
     <ClInclude Include="src\Renderer\PixelShader.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Renderer\VertexShader.h" />
+    <ClInclude Include="src\UI\Text.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="deps\AtgFramework\AtgFramework2010.vcxproj">

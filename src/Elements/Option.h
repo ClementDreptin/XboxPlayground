@@ -1,9 +1,9 @@
 #pragma once
 
-#include <AtgFont.h>
 #include <AtgInput.h>
 
 #include "UI\Layout.h"
+#include "UI\Text.h"
 
 // Abstract class describing an option in a menu (need to be derived to be instantiated).
 class Option
@@ -24,7 +24,7 @@ public:
     virtual void Render(float x, float y, D3DCOLOR color = Layout::TextColor) = 0;
 
 protected:
-    std::wstring m_Text;
+    Text m_Text;
     Callback m_Callback;
 };
 

@@ -2,8 +2,7 @@
 #include "Elements\RangeOption.h"
 
 #include "UI\Layout.h"
-
-extern ATG::Font g_Font;
+#include "UI\Font.h"
 
 RangeOption::RangeOption()
     : Option(), m_Min(0.0f), m_Max(0.0f), m_Current(0.0f)

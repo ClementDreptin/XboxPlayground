@@ -2,8 +2,7 @@
 #include "Elements\OptionGroup.h"
 
 #include "UI\Layout.h"
-
-extern ATG::Font g_Font;
+#include "UI\Font.h"
 
 OptionGroup::OptionGroup()
     : m_CurrentScrollerPos(0)
