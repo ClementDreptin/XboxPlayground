@@ -24,7 +24,7 @@ HRESULT Menu::Init()
     props.Color = Layout::BackgroundColor;
     props.BorderWidth = 5.0f;
     props.BorderColor = Layout::Color;
-    props.Border = Rectangle::Border_All;
+    props.BorderPosition = Border::Border_All;
     hr = m_Background.Init(props);
     if (FAILED(hr))
         return hr;

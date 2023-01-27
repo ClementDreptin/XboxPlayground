@@ -23,6 +23,7 @@
     <ClCompile Include="src\Elements\Option.cpp" />
     <ClCompile Include="src\Elements\OptionGroup.cpp" />
     <ClCompile Include="src\Elements\RangeOption.cpp" />
+    <ClCompile Include="src\UI\Border.cpp" />
     <ClCompile Include="src\UI\Layout.cpp" />
     <ClCompile Include="src\UI\Line.cpp" />
     <ClCompile Include="src\UI\Rectangle.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="src\Elements\OptionGroup.h" />
     <ClInclude Include="src\Elements\RangeOption.h" />
     <ClInclude Include="src\Renderer\D3DDevice.h" />
+    <ClInclude Include="src\UI\Border.h" />
     <ClInclude Include="src\UI\Font.h" />
     <ClInclude Include="src\UI\Layout.h" />
     <ClInclude Include="src\UI\Line.h" />
