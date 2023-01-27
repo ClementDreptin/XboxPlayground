@@ -10,27 +10,27 @@ PixelShader Rectangle::s_PixelShader;
 bool Rectangle::s_ShadersInitialized = false;
 
 Rectangle::Rectangle()
-    : m_X(0.0f), m_Y(0.0f), m_Width(0.0f), m_Height(0.0f), m_DisplayWidth(0), m_DisplayHeight(0), m_Color(0)
+    : m_Props(), m_DisplayWidth(0.0f), m_DisplayHeight(0.0f)
 {
 }
 
-HRESULT Rectangle::Init(float x, float y, float width, float height, D3DCOLOR color)
+HRESULT Rectangle::Init(const Props &props)
 {
     HRESULT hr = S_OK;
 
-    // Save the display dimensions
-    ATG::GetVideoSettings(&m_DisplayWidth, &m_DisplayHeight);
+    // Get the display dimensions
+    uint32_t displayWidth = 0;
+    uint32_t displayHeight = 0;
+    ATG::GetVideoSettings(&displayWidth, &displayHeight);
 
-    // Save the position, dimensions and color
-    m_X = x;
-    m_Y = y;
-    m_Width = width;
-    m_Height = height;
-    m_Color = color;
+    // Set the members
+    m_Props = props;
+    m_DisplayWidth = static_cast<float>(displayWidth);
+    m_DisplayHeight = static_cast<float>(displayHeight);
 
     // Set up the matrices for orthographic projection
     m_ViewMatrix = XMMatrixIdentity();
-    m_ProjectionMatrix = XMMatrixOrthographicOffCenterLH(0.0f, static_cast<float>(m_DisplayWidth), 0.0f, static_cast<float>(m_DisplayHeight), -1.0f, 1.0f);
+    m_ProjectionMatrix = XMMatrixOrthographicOffCenterLH(0.0f, m_DisplayWidth, 0.0f, m_DisplayHeight, -1.0f, 1.0f);
     CalculateWorldViewProjectionMatrix();
 
     // Create the vertices
@@ -38,10 +38,10 @@ HRESULT Rectangle::Init(float x, float y, float width, float height, D3DCOLOR co
     // rectangle grow downwards along the Y axis, we need to substract its height
     // to the Y coordinate of each vertex.
     Vertex vertices[] = {
-        Vertex(0.0f, 0.0f - height, 0.0f),    // Bottom Left
-        Vertex(0.0f, height - height, 0.0f),  // Top Left
-        Vertex(width, height - height, 0.0f), // Top Right
-        Vertex(width, 0.0f - height, 0.0f)    // Bottom Right
+        Vertex(0.0f, 0.0f - m_Props.Height, 0.0f),                    // Bottom Left
+        Vertex(0.0f, m_Props.Height - m_Props.Height, 0.0f),          // Top Left
+        Vertex(m_Props.Width, m_Props.Height - m_Props.Height, 0.0f), // Top Right
+        Vertex(m_Props.Width, 0.0f - m_Props.Height, 0.0f)            // Bottom Right
     };
 
     // Create the shaders when the first rectangle is instantiated
@@ -76,7 +76,7 @@ HRESULT Rectangle::Init(float x, float y, float width, float height, D3DCOLOR co
     if (FAILED(hr))
         return hr;
 
-    return S_OK;
+    return hr;
 }
 
 void Rectangle::Render()
@@ -97,10 +97,10 @@ void Rectangle::Render()
 
     // Turn the color into a float array and pass it to the pixel shader
     float color[4] = {
-        ((m_Color & 0x00ff0000) >> 16) / 255.0f,
-        ((m_Color & 0x0000ff00) >> 8) / 255.0f,
-        ((m_Color & 0x000000ff) >> 0) / 255.0f,
-        ((m_Color & 0xff000000) >> 24) / 255.0f,
+        ((m_Props.Color & 0x00ff0000) >> 16) / 255.0f,
+        ((m_Props.Color & 0x0000ff00) >> 8) / 255.0f,
+        ((m_Props.Color & 0x000000ff) >> 0) / 255.0f,
+        ((m_Props.Color & 0xff000000) >> 24) / 255.0f,
     };
 
     g_pd3dDevice->SetPixelShaderConstantF(0, color, 1);
@@ -113,6 +113,6 @@ void Rectangle::CalculateWorldViewProjectionMatrix()
 {
     // Direct3D uses an upwards Y axis system which is a bit unintuitive when dealing
     // with 2D rendering, so we flip the Y axis
-    m_WorldMatrix = XMMatrixTranslation(static_cast<float>(m_X), static_cast<float>(m_DisplayHeight - m_Y), 0.0f);
+    m_WorldMatrix = XMMatrixTranslation(m_Props.X, m_DisplayHeight - m_Props.Y, 0.0f);
     m_WVPMatrix = m_WorldMatrix * m_ViewMatrix * m_ProjectionMatrix;
 }

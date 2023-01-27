@@ -16,7 +16,13 @@ HRESULT Menu::Init()
     HRESULT hr = S_OK;
 
     // Create the background
-    hr = m_Background.Init(Layout::X, Layout::Y, Layout::Width, Layout::Height, Layout::BackgroundColor);
+    Rectangle::Props props = { 0 };
+    props.X = Layout::X;
+    props.Y = Layout::Y;
+    props.Width = Layout::Width;
+    props.Height = Layout::Height;
+    props.Color = Layout::BackgroundColor;
+    hr = m_Background.Init(props);
     if (FAILED(hr))
         return hr;
 

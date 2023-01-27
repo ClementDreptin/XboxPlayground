@@ -12,7 +12,13 @@ OptionGroup::OptionGroup(const std::string &name, const std::vector<std::shared_
     : m_Name(name), m_Options(options), m_CurrentScrollerPos(0)
 {
     // Create the scroller
-    m_Scroller.Init(Layout::X, Layout::Y, Layout::Width, 50.0f, D3DCOLOR_ARGB(204, D3DCOLOR_GETRED(Layout::Color), D3DCOLOR_GETGREEN(Layout::Color), D3DCOLOR_GETBLUE(Layout::Color)));
+    Rectangle::Props props = { 0 };
+    props.X = Layout::X;
+    props.Y = Layout::Y;
+    props.Width = Layout::Width;
+    props.Height = 50.0f;
+    props.Color = D3DCOLOR_ARGB(204, D3DCOLOR_GETRED(Layout::Color), D3DCOLOR_GETGREEN(Layout::Color), D3DCOLOR_GETBLUE(Layout::Color));
+    m_Scroller.Init(props);
 }
 
 void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
