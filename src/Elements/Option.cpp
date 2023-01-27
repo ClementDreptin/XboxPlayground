@@ -15,5 +15,5 @@ Option::Option(const std::wstring &text, Callback callback)
 
 void Option::Render(float x, float y, D3DCOLOR color)
 {
-    m_Text.Render(x, y, color);
+    m_Text.Render(x + Layout::Padding, y + Layout::Padding, color);
 }
