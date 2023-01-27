@@ -17,15 +17,6 @@ public:
 
     Option(const std::wstring &text, Callback callback);
 
-    // Initialize the font.
-    static void Begin() { s_Font.Begin(); };
-
-    // Clean up the font.
-    static void End() { s_Font.End(); };
-
-    // Get the font height.
-    static float GetFontHeight() { return s_Font.GetFontHeight(); }
-
     // Update the option.
     virtual void Update(ATG::GAMEPAD *pGamepad) = 0;
 
@@ -35,14 +26,6 @@ public:
 protected:
     std::wstring m_Text;
     Callback m_Callback;
-
-    static ATG::Font s_Font;
-
-private:
-    static bool s_FontInitialized;
-
-    // Creates the font used to render the text of all options.
-    static HRESULT InitFont();
 };
 
 // Macro to create a shared pointer to an option. Being able to use templated arguments and std::forward

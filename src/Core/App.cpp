@@ -2,6 +2,9 @@
 #include "Core\App.h"
 
 #include <AtgInput.h>
+#include <AtgFont.h>
+
+ATG::Font g_Font;
 
 App::App()
     : m_MenuOpen(false)
@@ -11,6 +14,14 @@ App::App()
 HRESULT App::Initialize()
 {
     HRESULT hr = S_OK;
+
+    // Create the font
+    hr = g_Font.Create("game:\\Media\\Fonts\\Arial_20.xpr");
+    if (FAILED(hr))
+    {
+        Log::Error("Couldn't create the font");
+        return hr;
+    }
 
     // Create the menu
     hr = m_Menu.Init();

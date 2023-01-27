@@ -3,13 +3,15 @@
 
 #include "UI\Layout.h"
 
+extern ATG::Font g_Font;
+
 OptionGroup::OptionGroup()
     : m_CurrentScrollerPos(0)
 {
 }
 
 OptionGroup::OptionGroup(const std::string &name, const std::vector<std::shared_ptr<Option>> &options)
-    : m_Name(name), m_Options(options), m_CurrentScrollerPos(0), m_LineHeight(Option::GetFontHeight() + Layout::Padding * 2)
+    : m_Name(name), m_Options(options), m_CurrentScrollerPos(0), m_LineHeight(g_Font.GetFontHeight() + Layout::Padding * 2)
 {
     // Create the scroller
     Rectangle::Props props = { 0 };
@@ -52,11 +54,11 @@ void OptionGroup::Render()
     // Render the scroller
     m_Scroller.Render();
 
-    // Rendern the options
-    Option::Begin();
+    // Render the options
+    g_Font.Begin();
     for (size_t i = 0; i < m_Options.size(); i++)
         m_Options[i]->Render(Layout::X, Layout::Y + i * m_LineHeight);
-    Option::End();
+    g_Font.End();
 }
 
 void OptionGroup::MoveScroller()

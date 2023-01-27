@@ -3,6 +3,8 @@
 
 #include "UI\Layout.h"
 
+extern ATG::Font g_Font;
+
 RangeOption::RangeOption()
     : Option(), m_Min(0.0f), m_Max(0.0f), m_Current(0.0f)
 {
@@ -41,8 +43,8 @@ void RangeOption::Render(float x, float y, D3DCOLOR color)
     std::wstring text = std::to_wstring(static_cast<long double>(m_Current));
 
     // Calculate the width of the wide string of the number value
-    float textWidth = s_Font.GetTextWidth(text.c_str());
+    float textWidth = g_Font.GetTextWidth(text.c_str());
 
     // Draw the wide string of the number value
-    s_Font.DrawText(x + Layout::Width - textWidth - Layout::Padding, y + Layout::Padding, color, text.c_str());
+    g_Font.DrawText(x + Layout::Width - textWidth - Layout::Padding, y + Layout::Padding, color, text.c_str());
 }
