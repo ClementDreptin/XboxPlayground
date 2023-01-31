@@ -38,9 +38,6 @@ private:
     bool m_HasBorder;
     bool m_IsInitialized;
 
-    float m_DisplayWidth;
-    float m_DisplayHeight;
-
     VertexBuffer m_VertexBuffer;
     IndexBuffer m_IndexBuffer;
 

@@ -32,9 +32,6 @@ private:
     Props m_Props;
     bool m_IsInitialized;
 
-    float m_DisplayWidth;
-    float m_DisplayHeight;
-
     VertexBuffer m_VertexBuffer;
     IndexBuffer m_IndexBuffer;
 

@@ -1,16 +1,17 @@
 #include "pch.h"
 #include "UI\Line.h"
 
-#include <AtgUtil.h>
-
 #include "Renderer\D3DDevice.h"
+
+extern float g_DisplayWidth;
+extern float g_DisplayHeight;
 
 VertexShader Line::s_VertexShader;
 PixelShader Line::s_PixelShader;
 bool Line::s_ShadersInitialized = false;
 
 Line::Line()
-    : m_Props(), m_IsInitialized(false), m_DisplayWidth(0.0f), m_DisplayHeight(0.0f)
+    : m_Props(), m_IsInitialized(false)
 {
 }
 
@@ -75,18 +76,9 @@ HRESULT Line::Init()
 {
     HRESULT hr = S_OK;
 
-    // Get the display dimensions
-    uint32_t displayWidth = 0;
-    uint32_t displayHeight = 0;
-    ATG::GetVideoSettings(&displayWidth, &displayHeight);
-
-    // Set the display dimensions
-    m_DisplayWidth = static_cast<float>(displayWidth);
-    m_DisplayHeight = static_cast<float>(displayHeight);
-
     // Set up the matrices for orthographic projection
     m_ViewMatrix = XMMatrixIdentity();
-    m_ProjectionMatrix = XMMatrixOrthographicOffCenterLH(0.0f, m_DisplayWidth, 0.0f, m_DisplayHeight, -1.0f, 1.0f);
+    m_ProjectionMatrix = XMMatrixOrthographicOffCenterLH(0.0f, g_DisplayWidth, 0.0f, g_DisplayHeight, -1.0f, 1.0f);
     CalculateWorldViewProjectionMatrix();
 
     // Create the vertices
@@ -141,7 +133,7 @@ void Line::CalculateWorldViewProjectionMatrix()
 {
     // Direct3D uses an upwards Y axis system which is a bit unintuitive when dealing
     // with 2D rendering, so we flip the Y axis
-    m_WorldMatrix = XMMatrixTranslation(m_Props.X, m_DisplayHeight - m_Props.Y, 0.0f);
+    m_WorldMatrix = XMMatrixTranslation(m_Props.X, g_DisplayHeight - m_Props.Y, 0.0f);
     m_WVPMatrix = m_WorldMatrix * m_ViewMatrix * m_ProjectionMatrix;
 }
 

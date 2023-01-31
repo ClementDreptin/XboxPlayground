@@ -3,8 +3,11 @@
 
 #include <AtgInput.h>
 #include <AtgFont.h>
+#include <AtgUtil.h>
 
 ATG::Font g_Font;
+float g_DisplayWidth = 0.0f;
+float g_DisplayHeight = 0.0f;
 
 App::App()
     : m_MenuOpen(false)
@@ -14,6 +17,13 @@ App::App()
 HRESULT App::Initialize()
 {
     HRESULT hr = S_OK;
+
+    // Save the display dimensions
+    uint32_t displayWidth = 0;
+    uint32_t displayHeight = 0;
+    ATG::GetVideoSettings(&displayWidth, &displayHeight);
+    g_DisplayWidth = static_cast<float>(displayWidth);
+    g_DisplayHeight = static_cast<float>(displayHeight);
 
     // Create the font
     hr = g_Font.Create("game:\\Media\\Fonts\\Arial_16.xpr");
