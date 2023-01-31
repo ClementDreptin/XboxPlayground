@@ -27,14 +27,13 @@ HRESULT App::Initialize()
     Text::Props controlsTextProps = { 0 };
     controlsTextProps.X = 10.0f;
     controlsTextProps.Y = 10.0f;
-    controlsTextProps.Text = L"Press LT + DPAD_LEFT to Open/Close";
+    controlsTextProps.Text = L"Press LT + DPAD_LEFT to Open";
     controlsTextProps.Color = Layout::TextColor;
     controlsTextProps.BackgroundColor = Layout::BackgroundColor;
     controlsTextProps.BorderWidth = 5.0f;
     controlsTextProps.BorderColor = Layout::Color;
     controlsTextProps.BorderPosition = Border::Border_All;
-
-    hr = m_ControlsText.Init(controlsTextProps);
+    hr = m_ControlsText.SetProps(controlsTextProps);
     if (FAILED(hr))
         return hr;
 
@@ -57,6 +56,12 @@ HRESULT App::Update()
     if (pGamepad->bLastLeftTrigger && pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)
     {
         m_MenuOpen = !m_MenuOpen;
+
+        // Update the controls text
+        Text::Props newProps = m_ControlsText.GetProps();
+        newProps.Text = L"Press LT + DPAD_LEFT to " + std::wstring(!m_MenuOpen ? L"Open" : L"Close");
+        m_ControlsText.SetProps(newProps);
+
         return hr;
     }
 

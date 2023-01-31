@@ -10,11 +10,78 @@ PixelShader Rectangle::s_PixelShader;
 bool Rectangle::s_ShadersInitialized = false;
 
 Rectangle::Rectangle()
-    : m_Props(), m_HasBorder(false), m_DisplayWidth(0.0f), m_DisplayHeight(0.0f)
+    : m_Props(), m_HasBorder(false), m_IsInitialized(false), m_DisplayWidth(0.0f), m_DisplayHeight(0.0f)
 {
 }
 
-HRESULT Rectangle::Init(const Props &props)
+HRESULT Rectangle::SetProps(const Props &props)
+{
+    HRESULT hr = S_OK;
+
+    // Check if the world view project matrix and/or the vertex buffer need to be updated
+    bool needToUpdateWorldViewProjectionMatrix = m_Props.X != props.X || m_Props.Y != props.Y;
+    bool needToUpdateVertexBuffer = m_Props.Width != props.Width || m_Props.Height != props.Height;
+
+    m_Props = props;
+    m_HasBorder = m_Props.BorderPosition != Border::Border_None && m_Props.BorderWidth > 0;
+
+    // If this is the first time SetProps is called, just initialize the rectangle and return
+    if (!m_IsInitialized)
+        return Init();
+
+    // Update the border
+    hr = SetBorder();
+    if (FAILED(hr))
+        return hr;
+
+    // Perform the updates if needed
+    if (needToUpdateWorldViewProjectionMatrix)
+        CalculateWorldViewProjectionMatrix();
+
+    if (needToUpdateVertexBuffer)
+        hr = UpdateVertexBuffer();
+
+    return hr;
+}
+
+void Rectangle::Render()
+{
+    // Initialize default device states
+    g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+    g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    g_pd3dDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+    g_pd3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    g_pd3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+    g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+    g_pd3dDevice->SetVertexDeclaration(m_VertexBuffer.GetVertexDeclaration());
+    g_pd3dDevice->SetStreamSource(0, &m_VertexBuffer, 0, sizeof(Vertex));
+    g_pd3dDevice->SetVertexShader(&s_VertexShader);
+    g_pd3dDevice->SetPixelShader(&s_PixelShader);
+    g_pd3dDevice->SetIndices(&m_IndexBuffer);
+
+    // Pass the world view projection matrix to the vertex shader
+    g_pd3dDevice->SetVertexShaderConstantF(0, reinterpret_cast<float *>(&m_WVPMatrix), 4);
+
+    // Turn the color into a float array and pass it to the pixel shader
+    float color[4] = {
+        ((m_Props.Color & 0x00ff0000) >> 16) / 255.0f,
+        ((m_Props.Color & 0x0000ff00) >> 8) / 255.0f,
+        ((m_Props.Color & 0x000000ff) >> 0) / 255.0f,
+        ((m_Props.Color & 0xff000000) >> 24) / 255.0f,
+    };
+
+    g_pd3dDevice->SetPixelShaderConstantF(0, color, 1);
+
+    // Draw the rectangle
+    g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
+
+    // Render the border if needed
+    if (m_HasBorder)
+        m_Border.Render();
+}
+
+HRESULT Rectangle::Init()
 {
     HRESULT hr = S_OK;
 
@@ -23,8 +90,7 @@ HRESULT Rectangle::Init(const Props &props)
     uint32_t displayHeight = 0;
     ATG::GetVideoSettings(&displayWidth, &displayHeight);
 
-    // Set the members
-    m_Props = props;
+    // Set the display dimensions
     m_DisplayWidth = static_cast<float>(displayWidth);
     m_DisplayHeight = static_cast<float>(displayHeight);
 
@@ -76,59 +142,28 @@ HRESULT Rectangle::Init(const Props &props)
     if (FAILED(hr))
         return hr;
 
-    // Initialize the border if needed
-    m_HasBorder = m_Props.BorderPosition != Border::Border_None && m_Props.BorderWidth > 0;
-    if (m_HasBorder)
-    {
-        Border::Props borderProps = { 0 };
-        borderProps.X = m_Props.X;
-        borderProps.Y = m_Props.Y;
-        borderProps.Thickness = m_Props.BorderWidth;
-        borderProps.Color = m_Props.BorderColor;
-        borderProps.Position = m_Props.BorderPosition;
-        borderProps.Width = m_Props.Width;
-        borderProps.Height = m_Props.Height;
+    // Initialize the border
+    hr = SetBorder();
+    if (FAILED(hr))
+        return hr;
 
-        hr = m_Border.Init(borderProps);
-        if (FAILED(hr))
-            return hr;
-    }
+    m_IsInitialized = true;
 
     return hr;
 }
 
-void Rectangle::Render()
+HRESULT Rectangle::SetBorder()
 {
-    // Initialize default device states
-    g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-    g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-    g_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+    Border::Props borderProps = { 0 };
+    borderProps.X = m_Props.X;
+    borderProps.Y = m_Props.Y;
+    borderProps.Thickness = m_Props.BorderWidth;
+    borderProps.Color = m_Props.BorderColor;
+    borderProps.Position = m_Props.BorderPosition;
+    borderProps.Width = m_Props.Width;
+    borderProps.Height = m_Props.Height;
 
-    g_pd3dDevice->SetVertexDeclaration(m_VertexBuffer.GetVertexDeclaration());
-    g_pd3dDevice->SetStreamSource(0, m_VertexBuffer.Get(), 0, sizeof(Vertex));
-    g_pd3dDevice->SetVertexShader(s_VertexShader.Get());
-    g_pd3dDevice->SetPixelShader(s_PixelShader.Get());
-    g_pd3dDevice->SetIndices(m_IndexBuffer.Get());
-
-    // Pass the world view projection matrix to the vertex shader
-    g_pd3dDevice->SetVertexShaderConstantF(0, reinterpret_cast<float *>(&m_WVPMatrix), 4);
-
-    // Turn the color into a float array and pass it to the pixel shader
-    float color[4] = {
-        ((m_Props.Color & 0x00ff0000) >> 16) / 255.0f,
-        ((m_Props.Color & 0x0000ff00) >> 8) / 255.0f,
-        ((m_Props.Color & 0x000000ff) >> 0) / 255.0f,
-        ((m_Props.Color & 0xff000000) >> 24) / 255.0f,
-    };
-
-    g_pd3dDevice->SetPixelShaderConstantF(0, color, 1);
-
-    // Draw the rectangle
-    g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
-
-    // Render the border if needed
-    if (m_HasBorder)
-        m_Border.Render();
+    return m_Border.SetProps(borderProps);
 }
 
 void Rectangle::CalculateWorldViewProjectionMatrix()
@@ -137,4 +172,21 @@ void Rectangle::CalculateWorldViewProjectionMatrix()
     // with 2D rendering, so we flip the Y axis
     m_WorldMatrix = XMMatrixTranslation(m_Props.X, m_DisplayHeight - m_Props.Y, 0.0f);
     m_WVPMatrix = m_WorldMatrix * m_ViewMatrix * m_ProjectionMatrix;
+}
+
+HRESULT Rectangle::UpdateVertexBuffer()
+{
+    // Create the vertices
+    // Since the Y axis goes upwards, if we want a height increase to make our
+    // rectangle grow downwards along the Y axis, we need to substract its height
+    // to the Y coordinate of each vertex.
+    Vertex vertices[] = {
+        Vertex(0.0f, 0.0f - m_Props.Height, 0.0f),                    // Bottom Left
+        Vertex(0.0f, m_Props.Height - m_Props.Height, 0.0f),          // Top Left
+        Vertex(m_Props.Width, m_Props.Height - m_Props.Height, 0.0f), // Top Right
+        Vertex(m_Props.Width, 0.0f - m_Props.Height, 0.0f)            // Bottom Right
+    };
+
+    // Send the new vertices to the vertex buffer
+    return m_VertexBuffer.UpdateBuffer(vertices, ARRAYSIZE(vertices));
 }

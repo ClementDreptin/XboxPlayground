@@ -29,17 +29,24 @@ public:
 
     Border();
 
-    // Initialize a line for each border.
-    HRESULT Init(const Props &props);
+    inline Props GetProps() const { return m_Props; }
+
+    HRESULT SetProps(const Props &props);
 
     // Render the border.
     void Render();
 
 private:
     Props m_Props;
+    bool m_IsInitialized;
 
     Line m_Left;
     Line m_Right;
     Line m_Top;
     Line m_Bottom;
+
+    // Initialize a line for each border.
+    HRESULT Init();
+
+    HRESULT SetBorders();
 };

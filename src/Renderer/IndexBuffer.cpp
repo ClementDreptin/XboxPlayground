@@ -8,14 +8,14 @@ IndexBuffer::IndexBuffer()
 {
 }
 
-HRESULT IndexBuffer::Init(uint16_t *pData, uint32_t numIndices)
+HRESULT IndexBuffer::Init(uint16_t *pData, size_t numIndices)
 {
     HRESULT hr = S_OK;
 
-    uint32_t dataSize = sizeof(uint16_t) * numIndices;
+    size_t dataSize = sizeof(uint16_t) * numIndices;
 
     // Create the index buffer
-    hr = g_pd3dDevice->CreateIndexBuffer(dataSize, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, NULL, &m_pBuffer, nullptr);
+    hr = g_pd3dDevice->CreateIndexBuffer(dataSize, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, 0, &m_pBuffer, nullptr);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the index buffer");
@@ -23,14 +23,39 @@ HRESULT IndexBuffer::Init(uint16_t *pData, uint32_t numIndices)
     }
 
     // Copy the data into the index buffer
+    hr = UpdateBuffer(pData, numIndices);
+    if (FAILED(hr))
+        return hr;
+
+    return hr;
+}
+
+HRESULT IndexBuffer::UpdateBuffer(uint16_t *pData, size_t numIndices)
+{
+    HRESULT hr = S_OK;
+
+    // Make sure the index buffer is initialized
+    if (m_pBuffer == nullptr)
+    {
+        Log::Error("Can't update the vertex buffer before initializing it");
+        return hr;
+    }
+
+    size_t dataSize = sizeof(uint16_t) * numIndices;
     void *pIndices = nullptr;
-    hr = m_pBuffer->Lock(0, dataSize, reinterpret_cast<void **>(&pIndices), NULL);
+
+    // Lock the buffer
+    hr = m_pBuffer->Lock(0, dataSize, reinterpret_cast<void **>(&pIndices), 0);
     if (FAILED(hr))
     {
         Log::Error("Couldn't lock the index buffer");
         return hr;
     }
-    memcpy(pIndices, pData, dataSize);
+
+    // Write to the buffer
+    memcpy_s(pIndices, dataSize, pData, dataSize);
+
+    // Unlock the buffer
     m_pBuffer->Unlock();
 
     return hr;

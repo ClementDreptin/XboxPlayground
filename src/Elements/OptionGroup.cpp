@@ -19,7 +19,7 @@ OptionGroup::OptionGroup(const std::string &name, const std::vector<std::shared_
     props.Width = Layout::Width - Layout::Gap * 2;
     props.Height = m_LineHeight - Layout::Gap * 2;
     props.Color = Layout::Color;
-    m_Scroller.Init(props);
+    m_Scroller.SetProps(props);
 }
 
 void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
@@ -60,5 +60,7 @@ void OptionGroup::Render()
 
 void OptionGroup::MoveScroller()
 {
-    m_Scroller.SetY(Layout::Y + Layout::Gap + m_LineHeight * m_CurrentScrollerPos);
+    Rectangle::Props newProps = m_Scroller.GetProps();
+    newProps.Y = Layout::Y + Layout::Gap + m_LineHeight * m_CurrentScrollerPos;
+    m_Scroller.SetProps(newProps);
 }

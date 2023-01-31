@@ -20,38 +20,17 @@ public:
 
     Line();
 
-    // Create the vertex and index buffers needed to create a line. Set up the
-    // matrices to project the line.
-    HRESULT Init(const Props &props);
+    inline Props GetProps() const { return m_Props; }
 
-    float GetX() const { return m_Props.X; }
-
-    float GetY() const { return m_Props.Y; }
-
-    void SetPosition(float x, float y)
-    {
-        m_Props.X = x;
-        m_Props.Y = y;
-        CalculateWorldViewProjectionMatrix();
-    }
-
-    void SetX(float x)
-    {
-        m_Props.X = x;
-        CalculateWorldViewProjectionMatrix();
-    }
-
-    void SetY(float y)
-    {
-        m_Props.Y = y;
-        CalculateWorldViewProjectionMatrix();
-    }
+    // Set the new props and update the world view projection matrix and/or the vertex buffer if necessary.
+    HRESULT SetProps(const Props &props);
 
     // Render the rectangle.
     void Render();
 
 private:
     Props m_Props;
+    bool m_IsInitialized;
 
     float m_DisplayWidth;
     float m_DisplayHeight;
@@ -68,7 +47,14 @@ private:
     XMMATRIX m_ProjectionMatrix;
     XMMATRIX m_WVPMatrix;
 
+    // Create the vertex and index buffers needed to create a line. Set up the
+    // matrices to project the line.
+    HRESULT Init();
+
     // Apply a translation from the position and recalculate the world view
     // projection matrix.
     void CalculateWorldViewProjectionMatrix();
+
+    // Update the vertex buffer from the props.
+    HRESULT UpdateVertexBuffer();
 };

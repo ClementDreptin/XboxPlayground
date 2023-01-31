@@ -44,7 +44,7 @@ HRESULT VertexShader::Init()
         nullptr,
         "main",
         "vs_2_0",
-        NULL,
+        0,
         &pShaderCode,
         &pErrorMsg,
         nullptr
@@ -68,5 +68,5 @@ HRESULT VertexShader::Init()
         return hr;
     }
 
-    return S_OK;
+    return hr;
 }

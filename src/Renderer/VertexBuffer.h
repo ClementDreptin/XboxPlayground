@@ -17,12 +17,15 @@ class VertexBuffer
 public:
     VertexBuffer();
 
-    D3DVertexBuffer *Get() const { return m_pBuffer; }
+    inline D3DVertexBuffer *operator&() const { return m_pBuffer; }
 
-    D3DVertexDeclaration *GetVertexDeclaration() const { return m_pVertexDeclaration; }
+    inline D3DVertexDeclaration *GetVertexDeclaration() const { return m_pVertexDeclaration; }
 
     // Create the vertex buffer, copy data into it and set the vertex declaration.
-    HRESULT Init(Vertex *pData, uint32_t numVertices);
+    HRESULT Init(Vertex *pData, size_t numVertices);
+
+    // Copy pData into the buffer on the GPU.
+    HRESULT UpdateBuffer(Vertex *pData, size_t numVertices);
 
 private:
     D3DVertexBuffer *m_pBuffer;

@@ -31,7 +31,7 @@ HRESULT PixelShader::Init()
         nullptr,
         "main",
         "ps_2_0",
-        NULL,
+        0,
         &pShaderCode,
         &pErrorMsg,
         nullptr
@@ -55,5 +55,5 @@ HRESULT PixelShader::Init()
         return hr;
     }
 
-    return S_OK;
+    return hr;
 }

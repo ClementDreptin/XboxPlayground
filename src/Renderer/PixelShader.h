@@ -6,7 +6,7 @@ class PixelShader
 public:
     PixelShader();
 
-    D3DPixelShader *Get() const { return m_pShader; }
+    inline D3DPixelShader *operator&() const { return m_pShader; }
 
     // Compile the pixel shader source and create the pixel shader.
     HRESULT Init();

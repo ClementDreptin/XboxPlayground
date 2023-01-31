@@ -8,30 +8,19 @@ VertexBuffer::VertexBuffer()
 {
 }
 
-HRESULT VertexBuffer::Init(Vertex *pData, uint32_t numVertices)
+HRESULT VertexBuffer::Init(Vertex *pData, size_t numVertices)
 {
     HRESULT hr = S_OK;
 
-    uint32_t dataSize = sizeof(Vertex) * numVertices;
+    size_t dataSize = sizeof(Vertex) * numVertices;
 
     // Create the vertex buffer
-    hr = g_pd3dDevice->CreateVertexBuffer(dataSize, D3DUSAGE_WRITEONLY, NULL, D3DPOOL_DEFAULT, &m_pBuffer, nullptr);
+    hr = g_pd3dDevice->CreateVertexBuffer(dataSize, D3DUSAGE_WRITEONLY, 0, D3DPOOL_DEFAULT, &m_pBuffer, nullptr);
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the vertex buffer");
         return hr;
     }
-
-    // Copy the data into the vertex buffer
-    void *pVertices = nullptr;
-    hr = m_pBuffer->Lock(0, dataSize, reinterpret_cast<void **>(&pVertices), NULL);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't lock the vertex buffer");
-        return hr;
-    }
-    memcpy(pVertices, pData, dataSize);
-    m_pBuffer->Unlock();
 
     // Define the vertex elements
     D3DVERTEXELEMENT9 vertexElements[] = {
@@ -46,6 +35,47 @@ HRESULT VertexBuffer::Init(Vertex *pData, uint32_t numVertices)
         Log::Error("Couldn't create the vertex declaration");
         return hr;
     }
+
+    // Copy the data into the vertex buffer
+    hr = UpdateBuffer(pData, numVertices);
+    if (FAILED(hr))
+        return hr;
+
+    return hr;
+}
+
+HRESULT VertexBuffer::UpdateBuffer(Vertex *pData, size_t numVertices)
+{
+    HRESULT hr = S_OK;
+
+    // Make sure the vertex buffer is initialized
+    if (m_pBuffer == nullptr)
+    {
+        Log::Error("Can't update the vertex buffer before initializing it");
+        return hr;
+    }
+
+    size_t dataSize = sizeof(Vertex) * numVertices;
+    void *pVertices = nullptr;
+
+    // Lock the buffer
+    hr = m_pBuffer->Lock(0, dataSize, reinterpret_cast<void **>(&pVertices), 0);
+    if (FAILED(hr))
+    {
+        Log::Error("Couldn't lock the vertex buffer");
+        return hr;
+    }
+
+    // Write to the buffer
+    errno_t err = memcpy_s(pVertices, dataSize, pData, dataSize);
+    if (err != 0)
+    {
+        Log::Error("Couldn't write to the vertex buffer");
+        return E_FAIL;
+    }
+
+    // Unlock the buffer
+    m_pBuffer->Unlock();
 
     return hr;
 }
