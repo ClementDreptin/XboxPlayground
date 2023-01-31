@@ -16,7 +16,7 @@ HRESULT App::Initialize()
     HRESULT hr = S_OK;
 
     // Create the font
-    hr = g_Font.Create("game:\\Media\\Fonts\\Arial_20.xpr");
+    hr = g_Font.Create("game:\\Media\\Fonts\\Arial_16.xpr");
     if (FAILED(hr))
     {
         Log::Error("Couldn't create the font");
@@ -27,7 +27,7 @@ HRESULT App::Initialize()
     Text::Props controlsTextProps = { 0 };
     controlsTextProps.X = 10.0f;
     controlsTextProps.Y = 10.0f;
-    controlsTextProps.Text = L"Press LT + DPAD_LEFT to Open";
+    controlsTextProps.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to Open";
     controlsTextProps.Color = Layout::TextColor;
     controlsTextProps.BackgroundColor = Layout::BackgroundColor;
     controlsTextProps.BorderWidth = 5.0f;
@@ -59,7 +59,7 @@ HRESULT App::Update()
 
         // Update the controls text
         Text::Props newProps = m_ControlsText.GetProps();
-        newProps.Text = L"Press LT + DPAD_LEFT to " + std::wstring(!m_MenuOpen ? L"Open" : L"Close");
+        newProps.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to " + std::wstring(!m_MenuOpen ? L"Open" : L"Close");
         m_ControlsText.SetProps(newProps);
 
         return hr;

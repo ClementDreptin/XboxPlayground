@@ -132,6 +132,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="src\Resources\Fonts\Arial_20.rdf" />
+    <CustomBuild Include="src\Resources\Fonts\Arial_16.rdf" />
   </ItemGroup>
 </Project>

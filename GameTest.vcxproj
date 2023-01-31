@@ -7,14 +7,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="src\Resources\Fonts\Arial_20.rdf">
-      <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">bundler "%(FullPath)" -o "$(OutDir)Media\Fonts\%(Filename).xpr"</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Create a bundled resource file from %(FullPath)</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Fonts\%(Filename).xpr</Outputs>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="src\Core\App.cpp" />
     <ClCompile Include="src\Core\Callbacks.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
@@ -63,6 +55,14 @@
     <ProjectReference Include="deps\AtgFramework\AtgFramework2010.vcxproj">
       <Project>{91d208a6-9936-47fd-9659-67205c3eb0ab}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\Resources\Fonts\Arial_16.rdf">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">bundler "%(FullPath)" -o "$(OutDir)Media\Fonts\%(Filename).xpr"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Create a bundled resource file from %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)Media\Fonts\%(Filename).xpr</Outputs>
+    </CustomBuild>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D65EA7DE-FBA2-441D-BE74-B376437D08E0}</ProjectGuid>
