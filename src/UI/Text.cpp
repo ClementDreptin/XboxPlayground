@@ -18,7 +18,7 @@ HRESULT Text::SetProps(const Props &props)
         return Init();
 
     // Update the background from the new props
-    return m_Background.SetProps(GenerateBackgroundProps());
+    return SetBackground();
 }
 
 void Text::Render()
@@ -38,7 +38,7 @@ HRESULT Text::Init()
     HRESULT hr = S_OK;
 
     // Initialize the background
-    hr = m_Background.SetProps(GenerateBackgroundProps());
+    hr = SetBackground();
     if (FAILED(hr))
         return hr;
 
@@ -47,17 +47,17 @@ HRESULT Text::Init()
     return hr;
 }
 
-Rectangle::Props Text::GenerateBackgroundProps()
+HRESULT Text::SetBackground()
 {
-    Rectangle::Props backgroundProps = { 0 };
-    backgroundProps.X = m_Props.X;
-    backgroundProps.Y = m_Props.Y;
-    backgroundProps.Width = g_Font.GetTextWidth(m_Props.Text.c_str()) + Layout::Padding * 2;
-    backgroundProps.Height = g_Font.GetFontHeight() + Layout::Padding * 2;
-    backgroundProps.Color = m_Props.BackgroundColor;
-    backgroundProps.BorderWidth = m_Props.BorderWidth;
-    backgroundProps.BorderColor = m_Props.BorderColor;
-    backgroundProps.BorderPosition = m_Props.BorderPosition;
+    Rectangle::Props props = { 0 };
+    props.X = m_Props.X;
+    props.Y = m_Props.Y;
+    props.Width = g_Font.GetTextWidth(m_Props.Text.c_str()) + Layout::Padding * 2;
+    props.Height = g_Font.GetFontHeight() + Layout::Padding * 2;
+    props.Color = m_Props.BackgroundColor;
+    props.BorderWidth = m_Props.BorderWidth;
+    props.BorderColor = m_Props.BorderColor;
+    props.BorderPosition = m_Props.BorderPosition;
 
-    return backgroundProps;
+    return m_Background.SetProps(props);
 }

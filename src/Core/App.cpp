@@ -34,16 +34,16 @@ HRESULT App::Initialize()
     }
 
     // Create the controls text
-    Text::Props controlsTextProps = { 0 };
-    controlsTextProps.X = 10.0f;
-    controlsTextProps.Y = 10.0f;
-    controlsTextProps.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to Open";
-    controlsTextProps.Color = Layout::TextColor;
-    controlsTextProps.BackgroundColor = Layout::BackgroundColor;
-    controlsTextProps.BorderWidth = 5.0f;
-    controlsTextProps.BorderColor = Layout::Color;
-    controlsTextProps.BorderPosition = Border::Border_All;
-    hr = m_ControlsText.SetProps(controlsTextProps);
+    Text::Props props = { 0 };
+    props.X = 10.0f;
+    props.Y = 10.0f;
+    props.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to Open";
+    props.Color = Layout::TextColor;
+    props.BackgroundColor = Layout::BackgroundColor;
+    props.BorderWidth = 5.0f;
+    props.BorderColor = Layout::Color;
+    props.BorderPosition = Border::Border_All;
+    hr = m_ControlsText.SetProps(props);
     if (FAILED(hr))
         return hr;
 
@@ -68,9 +68,9 @@ HRESULT App::Update()
         m_MenuOpen = !m_MenuOpen;
 
         // Update the controls text
-        Text::Props newProps = m_ControlsText.GetProps();
-        newProps.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to " + std::wstring(!m_MenuOpen ? L"Open" : L"Close");
-        m_ControlsText.SetProps(newProps);
+        Text::Props props = m_ControlsText.GetProps();
+        props.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to " + std::wstring(!m_MenuOpen ? L"Open" : L"Close");
+        m_ControlsText.SetProps(props);
 
         return hr;
     }

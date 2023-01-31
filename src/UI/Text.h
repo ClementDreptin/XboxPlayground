@@ -38,6 +38,6 @@ private:
     // Initialize the background if needed.
     HRESULT Init();
 
-    // Generate the background props.
-    Rectangle::Props GenerateBackgroundProps();
+    // Set the background from the props.
+    HRESULT SetBackground();
 };

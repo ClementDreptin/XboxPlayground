@@ -25,4 +25,10 @@ private:
 
     std::vector<OptionGroup> m_OptionGroups;
     size_t m_CurrentOptionGroupIndex;
+
+    // Create the structure of the menu.
+    void CreateStructure();
+
+    // Create the background of the menu.
+    HRESULT CreateBackground();
 };

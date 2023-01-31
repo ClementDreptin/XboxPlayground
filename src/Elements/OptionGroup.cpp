@@ -60,7 +60,7 @@ void OptionGroup::Render()
 
 void OptionGroup::MoveScroller()
 {
-    Rectangle::Props newProps = m_Scroller.GetProps();
-    newProps.Y = Layout::Y + Layout::Gap + m_LineHeight * m_CurrentScrollerPos;
-    m_Scroller.SetProps(newProps);
+    Rectangle::Props props = m_Scroller.GetProps();
+    props.Y = Layout::Y + Layout::Gap + m_LineHeight * m_CurrentScrollerPos;
+    m_Scroller.SetProps(props);
 }
