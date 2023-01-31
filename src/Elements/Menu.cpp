@@ -66,7 +66,7 @@ void Menu::CreateStructure()
         std::vector<std::shared_ptr<Option>> options;
         options.emplace_back(MakeOption(RangeOption, L"Option 1", Callback::Option1Callback, 2.2f, 4.0f, 0.2f));
         options.emplace_back(MakeOption(ClickableOption, L"Option 2", Callback::Option2Callback));
-        m_OptionGroups.emplace_back(OptionGroup("cat1", options));
+        m_OptionGroups.emplace_back(OptionGroup(L"cat1", options));
     }
 
     // Second group
@@ -74,7 +74,7 @@ void Menu::CreateStructure()
         std::vector<std::shared_ptr<Option>> options;
         options.emplace_back(MakeOption(ClickableOption, L"Option 3", Callback::Option3Callback));
         options.emplace_back(MakeOption(ClickableOption, L"Option 4", Callback::Option4Callback));
-        m_OptionGroups.emplace_back(OptionGroup("cat2", options));
+        m_OptionGroups.emplace_back(OptionGroup(L"cat2", options));
     }
 }
 

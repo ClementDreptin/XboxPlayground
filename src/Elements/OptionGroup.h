@@ -11,9 +11,9 @@ class OptionGroup
 public:
     OptionGroup();
 
-    OptionGroup(const std::string &name, const std::vector<std::shared_ptr<Option>> &options);
+    OptionGroup(const std::wstring &name, const std::vector<std::shared_ptr<Option>> &options);
 
-    const std::string &GetName() const { return m_Name; }
+    const std::wstring &GetName() const { return m_Name; }
 
     const std::vector<std::shared_ptr<Option>> &GetOptions() const { return m_Options; }
 
@@ -24,7 +24,7 @@ public:
     void Render();
 
 private:
-    std::string m_Name;
+    std::wstring m_Name;
     std::vector<std::shared_ptr<Option>> m_Options;
 
     Rectangle m_Scroller;

@@ -9,7 +9,7 @@ OptionGroup::OptionGroup()
 {
 }
 
-OptionGroup::OptionGroup(const std::string &name, const std::vector<std::shared_ptr<Option>> &options)
+OptionGroup::OptionGroup(const std::wstring &name, const std::vector<std::shared_ptr<Option>> &options)
     : m_Name(name), m_Options(options), m_CurrentScrollerPos(0), m_LineHeight(g_Font.GetFontHeight() + Layout::Padding * 2)
 {
     // Create the scroller
