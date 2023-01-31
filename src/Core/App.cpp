@@ -40,7 +40,7 @@ HRESULT App::Initialize()
     props.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to Open";
     props.Color = Layout::TextColor;
     props.BackgroundColor = Layout::BackgroundColor;
-    props.BorderWidth = 5.0f;
+    props.BorderWidth = Layout::BorderWidth;
     props.BorderColor = Layout::Color;
     props.BorderPosition = Border::Border_All;
     hr = m_ControlsText.SetProps(props);
