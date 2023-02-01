@@ -8,20 +8,24 @@ float X = 400.0f;
 
 float Y = 150.0f;
 
-float Width = 0.0f; // The width is calculated when initializing the menu
-
-const float Height = 400.0f;
-
 D3DCOLOR Color = D3DCOLOR_XRGB(255, 0, 0);
 
 D3DCOLOR BackgroundColor = D3DCOLOR_XRGB(20, 20, 20);
 
 D3DCOLOR TextColor = D3DCOLOR_XRGB(255, 255, 255);
 
+const float Height = 400.0f;
+
 const float Padding = 5.0f;
 
 const float Gap = 2.0f;
 
 const float BorderWidth = 5.0f;
+
+// The following values are calculated dynamically when initializing the menu
+
+float Width = 0.0f;
+
+float LineHeight = 0.0f;
 
 }

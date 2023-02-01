@@ -23,4 +23,6 @@ extern const float Gap;
 
 extern const float BorderWidth;
 
+extern float LineHeight;
+
 }

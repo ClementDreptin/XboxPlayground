@@ -37,4 +37,7 @@ private:
 
     // Update the option group headers according to the currently selected option group.
     HRESULT UpdateOptionGroupHeaders();
+
+    // Calculate all dynamic layout values from the menu structure.
+    void CalculateDynamicLayoutValues();
 };

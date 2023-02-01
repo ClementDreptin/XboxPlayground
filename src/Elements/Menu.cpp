@@ -88,19 +88,15 @@ void Menu::CreateStructure()
         options.emplace_back(MakeOption(ClickableOption, L"Option 4", Callback::Option4Callback));
         m_OptionGroups.emplace_back(OptionGroup(L"Second Category", options));
     }
+
+    CalculateDynamicLayoutValues();
 }
 
 HRESULT Menu::CreateBackground()
 {
-    // Calculate the menu width according to the option groups
-    for (size_t i = 0; i < m_OptionGroups.size(); i++)
-        Layout::Width += (g_Font.GetTextWidth(m_OptionGroups[i].GetName().c_str()) + Layout::Padding * 2);
-    Layout::Width += Layout::BorderWidth * (m_OptionGroups.size() - 1);
-
-    // Create the background
     Rectangle::Props props = { 0 };
     props.X = Layout::X;
-    props.Y = Layout::Y + g_Font.GetFontHeight() + Layout::Padding * 2 + Layout::BorderWidth;
+    props.Y = Layout::Y + Layout::LineHeight + Layout::BorderWidth;
     props.Width = Layout::Width;
     props.Height = Layout::Height;
     props.Color = Layout::BackgroundColor;
@@ -152,4 +148,15 @@ HRESULT Menu::UpdateOptionGroupHeaders()
     }
 
     return hr;
+}
+
+void Menu::CalculateDynamicLayoutValues()
+{
+    // Calculate the menu width
+    for (size_t i = 0; i < m_OptionGroups.size(); i++)
+        Layout::Width += (g_Font.GetTextWidth(m_OptionGroups[i].GetName().c_str()) + Layout::Padding * 2);
+    Layout::Width += Layout::BorderWidth * (m_OptionGroups.size() - 1);
+
+    // Calculate the line height
+    Layout::LineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
 }

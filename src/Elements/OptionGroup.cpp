@@ -10,14 +10,14 @@ OptionGroup::OptionGroup()
 }
 
 OptionGroup::OptionGroup(const std::wstring &name, const std::vector<std::shared_ptr<Option>> &options)
-    : m_Name(name), m_Options(options), m_CurrentScrollerPos(0), m_LineHeight(g_Font.GetFontHeight() + Layout::Padding * 2)
+    : m_Name(name), m_Options(options), m_CurrentScrollerPos(0)
 {
     // Create the scroller
     Rectangle::Props props = { 0 };
     props.X = Layout::X + Layout::Gap;
     props.Y = Layout::Y + Layout::Gap;
     props.Width = Layout::Width - Layout::Gap * 2;
-    props.Height = m_LineHeight - Layout::Gap * 2;
+    props.Height = Layout::LineHeight - Layout::Gap * 2;
     props.Color = Layout::Color;
     m_Scroller.SetProps(props);
 }
@@ -55,12 +55,12 @@ void OptionGroup::Render()
 
     // Render the options
     for (size_t i = 0; i < m_Options.size(); i++)
-        m_Options[i]->Render(Layout::X, Layout::Y + (i + 1) * m_LineHeight + Layout::BorderWidth);
+        m_Options[i]->Render(Layout::X, Layout::Y + (i + 1) * Layout::LineHeight + Layout::BorderWidth);
 }
 
 void OptionGroup::MoveScroller()
 {
     Rectangle::Props props = m_Scroller.GetProps();
-    props.Y = Layout::Y + Layout::Gap + m_LineHeight * m_CurrentScrollerPos;
+    props.Y = Layout::Y + Layout::Gap + Layout::LineHeight * m_CurrentScrollerPos;
     m_Scroller.SetProps(props);
 }
