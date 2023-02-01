@@ -4,6 +4,7 @@
 
 #include "UI\Layout.h"
 #include "UI\Text.h"
+#include "UI\Rectangle.h"
 
 // Abstract class describing an option in a menu (need to be derived to be instantiated).
 class Option
@@ -17,6 +18,9 @@ public:
 
     Option(const std::wstring &text, Callback callback);
 
+    // Set the option state (selected or not).
+    void Select(bool selected) { m_IsSelected = selected; }
+
     // Update the option.
     virtual void Update(ATG::GAMEPAD *pGamepad) = 0;
 
@@ -26,6 +30,9 @@ public:
 protected:
     Text m_Text;
     Callback m_Callback;
+
+    bool m_IsSelected;
+    Rectangle m_Background;
 };
 
 // Macro to create a shared pointer to an option. Being able to use templated arguments and std::forward

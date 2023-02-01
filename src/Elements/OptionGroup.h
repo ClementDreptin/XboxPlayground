@@ -27,9 +27,5 @@ private:
     std::wstring m_Name;
     std::vector<std::shared_ptr<Option>> m_Options;
 
-    Rectangle m_Scroller;
-    size_t m_CurrentScrollerPos;
-
-    // Update the poition of the scroller according to the m_CurrentScrollerPos index.
-    void MoveScroller();
+    size_t m_CurrentSelectedOptionIndex;
 };

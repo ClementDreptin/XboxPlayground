@@ -4,7 +4,7 @@
 #include "UI\Font.h"
 
 Option::Option()
-    : m_Callback(nullptr)
+    : m_Callback(nullptr), m_IsSelected(false)
 {
 }
 
@@ -18,6 +18,20 @@ Option::Option(const std::wstring &text, Callback callback)
 
 void Option::Render(float x, float y, D3DCOLOR color)
 {
+    // Render the background if the option is selected
+    if (m_IsSelected)
+    {
+        Rectangle::Props props = { 0 };
+        props.X = x + Layout::Gap;
+        props.Y = y + Layout::Gap;
+        props.Width = Layout::Width - Layout::Gap * 2;
+        props.Height = Layout::LineHeight - Layout::Gap * 2;
+        props.Color = Layout::Color;
+        m_Background.SetProps(props);
+
+        m_Background.Render();
+    }
+
     Text::Props props = m_Text.GetProps();
     props.X = x + Layout::Padding;
     props.Y = y + Layout::Padding;
