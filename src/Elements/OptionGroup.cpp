@@ -55,7 +55,7 @@ void OptionGroup::Render()
 
     // Render the options
     for (size_t i = 0; i < m_Options.size(); i++)
-        m_Options[i]->Render(Layout::X, Layout::Y + i * m_LineHeight);
+        m_Options[i]->Render(Layout::X, Layout::Y + (i + 1) * m_LineHeight + Layout::BorderWidth);
 }
 
 void OptionGroup::MoveScroller()

@@ -7,7 +7,7 @@ extern float X;
 
 extern float Y;
 
-extern const float Width;
+extern float Width;
 
 extern const float Height;
 

@@ -3,6 +3,7 @@
 #include <AtgInput.h>
 
 #include "UI\Rectangle.h"
+#include "UI\Text.h"
 #include "Elements\OptionGroup.h"
 
 // Class to represent to menu
@@ -26,9 +27,14 @@ private:
     std::vector<OptionGroup> m_OptionGroups;
     size_t m_CurrentOptionGroupIndex;
 
+    std::vector<Text> m_OptionGroupHeaders;
+
     // Create the structure of the menu.
     void CreateStructure();
 
     // Create the background of the menu.
     HRESULT CreateBackground();
+
+    // Update the option group headers according to the currently selected option group.
+    HRESULT UpdateOptionGroupHeaders();
 };
