@@ -94,7 +94,6 @@ void Menu::CreateStructure()
     }
 
     CalculateMenuWidth();
-    CalculateLineHeight();
 }
 
 HRESULT Menu::CreateBackground()
@@ -182,9 +181,4 @@ void Menu::CalculateMenuWidth()
 
     // Increase the menu width by the max between all the option names width and the longest option name
     Layout::Width += std::max<float>(allOptionGroupNamesWidth, longestOptionNameWidth);
-}
-
-void Menu::CalculateLineHeight()
-{
-    Layout::LineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
 }

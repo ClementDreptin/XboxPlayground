@@ -33,19 +33,39 @@ HRESULT App::Initialize()
         return hr;
     }
 
+    // Calculate the line height;
+    Layout::LineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
+
     // Create the controls text
-    Text::Props props = { 0 };
-    props.X = 10.0f;
-    props.Y = 10.0f;
-    props.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to Open";
-    props.Color = Layout::TextColor;
-    props.BackgroundColor = Layout::BackgroundColor;
-    props.BorderWidth = Layout::BorderWidth;
-    props.BorderColor = Layout::Color;
-    props.BorderPosition = Border::Border_All;
-    hr = m_ControlsText.SetProps(props);
-    if (FAILED(hr))
-        return hr;
+    {
+        Text::Props props = { 0 };
+        props.X = 10.0f;
+        props.Y = 10.0f;
+        props.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to Open";
+        props.Color = Layout::TextColor;
+        props.BackgroundColor = Layout::BackgroundColor;
+        props.BorderWidth = Layout::BorderWidth;
+        props.BorderColor = Layout::Color;
+        props.BorderPosition = Border::Border_All;
+        hr = m_ControlsText.SetProps(props);
+        if (FAILED(hr))
+            return hr;
+    }
+
+    // Create the framerate text
+    {
+        Text::Props props = { 0 };
+        props.X = 10.0f;
+        props.Y = g_DisplayHeight - Layout::LineHeight - Layout::BorderWidth * 2 - 10.0f;
+        props.Color = Layout::TextColor;
+        props.BackgroundColor = Layout::BackgroundColor;
+        props.BorderWidth = Layout::BorderWidth;
+        props.BorderColor = Layout::Color;
+        props.BorderPosition = Border::Border_All;
+        hr = m_FrameRateText.SetProps(props);
+        if (FAILED(hr))
+            return hr;
+    }
 
     // Create the menu
     hr = m_Menu.Init();
@@ -93,6 +113,13 @@ HRESULT App::Render()
 
     // Render the controls text
     m_ControlsText.Render();
+
+    // Render the frame rate text
+    m_Timer.MarkFrame();
+    Text::Props props = m_FrameRateText.GetProps();
+    props.Text = m_Timer.GetFrameRate();
+    m_FrameRateText.SetProps(props);
+    m_FrameRateText.Render();
 
     // Present the scene
     m_pd3dDevice->Present(nullptr, nullptr, nullptr, nullptr);

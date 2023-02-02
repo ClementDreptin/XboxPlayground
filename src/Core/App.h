@@ -1,6 +1,7 @@
 #pragma once
 
 #include <AtgApp.h>
+#include <AtgUtil.h>
 
 #include "Elements\Menu.h"
 #include "UI\Text.h"
@@ -27,4 +28,7 @@ private:
     bool m_MenuOpen;
 
     Text m_ControlsText;
+
+    ATG::Timer m_Timer;
+    Text m_FrameRateText;
 };

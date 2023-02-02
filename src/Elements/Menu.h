@@ -40,7 +40,4 @@ private:
 
     // Calculate the menu width from its structure.
     void CalculateMenuWidth();
-
-    // Calculate the line height.
-    void CalculateLineHeight();
 };
