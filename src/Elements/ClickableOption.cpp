@@ -6,8 +6,8 @@ ClickableOption::ClickableOption()
 {
 }
 
-ClickableOption::ClickableOption(const std::wstring &text, Callback callback)
-    : Option(text, callback)
+ClickableOption::ClickableOption(const std::wstring &name, Callback callback)
+    : Option(name, callback)
 {
 }
 

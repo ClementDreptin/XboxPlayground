@@ -56,7 +56,7 @@ HRESULT App::Initialize()
     {
         Text::Props props = { 0 };
         props.X = 10.0f;
-        props.Y = g_DisplayHeight - Layout::LineHeight - Layout::BorderWidth * 2 - 10.0f;
+        props.Y = g_DisplayHeight - Layout::LineHeight - 10.0f;
         props.Color = Layout::TextColor;
         props.BackgroundColor = Layout::BackgroundColor;
         props.BorderWidth = Layout::BorderWidth;

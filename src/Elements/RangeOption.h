@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Elements\Option.h"
+#include "UI\Text.h"
 
 // Disable the C4481 warning for the override keyword
 #pragma warning(push)
@@ -12,19 +13,21 @@ class RangeOption : public Option
 public:
     RangeOption();
 
-    RangeOption(const std::wstring &text, Callback callback, float min, float max, float step);
+    RangeOption(const std::wstring &name, Callback callback, float min, float max, float step);
 
     // Check for user clicks.
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
 
     // Render the text.
-    virtual void Render(float x, float y, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255)) override;
+    virtual void Render(float x, float y, D3DCOLOR color = Layout::TextColor) override;
 
 private:
     float m_Min;
     float m_Max;
     float m_Step;
     float m_Current;
+
+    Text m_Text;
 };
 
 #pragma warning(pop)

@@ -9,8 +9,8 @@ RangeOption::RangeOption()
 {
 }
 
-RangeOption::RangeOption(const std::wstring &text, Callback callback, float min, float max, float step)
-    : Option(text, callback), m_Min(min), m_Max(max), m_Step(step), m_Current(min)
+RangeOption::RangeOption(const std::wstring &name, Callback callback, float min, float max, float step)
+    : Option(name, callback), m_Min(min), m_Max(max), m_Step(step), m_Current(min)
 {
 }
 
@@ -46,6 +46,12 @@ void RangeOption::Render(float x, float y, D3DCOLOR color)
     // Calculate the width of the wide string of the number value
     float textWidth = g_Font.GetTextWidth(text.c_str());
 
-    // Draw the wide string of the number value
-    g_Font.DrawText(x + Layout::Width - textWidth - Layout::Padding, y + Layout::Padding, color, text.c_str());
+    // Draw the text with the number
+    Text::Props props = { 0 };
+    props.X = x + Layout::Width - textWidth - Layout::Padding;
+    props.Y = y + Layout::Padding;
+    props.Text = text;
+    props.Color = color;
+    m_Text.SetProps(props);
+    m_Text.Render();
 }

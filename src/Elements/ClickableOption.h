@@ -12,13 +12,13 @@ class ClickableOption : public Option
 public:
     ClickableOption();
 
-    ClickableOption(const std::wstring &text, Callback callback);
+    ClickableOption(const std::wstring &name, Callback callback);
 
     // Check for user clicks.
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
 
     // Render the text.
-    virtual void Render(float x, float y, D3DCOLOR color = D3DCOLOR_XRGB(255, 255, 255)) override;
+    virtual void Render(float x, float y, D3DCOLOR color = Layout::TextColor) override;
 };
 
 #pragma warning(pop)
