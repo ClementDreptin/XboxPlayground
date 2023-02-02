@@ -16,7 +16,7 @@ RangeOption::RangeOption(const std::wstring &name, Callback callback, float min,
 
 void RangeOption::Update(ATG::GAMEPAD *pGamepad)
 {
-    // Allow the user to change the value
+    // Allow the user to change the value with DPAD LEFT/DPAD RIGHT
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
     {
         if (m_Current < m_Max)

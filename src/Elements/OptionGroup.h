@@ -13,9 +13,9 @@ public:
 
     OptionGroup(const std::wstring &name, const std::vector<std::shared_ptr<Option>> &options);
 
-    const std::wstring &GetName() const { return m_Name; }
+    inline const std::wstring &GetName() const { return m_Name; }
 
-    const std::vector<std::shared_ptr<Option>> &GetOptions() const { return m_Options; }
+    inline const std::vector<std::shared_ptr<Option>> &GetOptions() const { return m_Options; }
 
     // Change the currently selected option and update it.
     void Update(ATG::GAMEPAD *pGamepad);

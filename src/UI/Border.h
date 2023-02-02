@@ -31,6 +31,7 @@ public:
 
     inline Props GetProps() const { return m_Props; }
 
+    // Update the borders from the props.
     HRESULT SetProps(const Props &props);
 
     // Render the border.
@@ -48,5 +49,6 @@ private:
     // Initialize a line for each border.
     HRESULT Init();
 
+    // Update the borders from the props.
     HRESULT SetBorders();
 };

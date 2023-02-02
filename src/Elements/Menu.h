@@ -12,7 +12,7 @@ class Menu
 public:
     Menu();
 
-    // Create the background and the menu structure.
+    // Create the background, the option group headers and the menu structure.
     HRESULT Init();
 
     // Listen to user input and allow the user to change the current option group.

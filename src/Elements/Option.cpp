@@ -32,6 +32,7 @@ void Option::Render(float x, float y, D3DCOLOR color)
         m_Background.Render();
     }
 
+    // Render the text
     Text::Props props = m_Text.GetProps();
     props.X = x + Layout::Padding;
     props.Y = y + Layout::Padding;

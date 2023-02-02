@@ -54,7 +54,7 @@ HRESULT VertexShader::Init()
     {
         Log::Error("Couldn't compile the vertex shader");
 
-        if (pErrorMsg)
+        if (pErrorMsg != nullptr)
             Log::Error(reinterpret_cast<char *>(pErrorMsg->GetBufferPointer()));
 
         return hr;

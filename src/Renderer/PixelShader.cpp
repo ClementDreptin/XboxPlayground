@@ -41,7 +41,7 @@ HRESULT PixelShader::Init()
     {
         Log::Error("Couldn't compile the pixel shader");
 
-        if (pErrorMsg)
+        if (pErrorMsg != nullptr)
             Log::Error(reinterpret_cast<char *>(pErrorMsg->GetBufferPointer()));
 
         return hr;
