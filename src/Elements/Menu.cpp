@@ -76,17 +76,21 @@ void Menu::CreateStructure()
     // First group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(RangeOption, L"Option 1", Callback::Option1Callback, 2.2f, 4.0f, 0.2f));
-        options.emplace_back(MakeOption(ClickableOption, L"Option 2", Callback::Option2Callback));
-        m_OptionGroups.emplace_back(OptionGroup(L"First Category", options));
+        options.emplace_back(MakeOption(ClickableOption, L"God Mode", Callback::Option1Callback));
+        options.emplace_back(MakeOption(ClickableOption, L"Fall Damage", Callback::Option1Callback));
+        options.emplace_back(MakeOption(ClickableOption, L"Ammo", Callback::Option1Callback));
+        options.emplace_back(MakeOption(ClickableOption, L"Spawn Care Package", Callback::Option1Callback));
+        m_OptionGroups.emplace_back(OptionGroup(L"Main", options));
     }
 
     // Second group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ClickableOption, L"Option 3", Callback::Option3Callback));
-        options.emplace_back(MakeOption(ClickableOption, L"Option 4", Callback::Option4Callback));
-        m_OptionGroups.emplace_back(OptionGroup(L"Second Category", options));
+        options.emplace_back(MakeOption(ClickableOption, L"Save/Load Binds", Callback::Option1Callback));
+        options.emplace_back(MakeOption(ClickableOption, L"Save Position", Callback::Option1Callback));
+        options.emplace_back(MakeOption(ClickableOption, L"Load Position", Callback::Option1Callback));
+        options.emplace_back(MakeOption(ClickableOption, L"UFO", Callback::Option1Callback));
+        m_OptionGroups.emplace_back(OptionGroup(L"Teleport", options));
     }
 
     CalculateDynamicLayoutValues();
@@ -153,8 +157,20 @@ HRESULT Menu::UpdateOptionGroupHeaders()
 void Menu::CalculateDynamicLayoutValues()
 {
     // Calculate the menu width
+    float allOptionGroupNamesWidth = 0.0f;
+    float longestOptionNameWidth = 0.0f;
     for (size_t i = 0; i < m_OptionGroups.size(); i++)
-        Layout::Width += (g_Font.GetTextWidth(m_OptionGroups[i].GetName().c_str()) + Layout::Padding * 2);
+    {
+        allOptionGroupNamesWidth += (g_Font.GetTextWidth(m_OptionGroups[i].GetName().c_str()) + Layout::Padding * 2);
+        for (size_t j = 0; j < m_OptionGroups[i].GetOptions().size(); j++)
+        {
+            float optionNameWidth = g_Font.GetTextWidth(m_OptionGroups[i].GetOptions()[j]->GetName().c_str()) + Layout::Padding * 2;
+            if (longestOptionNameWidth < optionNameWidth)
+                longestOptionNameWidth = optionNameWidth;
+        }
+    }
+    longestOptionNameWidth += 100.0f;
+    Layout::Width += std::max<float>(allOptionGroupNamesWidth, longestOptionNameWidth);
     Layout::Width += Layout::BorderWidth * (m_OptionGroups.size() - 1);
 
     // Calculate the line height

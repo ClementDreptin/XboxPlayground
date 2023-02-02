@@ -8,11 +8,11 @@ Option::Option()
 {
 }
 
-Option::Option(const std::wstring &text, Callback callback)
-    : m_Callback(callback)
+Option::Option(const std::wstring &name, Callback callback)
+    : m_Name(name), m_Callback(callback)
 {
     Text::Props props = { 0 };
-    props.Text = text;
+    props.Text = m_Name;
     m_Text.SetProps(props);
 }
 

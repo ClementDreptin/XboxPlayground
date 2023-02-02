@@ -16,7 +16,9 @@ public:
 
     virtual ~Option() {}
 
-    Option(const std::wstring &text, Callback callback);
+    Option(const std::wstring &name, Callback callback);
+
+    inline const std::wstring &GetName() const { return m_Name; }
 
     // Set the option state (selected or not).
     void Select(bool selected) { m_IsSelected = selected; }
@@ -28,6 +30,7 @@ public:
     virtual void Render(float x, float y, D3DCOLOR color = Layout::TextColor) = 0;
 
 protected:
+    std::wstring m_Name;
     Text m_Text;
     Callback m_Callback;
 
