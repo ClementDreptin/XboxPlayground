@@ -93,7 +93,8 @@ void Menu::CreateStructure()
         m_OptionGroups.emplace_back(OptionGroup(L"Teleport", options));
     }
 
-    CalculateDynamicLayoutValues();
+    CalculateMenuWidth();
+    CalculateLineHeight();
 }
 
 HRESULT Menu::CreateBackground()
@@ -154,14 +155,17 @@ HRESULT Menu::UpdateOptionGroupHeaders()
     return hr;
 }
 
-void Menu::CalculateDynamicLayoutValues()
+void Menu::CalculateMenuWidth()
 {
-    // Calculate the menu width
     float allOptionGroupNamesWidth = 0.0f;
     float longestOptionNameWidth = 0.0f;
+
     for (size_t i = 0; i < m_OptionGroups.size(); i++)
     {
+        // Accumulate all the option group names width
         allOptionGroupNamesWidth += (g_Font.GetTextWidth(m_OptionGroups[i].GetName().c_str()) + Layout::Padding * 2);
+
+        // Find the longest option name
         for (size_t j = 0; j < m_OptionGroups[i].GetOptions().size(); j++)
         {
             float optionNameWidth = g_Font.GetTextWidth(m_OptionGroups[i].GetOptions()[j]->GetName().c_str()) + Layout::Padding * 2;
@@ -169,10 +173,18 @@ void Menu::CalculateDynamicLayoutValues()
                 longestOptionNameWidth = optionNameWidth;
         }
     }
-    longestOptionNameWidth += 100.0f;
-    Layout::Width += std::max<float>(allOptionGroupNamesWidth, longestOptionNameWidth);
-    Layout::Width += Layout::BorderWidth * (m_OptionGroups.size() - 1);
 
-    // Calculate the line height
+    // Take the space between each group header into account
+    allOptionGroupNamesWidth += Layout::BorderWidth * (m_OptionGroups.size() - 1);
+
+    // Take into account some space between with option name and the potential text on the right (e.g. the number for RangeOption)
+    longestOptionNameWidth += 100.0f;
+
+    // Increase the menu width by the max between all the option names width and the longest option name
+    Layout::Width += std::max<float>(allOptionGroupNamesWidth, longestOptionNameWidth);
+}
+
+void Menu::CalculateLineHeight()
+{
     Layout::LineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
 }
