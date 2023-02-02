@@ -18,7 +18,7 @@ public:
     // Check for user clicks.
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
 
-    // Render the text.
+    // Render the text and the number.
     virtual void Render(float x, float y, D3DCOLOR color = Layout::TextColor) override;
 
 private:

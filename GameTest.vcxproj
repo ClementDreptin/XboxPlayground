@@ -10,6 +10,7 @@
     <ClCompile Include="src\Core\App.cpp" />
     <ClCompile Include="src\Core\Callbacks.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
+    <ClCompile Include="src\Elements\ToggleOption.cpp" />
     <ClCompile Include="src\Elements\ClickableOption.cpp" />
     <ClCompile Include="src\Elements\Menu.cpp" />
     <ClCompile Include="src\Elements\Option.cpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="src\Core\App.h" />
     <ClInclude Include="src\Core\Callbacks.h" />
     <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Elements\ToggleOption.h" />
     <ClInclude Include="src\Elements\ClickableOption.h" />
     <ClInclude Include="src\Elements\Menu.h" />
     <ClInclude Include="src\Elements\Option.h" />

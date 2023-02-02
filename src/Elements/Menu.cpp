@@ -3,7 +3,6 @@
 
 #include "Core\Callbacks.h"
 #include "Elements\ClickableOption.h"
-#include "Elements\RangeOption.h"
 #include "UI\Layout.h"
 #include "UI\Font.h"
 
