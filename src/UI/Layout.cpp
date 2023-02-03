@@ -20,7 +20,7 @@ const float Padding = 5.0f;
 
 const float Gap = 2.0f;
 
-const float BorderWidth = 5.0f;
+const float BorderWidth = 2.5f;
 
 // The following values are calculated dynamically when initializing the menu
 
