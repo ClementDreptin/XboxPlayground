@@ -3,12 +3,10 @@
 namespace Callback
 {
 
-void Option1Callback(void *);
+void ClickCallback(void *);
 
-void Option2Callback(void *);
+void RangeCallback(void *);
 
-void Option3Callback(void *);
-
-void Option4Callback(void *);
+void ToggleCallback(void *);
 
 }

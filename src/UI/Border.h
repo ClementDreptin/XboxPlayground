@@ -27,28 +27,14 @@ public:
         float Height; // Height of the rectangle surrounded by the border.
     };
 
-    Border();
-
-    inline Props GetProps() const { return m_Props; }
-
-    // Update the borders from the props.
-    HRESULT SetProps(const Props &props);
+    Border() {}
 
     // Render the border.
-    void Render();
+    HRESULT Render(const Props &props);
 
 private:
-    Props m_Props;
-    bool m_IsInitialized;
-
     Line m_Left;
     Line m_Right;
     Line m_Top;
     Line m_Bottom;
-
-    // Initialize a line for each border.
-    HRESULT Init();
-
-    // Update the borders from the props.
-    HRESULT SetBorders();
 };

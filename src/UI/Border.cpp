@@ -1,112 +1,66 @@
 #include "pch.h"
 #include "UI\Border.h"
 
-Border::Border()
-    : m_Props(), m_IsInitialized(false)
-{
-}
-
-HRESULT Border::SetProps(const Props &props)
-{
-    m_Props = props;
-
-    // If this is the first time SetProps is called, just initialize the borders and return
-    if (!m_IsInitialized)
-        return Init();
-
-    // Set the borders from the props
-    return SetBorders();
-}
-
-void Border::Render()
-{
-    // Return early if no borders need to be rendered
-    if (m_Props.Position == Border_None || m_Props.Thickness == 0)
-        return;
-
-    // Render the left border if needed
-    if (m_Props.Position & Border_Left)
-        m_Left.Render();
-
-    // Render the right border if needed
-    if (m_Props.Position & Border_Right)
-        m_Right.Render();
-
-    // Render the top border if needed
-    if (m_Props.Position & Border_Top)
-        m_Top.Render();
-
-    // Render the bottom border if needed
-    if (m_Props.Position & Border_Bottom)
-        m_Bottom.Render();
-}
-
-HRESULT Border::Init()
+HRESULT Border::Render(const Props &props)
 {
     HRESULT hr = S_OK;
 
-    // Set the borders from the props
-    hr = SetBorders();
-    if (FAILED(hr))
+    // Return early if no borders need to be rendered
+    if (props.Position == Border_None || props.Thickness == 0)
         return hr;
 
-    m_IsInitialized = true;
-
-    return hr;
-}
-
-HRESULT Border::SetBorders()
-{
-    HRESULT hr = S_OK;
-
-    // Set the left border
+    // Render the left border if needed
+    if (props.Position & Border_Left)
     {
-        Line::Props props = { 0 };
-        props.X = m_Props.X - m_Props.Thickness;
-        props.Y = m_Props.Y;
-        props.Width = m_Props.Thickness;
-        props.Height = m_Props.Height + (m_Props.Position & Border_Bottom ? m_Props.Thickness : 0.0f);
-        props.Color = m_Props.Color;
-        hr = m_Left.SetProps(props);
+        Line::Props lineProps = { 0 };
+        lineProps.X = props.X - props.Thickness;
+        lineProps.Y = props.Y;
+        lineProps.Width = props.Thickness;
+        lineProps.Height = props.Height + (props.Position & Border_Bottom ? props.Thickness : 0.0f);
+        lineProps.Color = props.Color;
+        hr = m_Left.Render(lineProps);
         if (FAILED(hr))
             return hr;
     }
 
-    // Set the right border
+    // Render the right border if needed
+    if (props.Position & Border_Right)
     {
-        Line::Props props = { 0 };
-        props.X = m_Props.X + m_Props.Width;
-        props.Y = m_Props.Y - (m_Props.Position & Border_Top ? m_Props.Thickness : 0.0f);
-        props.Width = m_Props.Thickness;
-        props.Height = m_Props.Height + (m_Props.Position & Border_Top ? m_Props.Thickness : 0.0f);
-        props.Color = m_Props.Color;
-        hr = m_Right.SetProps(props);
+        Line::Props lineProps = { 0 };
+        lineProps.X = props.X + props.Width;
+        lineProps.Y = props.Y - (props.Position & Border_Top ? props.Thickness : 0.0f);
+        lineProps.Width = props.Thickness;
+        lineProps.Height = props.Height + (props.Position & Border_Top ? props.Thickness : 0.0f);
+        lineProps.Color = props.Color;
+        hr = m_Right.Render(lineProps);
         if (FAILED(hr))
             return hr;
     }
 
-    // Set the top border if needed
+    // Render the top border if needed
+    if (props.Position & Border_Top)
     {
-        Line::Props props = { 0 };
-        props.X = m_Props.X - (m_Props.Position & Border_Left ? m_Props.Thickness : 0.0f);
-        props.Y = m_Props.Y - m_Props.Thickness;
-        props.Width = m_Props.Width + (m_Props.Position & Border_Left ? m_Props.Thickness : 0.0f);
-        props.Height = m_Props.Thickness;
-        props.Color = m_Props.Color;
-        hr = m_Top.SetProps(props);
+        Line::Props lineProps = { 0 };
+        lineProps.X = props.X - (props.Position & Border_Left ? props.Thickness : 0.0f);
+        lineProps.Y = props.Y - props.Thickness;
+        lineProps.Width = props.Width + (props.Position & Border_Left ? props.Thickness : 0.0f);
+        lineProps.Height = props.Thickness;
+        lineProps.Color = props.Color;
+        hr = m_Top.Render(lineProps);
         if (FAILED(hr))
             return hr;
     }
 
-    // Set the bottom border if needed
+    // Render the bottom border if needed
+    if (props.Position & Border_Bottom)
     {
-        Line::Props props = { 0 };
-        props.X = m_Props.X;
-        props.Y = m_Props.Y + m_Props.Height;
-        props.Width = m_Props.Width + (m_Props.Position & Border_Right ? m_Props.Thickness : 0.0f);
-        props.Height = m_Props.Thickness;
-        props.Color = m_Props.Color;
-        hr = m_Bottom.SetProps(props);
+        Line::Props lineProps = { 0 };
+        lineProps.X = props.X;
+        lineProps.Y = props.Y + props.Height;
+        lineProps.Width = props.Width + (props.Position & Border_Right ? props.Thickness : 0.0f);
+        lineProps.Height = props.Thickness;
+        lineProps.Color = props.Color;
+        hr = m_Bottom.Render(lineProps);
         if (FAILED(hr))
             return hr;
     }

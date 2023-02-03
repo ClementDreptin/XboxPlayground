@@ -24,18 +24,12 @@ public:
 
     Rectangle();
 
-    inline Props GetProps() const { return m_Props; }
-
-    // Set the new props and update the world view projection matrix and/or the vertex buffer if necessary.
-    HRESULT SetProps(const Props &props);
-
     // Render the rectangle.
-    void Render();
+    HRESULT Render(const Props &props);
 
 private:
     Props m_Props;
     Border m_Border;
-    bool m_HasBorder;
     bool m_IsInitialized;
 
     VertexBuffer m_VertexBuffer;
@@ -53,9 +47,6 @@ private:
     // Create the vertex and index buffers needed to create a rectangle. Set up the
     // matrices to project the rectangle.
     HRESULT Init();
-
-    // Set the border from the props.
-    HRESULT SetBorder();
 
     // Apply a translation from the position and recalculate the world view
     // projection matrix.

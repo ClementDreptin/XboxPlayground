@@ -7,18 +7,18 @@
 #pragma warning(disable : 4481)
 
 // Class to represent a very basic option
-class ClickableOption : public Option
+class ClickOption : public Option
 {
 public:
-    ClickableOption();
+    ClickOption();
 
-    ClickableOption(const std::wstring &name, Callback callback);
+    ClickOption(const std::wstring &name, Callback callback);
 
     // Check for user clicks.
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
 
     // Render the text.
-    virtual void Render(float x, float y, D3DCOLOR color = Layout::TextColor) override;
+    virtual HRESULT Render(float x, float y) override;
 };
 
 #pragma warning(pop)

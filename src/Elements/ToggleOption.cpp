@@ -3,8 +3,6 @@
 
 #include "UI\Layout.h"
 
-float ToggleOption::s_RadioBoxSize = 0.0f;
-
 ToggleOption::ToggleOption()
     : Option(), m_Active(false)
 {
@@ -13,19 +11,6 @@ ToggleOption::ToggleOption()
 ToggleOption::ToggleOption(const std::wstring &name, Callback callback)
     : Option(name, callback), m_Active(false)
 {
-    // Set the radio box size the first time a ToggleOption is created
-    if (s_RadioBoxSize == 0.0f)
-        s_RadioBoxSize = Layout::LineHeight * 0.5f;
-
-    // Create the radio box
-    Rectangle::Props props = { 0 };
-    props.BorderWidth = 2.0f;
-    props.BorderColor = D3DCOLOR_XRGB(255, 255, 255);
-    props.BorderPosition = Border::Border_All;
-    props.Width = s_RadioBoxSize;
-    props.Height = s_RadioBoxSize;
-
-    m_RadioBox.SetProps(props);
 }
 
 void ToggleOption::Update(ATG::GAMEPAD *pGamepad)
@@ -38,16 +23,29 @@ void ToggleOption::Update(ATG::GAMEPAD *pGamepad)
     }
 }
 
-void ToggleOption::Render(float x, float y, D3DCOLOR color)
+HRESULT ToggleOption::Render(float x, float y)
 {
+    HRESULT hr = S_OK;
+
     // Call the parent to render the text
-    Option::Render(x, y, color);
+    hr = Option::Render(x, y);
+    if (FAILED(hr))
+        return hr;
 
     // Render the radio box
-    Rectangle::Props props = m_RadioBox.GetProps();
-    props.X = x + Layout::Width - s_RadioBoxSize - Layout::Padding;
-    props.Y = y + Layout::LineHeight / 2 - s_RadioBoxSize / 2;
+    float radioBoxSize = Layout::LineHeight * 0.5f;
+    Rectangle::Props props = { 0 };
+    props.X = x + Layout::Width - radioBoxSize - Layout::Padding;
+    props.Y = y + Layout::LineHeight / 2 - radioBoxSize / 2;
+    props.Width = radioBoxSize;
+    props.Height = radioBoxSize;
     props.Color = m_Active ? Layout::Color : D3DCOLOR_XRGB(0, 0, 0);
-    m_RadioBox.SetProps(props);
-    m_RadioBox.Render();
+    props.BorderWidth = 2.0f;
+    props.BorderColor = D3DCOLOR_XRGB(255, 255, 255);
+    props.BorderPosition = Border::Border_All;
+    hr = m_RadioBox.Render(props);
+    if (FAILED(hr))
+        return hr;
+
+    return hr;
 }

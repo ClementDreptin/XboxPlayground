@@ -31,4 +31,10 @@ private:
 
     ATG::Timer m_Timer;
     Text m_FrameRateText;
+
+    // Render the controls text.
+    HRESULT RenderControlsText();
+
+    // Render the frame rate text.
+    HRESULT RenderFrameRateText();
 };

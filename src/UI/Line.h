@@ -20,13 +20,8 @@ public:
 
     Line();
 
-    inline Props GetProps() const { return m_Props; }
-
-    // Set the new props and update the world view projection matrix and/or the vertex buffer if necessary.
-    HRESULT SetProps(const Props &props);
-
     // Render the rectangle.
-    void Render();
+    HRESULT Render(const Props &props);
 
 private:
     Props m_Props;

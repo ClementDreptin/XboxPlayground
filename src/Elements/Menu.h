@@ -12,14 +12,14 @@ class Menu
 public:
     Menu();
 
-    // Create the background, the option group headers and the menu structure.
+    // Create the menu structure.
     HRESULT Init();
 
     // Listen to user input and allow the user to change the current option group.
     void Update(ATG::GAMEPAD *pGamepad);
 
-    // Render the background and the currently selected option group.
-    void Render();
+    // Render the background, the option group headers and the currently selected option group.
+    HRESULT Render();
 
 private:
     Rectangle m_Background;
@@ -32,11 +32,11 @@ private:
     // Create the structure of the menu.
     void CreateStructure();
 
-    // Create the background of the menu.
-    HRESULT CreateBackground();
+    // Render the background of the menu.
+    HRESULT RenderBackground();
 
-    // Update the option group headers according to the currently selected option group.
-    HRESULT UpdateOptionGroupHeaders();
+    // Render the option group headers.
+    HRESULT RenderOptionGroupHeaders();
 
     // Calculate the menu width from its structure.
     void CalculateMenuWidth();

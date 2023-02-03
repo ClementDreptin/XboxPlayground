@@ -27,7 +27,7 @@ public:
     virtual void Update(ATG::GAMEPAD *pGamepad) = 0;
 
     // Render the text.
-    virtual void Render(float x, float y, D3DCOLOR color = Layout::TextColor) = 0;
+    virtual HRESULT Render(float x, float y) = 0;
 
 protected:
     std::wstring m_Name;

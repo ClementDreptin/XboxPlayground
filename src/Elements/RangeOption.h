@@ -19,7 +19,7 @@ public:
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
 
     // Render the text and the number.
-    virtual void Render(float x, float y, D3DCOLOR color = Layout::TextColor) override;
+    virtual HRESULT Render(float x, float y) override;
 
 private:
     float m_Min;

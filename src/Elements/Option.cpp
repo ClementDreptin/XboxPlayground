@@ -11,13 +11,12 @@ Option::Option()
 Option::Option(const std::wstring &name, Callback callback)
     : m_Name(name), m_Callback(callback)
 {
-    Text::Props props = { 0 };
-    props.Text = m_Name;
-    m_Text.SetProps(props);
 }
 
-void Option::Render(float x, float y, D3DCOLOR color)
+HRESULT Option::Render(float x, float y)
 {
+    HRESULT hr = S_OK;
+
     // Render the background if the option is selected
     if (m_IsSelected)
     {
@@ -27,17 +26,18 @@ void Option::Render(float x, float y, D3DCOLOR color)
         props.Width = Layout::Width - Layout::Gap * 2;
         props.Height = Layout::LineHeight - Layout::Gap * 2;
         props.Color = Layout::Color;
-        m_Background.SetProps(props);
-
-        m_Background.Render();
+        hr = m_Background.Render(props);
+        if (FAILED(hr))
+            return hr;
     }
 
     // Render the text
-    Text::Props props = m_Text.GetProps();
+    Text::Props props = { 0 };
     props.X = x + Layout::Padding;
     props.Y = y + Layout::Padding;
-    props.Color = color;
-    m_Text.SetProps(props);
+    props.Text = m_Name;
+    props.Color = Layout::TextColor;
+    hr = m_Text.Render(props);
 
-    m_Text.Render();
+    return hr;
 }

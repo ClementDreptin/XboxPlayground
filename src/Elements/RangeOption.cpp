@@ -35,10 +35,14 @@ void RangeOption::Update(ATG::GAMEPAD *pGamepad)
     }
 }
 
-void RangeOption::Render(float x, float y, D3DCOLOR color)
+HRESULT RangeOption::Render(float x, float y)
 {
+    HRESULT hr = S_OK;
+
     // Call the parent to render the text
-    Option::Render(x, y, color);
+    hr = Option::Render(x, y);
+    if (FAILED(hr))
+        return hr;
 
     // Create a wide string from the current number value
     std::wstring text = std::to_wstring(static_cast<long double>(m_Current));
@@ -51,7 +55,8 @@ void RangeOption::Render(float x, float y, D3DCOLOR color)
     props.X = x + Layout::Width - textWidth - Layout::Padding;
     props.Y = y + Layout::Padding;
     props.Text = text;
-    props.Color = color;
-    m_Text.SetProps(props);
-    m_Text.Render();
+    props.Color = Layout::TextColor;
+    hr = m_Text.Render(props);
+
+    return hr;
 }

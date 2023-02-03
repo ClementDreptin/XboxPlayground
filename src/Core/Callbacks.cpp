@@ -4,24 +4,23 @@
 namespace Callback
 {
 
-void Option1Callback(void *)
+void ClickCallback(void *)
 {
-    Log::Info("Option 1 clicked");
+    Log::Info("Clicked");
 }
 
-void Option2Callback(void *)
+void RangeCallback(void *pParameters)
 {
-    Log::Info("Option 2 clicked");
+    float value = *reinterpret_cast<float *>(pParameters);
+
+    Log::Info("number: %f", value);
 }
 
-void Option3Callback(void *)
+void ToggleCallback(void *pParameters)
 {
-    Log::Info("Option 3 clicked");
-}
+    bool value = *reinterpret_cast<bool *>(pParameters);
 
-void Option4Callback(void *)
-{
-    Log::Info("Option 4 clicked");
+    Log::Info(value ? "On" : "Off");
 }
 
 }

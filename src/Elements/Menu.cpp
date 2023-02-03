@@ -2,7 +2,9 @@
 #include "Elements\Menu.h"
 
 #include "Core\Callbacks.h"
-#include "Elements\ClickableOption.h"
+#include "Elements\ClickOption.h"
+#include "Elements\RangeOption.h"
+#include "Elements\ToggleOption.h"
 #include "UI\Layout.h"
 #include "UI\Font.h"
 
@@ -18,17 +20,11 @@ HRESULT Menu::Init()
     // Create menu structure
     CreateStructure();
 
-    // Create the background
-    hr = CreateBackground();
-    if (FAILED(hr))
-        return hr;
-
     // Set the default option group to be the first one
     m_CurrentOptionGroupIndex = 0;
 
     // Create the option group headers
     m_OptionGroupHeaders = std::vector<Text>(m_OptionGroups.size(), Text());
-    UpdateOptionGroupHeaders();
 
     return hr;
 }
@@ -39,35 +35,36 @@ void Menu::Update(ATG::GAMEPAD *pGamepad)
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
     {
         if (m_CurrentOptionGroupIndex > 0)
-        {
             m_CurrentOptionGroupIndex--;
-            UpdateOptionGroupHeaders();
-        }
     }
     else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
     {
         if (m_CurrentOptionGroupIndex < m_OptionGroups.size() - 1)
-        {
             m_CurrentOptionGroupIndex++;
-            UpdateOptionGroupHeaders();
-        }
     }
 
     // Update the currently selected option group
     m_OptionGroups[m_CurrentOptionGroupIndex].Update(pGamepad);
 }
 
-void Menu::Render()
+HRESULT Menu::Render()
 {
+    HRESULT hr = S_OK;
+
     // Render the background
-    m_Background.Render();
+    hr = RenderBackground();
+    if (FAILED(hr))
+        return hr;
 
     // Render the option group headers
-    for (size_t i = 0; i < m_OptionGroupHeaders.size(); i++)
-        m_OptionGroupHeaders[i].Render();
+    hr = RenderOptionGroupHeaders();
+    if (FAILED(hr))
+        return hr;
 
     // Render the currently selected option group
     m_OptionGroups[m_CurrentOptionGroupIndex].Render();
+
+    return hr;
 }
 
 void Menu::CreateStructure()
@@ -75,27 +72,29 @@ void Menu::CreateStructure()
     // First group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ClickableOption, L"God Mode", Callback::Option1Callback));
-        options.emplace_back(MakeOption(ClickableOption, L"Fall Damage", Callback::Option1Callback));
-        options.emplace_back(MakeOption(ClickableOption, L"Ammo", Callback::Option1Callback));
-        options.emplace_back(MakeOption(ClickableOption, L"Spawn Care Package", Callback::Option1Callback));
+        options.emplace_back(MakeOption(ClickOption, L"God Mode", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ClickOption, L"Fall Damage", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ClickOption, L"Ammo", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ClickOption, L"Spawn Care Package", Callback::ClickCallback));
+        options.emplace_back(MakeOption(RangeOption, L"Some Number", Callback::RangeCallback, 1.0f, 5.0f, 1.0f));
+        options.emplace_back(MakeOption(ToggleOption, L"Toggle Me", Callback::ToggleCallback));
         m_OptionGroups.emplace_back(OptionGroup(L"Main", options));
     }
 
     // Second group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ClickableOption, L"Save/Load Binds", Callback::Option1Callback));
-        options.emplace_back(MakeOption(ClickableOption, L"Save Position", Callback::Option1Callback));
-        options.emplace_back(MakeOption(ClickableOption, L"Load Position", Callback::Option1Callback));
-        options.emplace_back(MakeOption(ClickableOption, L"UFO", Callback::Option1Callback));
+        options.emplace_back(MakeOption(ClickOption, L"Save/Load Binds", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ClickOption, L"Save Position", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ClickOption, L"Load Position", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ClickOption, L"UFO", Callback::ClickCallback));
         m_OptionGroups.emplace_back(OptionGroup(L"Teleport", options));
     }
 
     CalculateMenuWidth();
 }
 
-HRESULT Menu::CreateBackground()
+HRESULT Menu::RenderBackground()
 {
     Rectangle::Props props = { 0 };
     props.X = Layout::X;
@@ -107,10 +106,10 @@ HRESULT Menu::CreateBackground()
     props.BorderColor = Layout::Color;
     props.BorderPosition = Border::Border_All;
 
-    return m_Background.SetProps(props);
+    return m_Background.Render(props);
 }
 
-HRESULT Menu::UpdateOptionGroupHeaders()
+HRESULT Menu::RenderOptionGroupHeaders()
 {
     HRESULT hr = S_OK;
 
@@ -145,7 +144,7 @@ HRESULT Menu::UpdateOptionGroupHeaders()
         else if (i > m_CurrentOptionGroupIndex)
             props.BorderPosition = static_cast<Border::Position>(Border::Border_Right | Border::Border_Top);
 
-        hr = m_OptionGroupHeaders[i].SetProps(props);
+        hr = m_OptionGroupHeaders[i].Render(props);
         if (FAILED(hr))
             return hr;
     }

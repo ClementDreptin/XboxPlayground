@@ -11,42 +11,36 @@ PixelShader Rectangle::s_PixelShader;
 bool Rectangle::s_ShadersInitialized = false;
 
 Rectangle::Rectangle()
-    : m_Props(), m_HasBorder(false), m_IsInitialized(false)
+    : m_Props(), m_IsInitialized(false)
 {
 }
 
-HRESULT Rectangle::SetProps(const Props &props)
+HRESULT Rectangle::Render(const Props &props)
 {
     HRESULT hr = S_OK;
 
     // Check if the world view project matrix and/or the vertex buffer need to be updated
     bool needToUpdateWorldViewProjectionMatrix = m_Props.X != props.X || m_Props.Y != props.Y;
     bool needToUpdateVertexBuffer = m_Props.Width != props.Width || m_Props.Height != props.Height;
+    bool hasBorder = props.BorderPosition != Border::Border_None && props.BorderWidth > 0;
 
     m_Props = props;
-    m_HasBorder = m_Props.BorderPosition != Border::Border_None && m_Props.BorderWidth > 0;
 
     // If this is the first time SetProps is called, just initialize the rectangle and return
     if (!m_IsInitialized)
         return Init();
-
-    // Update the border
-    hr = SetBorder();
-    if (FAILED(hr))
-        return hr;
 
     // Perform the updates if needed
     if (needToUpdateWorldViewProjectionMatrix)
         CalculateWorldViewProjectionMatrix();
 
     if (needToUpdateVertexBuffer)
+    {
         hr = UpdateVertexBuffer();
+        if (FAILED(hr))
+            return hr;
+    }
 
-    return hr;
-}
-
-void Rectangle::Render()
-{
     // Initialize default device states
     g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
     g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -78,8 +72,22 @@ void Rectangle::Render()
     g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
 
     // Render the border if needed
-    if (m_HasBorder)
-        m_Border.Render();
+    if (hasBorder)
+    {
+        Border::Props props = { 0 };
+        props.X = m_Props.X;
+        props.Y = m_Props.Y;
+        props.Thickness = m_Props.BorderWidth;
+        props.Color = m_Props.BorderColor;
+        props.Position = m_Props.BorderPosition;
+        props.Width = m_Props.Width;
+        props.Height = m_Props.Height;
+        hr = m_Border.Render(props);
+        if (FAILED(hr))
+            return hr;
+    }
+
+    return hr;
 }
 
 HRESULT Rectangle::Init()
@@ -134,28 +142,9 @@ HRESULT Rectangle::Init()
     if (FAILED(hr))
         return hr;
 
-    // Initialize the border
-    hr = SetBorder();
-    if (FAILED(hr))
-        return hr;
-
     m_IsInitialized = true;
 
     return hr;
-}
-
-HRESULT Rectangle::SetBorder()
-{
-    Border::Props borderProps = { 0 };
-    borderProps.X = m_Props.X;
-    borderProps.Y = m_Props.Y;
-    borderProps.Thickness = m_Props.BorderWidth;
-    borderProps.Color = m_Props.BorderColor;
-    borderProps.Position = m_Props.BorderPosition;
-    borderProps.Width = m_Props.Width;
-    borderProps.Height = m_Props.Height;
-
-    return m_Border.SetProps(borderProps);
 }
 
 void Rectangle::CalculateWorldViewProjectionMatrix()

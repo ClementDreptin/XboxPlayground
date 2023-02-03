@@ -15,7 +15,7 @@ Line::Line()
 {
 }
 
-HRESULT Line::SetProps(const Props &props)
+HRESULT Line::Render(const Props &props)
 {
     HRESULT hr = S_OK;
 
@@ -25,7 +25,7 @@ HRESULT Line::SetProps(const Props &props)
 
     m_Props = props;
 
-    // If this is the first time SetProps is called, just initialize the line and return
+    // If this is the first time Render is called, just initialize the line and return
     if (!m_IsInitialized)
         return Init();
 
@@ -34,13 +34,12 @@ HRESULT Line::SetProps(const Props &props)
         CalculateWorldViewProjectionMatrix();
 
     if (needToUpdateVertexBuffer)
+    {
         hr = UpdateVertexBuffer();
+        if (FAILED(hr))
+            return hr;
+    }
 
-    return hr;
-}
-
-void Line::Render()
-{
     // Initialize default device states
     g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
     g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -70,6 +69,8 @@ void Line::Render()
 
     // Draw the line
     g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
+
+    return hr;
 }
 
 HRESULT Line::Init()

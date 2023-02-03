@@ -36,37 +36,6 @@ HRESULT App::Initialize()
     // Calculate the line height;
     Layout::LineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
 
-    // Create the controls text
-    {
-        Text::Props props = { 0 };
-        props.X = 10.0f;
-        props.Y = 10.0f;
-        props.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to Open";
-        props.Color = Layout::TextColor;
-        props.BackgroundColor = Layout::BackgroundColor;
-        props.BorderWidth = Layout::BorderWidth;
-        props.BorderColor = Layout::Color;
-        props.BorderPosition = Border::Border_All;
-        hr = m_ControlsText.SetProps(props);
-        if (FAILED(hr))
-            return hr;
-    }
-
-    // Create the framerate text
-    {
-        Text::Props props = { 0 };
-        props.X = 10.0f;
-        props.Y = g_DisplayHeight - Layout::LineHeight - 10.0f;
-        props.Color = Layout::TextColor;
-        props.BackgroundColor = Layout::BackgroundColor;
-        props.BorderWidth = Layout::BorderWidth;
-        props.BorderColor = Layout::Color;
-        props.BorderPosition = Border::Border_All;
-        hr = m_FrameRateText.SetProps(props);
-        if (FAILED(hr))
-            return hr;
-    }
-
     // Create the menu
     hr = m_Menu.Init();
     if (FAILED(hr))
@@ -86,12 +55,6 @@ HRESULT App::Update()
     if (pGamepad->bLastLeftTrigger && pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)
     {
         m_MenuOpen = !m_MenuOpen;
-
-        // Update the controls text
-        Text::Props props = m_ControlsText.GetProps();
-        props.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to " + std::wstring(!m_MenuOpen ? L"Open" : L"Close");
-        m_ControlsText.SetProps(props);
-
         return hr;
     }
 
@@ -104,25 +67,63 @@ HRESULT App::Update()
 
 HRESULT App::Render()
 {
+    HRESULT hr = S_OK;
+
     // Clear the viewport
     m_pd3dDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
     // Render the menu if it's open
     if (m_MenuOpen)
-        m_Menu.Render();
+    {
+        hr = m_Menu.Render();
+        if (FAILED(hr))
+            return hr;
+    }
 
     // Render the controls text
-    m_ControlsText.Render();
+    hr = RenderControlsText();
+    if (FAILED(hr))
+        return hr;
 
     // Render the frame rate text
-    m_Timer.MarkFrame();
-    Text::Props props = m_FrameRateText.GetProps();
-    props.Text = m_Timer.GetFrameRate();
-    m_FrameRateText.SetProps(props);
-    m_FrameRateText.Render();
+    hr = RenderFrameRateText();
+    if (FAILED(hr))
+        return hr;
 
     // Present the scene
     m_pd3dDevice->Present(nullptr, nullptr, nullptr, nullptr);
 
-    return S_OK;
+    return hr;
+}
+
+HRESULT App::RenderControlsText()
+{
+    Text::Props props = { 0 };
+    props.X = 10.0f;
+    props.Y = 10.0f;
+    props.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to " + std::wstring(!m_MenuOpen ? L"Open" : L"Close");
+    props.Color = Layout::TextColor;
+    props.BackgroundColor = Layout::BackgroundColor;
+    props.BorderWidth = Layout::BorderWidth;
+    props.BorderColor = Layout::Color;
+    props.BorderPosition = Border::Border_All;
+
+    return m_ControlsText.Render(props);
+}
+
+HRESULT App::RenderFrameRateText()
+{
+    m_Timer.MarkFrame();
+
+    Text::Props props = { 0 };
+    props.X = 10.0f;
+    props.Y = g_DisplayHeight - Layout::LineHeight - 10.0f;
+    props.Text = m_Timer.GetFrameRate();
+    props.Color = Layout::TextColor;
+    props.BackgroundColor = Layout::BackgroundColor;
+    props.BorderWidth = Layout::BorderWidth;
+    props.BorderColor = Layout::Color;
+    props.BorderPosition = Border::Border_All;
+
+    return m_FrameRateText.Render(props);
 }

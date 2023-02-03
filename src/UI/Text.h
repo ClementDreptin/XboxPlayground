@@ -19,25 +19,11 @@ public:
         Border::Position BorderPosition;
     };
 
-    Text();
-
-    inline Props GetProps() const { return m_Props; }
-
-    // Set the new props and update the background if needed.
-    HRESULT SetProps(const Props &props);
+    Text() {}
 
     // Render the text.
-    void Render();
+    HRESULT Render(const Props &props);
 
 private:
-    Props m_Props;
     Rectangle m_Background;
-    bool m_HasBackgroundOrBorder;
-    bool m_IsInitialized;
-
-    // Initialize the background if needed.
-    HRESULT Init();
-
-    // Set the background from the props.
-    HRESULT SetBackground();
 };

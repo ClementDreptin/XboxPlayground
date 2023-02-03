@@ -47,7 +47,7 @@
     <ClCompile Include="src\Elements\OptionGroup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Elements\ClickableOption.cpp">
+    <ClCompile Include="src\Elements\ClickOption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Elements\RangeOption.cpp">
@@ -109,7 +109,7 @@
     <ClInclude Include="src\Renderer\D3DDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Elements\ClickableOption.h">
+    <ClInclude Include="src\Elements\ClickOption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Elements\RangeOption.h">
