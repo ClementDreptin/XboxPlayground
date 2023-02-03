@@ -40,7 +40,7 @@ HRESULT ToggleOption::Render(float x, float y)
     props.Width = radioBoxSize;
     props.Height = radioBoxSize;
     props.Color = m_Active ? Layout::Color : D3DCOLOR_XRGB(0, 0, 0);
-    props.BorderWidth = 2.0f;
+    props.BorderWidth = 1.0f;
     props.BorderColor = D3DCOLOR_XRGB(255, 255, 255);
     props.BorderPosition = Border::Border_All;
     hr = m_RadioBox.Render(props);
