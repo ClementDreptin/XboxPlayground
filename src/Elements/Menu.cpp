@@ -75,22 +75,20 @@ void Menu::CreateStructure()
     // First group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ClickOption, L"God Mode", Callback::ClickCallback));
-        options.emplace_back(MakeOption(ClickOption, L"Fall Damage", Callback::ClickCallback));
-        options.emplace_back(MakeOption(ClickOption, L"Ammo", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"God Mode", Callback::ToggleCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"Fall Damage", Callback::ToggleCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"Ammo", Callback::ToggleCallback));
         options.emplace_back(MakeOption(ClickOption, L"Spawn Care Package", Callback::ClickCallback));
-        options.emplace_back(MakeOption(RangeOption, L"Some Number", Callback::RangeCallback, 1.0f, 1.0f, 5.0f, 1.0f));
-        options.emplace_back(MakeOption(ToggleOption, L"Toggle Me", Callback::ToggleCallback));
         m_OptionGroups.emplace_back(OptionGroup(L"Main", options));
     }
 
     // Second group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ClickOption, L"Save/Load Binds", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"Save/Load Binds", Callback::ToggleCallback));
         options.emplace_back(MakeOption(ClickOption, L"Save Position", Callback::ClickCallback));
         options.emplace_back(MakeOption(ClickOption, L"Load Position", Callback::ClickCallback));
-        options.emplace_back(MakeOption(ClickOption, L"UFO", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"UFO", Callback::ToggleCallback));
         m_OptionGroups.emplace_back(OptionGroup(L"Teleport", options));
     }
 
@@ -102,7 +100,7 @@ void Menu::CreateStructure()
         m_OptionGroups.emplace_back(OptionGroup(L"Customization", options));
     }
 
-    CalculateMenuWidth();
+    CalculateMenuDimensions();
 }
 
 HRESULT Menu::RenderBackground()
@@ -163,15 +161,21 @@ HRESULT Menu::RenderOptionGroupHeaders()
     return hr;
 }
 
-void Menu::CalculateMenuWidth()
+void Menu::CalculateMenuDimensions()
 {
     float allOptionGroupNamesWidth = 0.0f;
     float longestOptionNameWidth = 0.0f;
+    size_t biggestAmountOfOptionsInAGroup = 0;
 
     for (size_t i = 0; i < m_OptionGroups.size(); i++)
     {
         // Accumulate all the option group names width
         allOptionGroupNamesWidth += (g_Font.GetTextWidth(m_OptionGroups[i].GetName().c_str()) + Layout::Padding * 2);
+
+        // Find the biggest amount of options in a single group
+        size_t amountOfOptions = m_OptionGroups[i].GetOptions().size();
+        if (biggestAmountOfOptionsInAGroup < amountOfOptions)
+            biggestAmountOfOptionsInAGroup = amountOfOptions;
 
         // Find the longest option name
         for (size_t j = 0; j < m_OptionGroups[i].GetOptions().size(); j++)
@@ -190,4 +194,7 @@ void Menu::CalculateMenuWidth()
 
     // Increase the menu width by the max between all the option names width and the longest option name
     Layout::Width += std::max<float>(allOptionGroupNamesWidth, longestOptionNameWidth);
+
+    // Make the menu tall enough for the biggest option group
+    Layout::Height += Layout::LineHeight * biggestAmountOfOptionsInAGroup;
 }

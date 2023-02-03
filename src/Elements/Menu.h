@@ -38,6 +38,6 @@ private:
     // Render the option group headers.
     HRESULT RenderOptionGroupHeaders();
 
-    // Calculate the menu width from its structure.
-    void CalculateMenuWidth();
+    // Calculate the menu dimensions from its structure.
+    void CalculateMenuDimensions();
 };
