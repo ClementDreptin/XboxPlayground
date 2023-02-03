@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core\ValueOrPtr.h"
 #include "Elements\Option.h"
 #include "UI\Text.h"
 
@@ -13,7 +14,7 @@ class RangeOption : public Option
 public:
     RangeOption();
 
-    RangeOption(const std::wstring &name, Callback callback, float min, float max, float step);
+    RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<float> &value, float min, float max, float step);
 
     // Check for user clicks.
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
@@ -25,7 +26,7 @@ private:
     float m_Min;
     float m_Max;
     float m_Step;
-    float m_Current;
+    ValueOrPtr<float> m_Current;
 
     Text m_Text;
 };

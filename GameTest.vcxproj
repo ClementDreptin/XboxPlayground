@@ -34,6 +34,7 @@
     <ClInclude Include="src\Core\App.h" />
     <ClInclude Include="src\Core\Callbacks.h" />
     <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Core\ValueOrPtr.h" />
     <ClInclude Include="src\Elements\ToggleOption.h" />
     <ClInclude Include="src\Elements\ClickOption.h" />
     <ClInclude Include="src\Elements\Menu.h" />

@@ -136,6 +136,9 @@
     <ClInclude Include="src\Elements\ToggleOption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\ValueOrPtr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\Resources\Fonts\Arial_16.rdf" />

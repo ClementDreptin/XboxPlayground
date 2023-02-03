@@ -8,6 +8,9 @@
 #include "UI\Layout.h"
 #include "UI\Font.h"
 
+extern float g_DisplayWidth;
+extern float g_DisplayHeight;
+
 Menu::Menu()
     : m_CurrentOptionGroupIndex(0)
 {
@@ -76,7 +79,7 @@ void Menu::CreateStructure()
         options.emplace_back(MakeOption(ClickOption, L"Fall Damage", Callback::ClickCallback));
         options.emplace_back(MakeOption(ClickOption, L"Ammo", Callback::ClickCallback));
         options.emplace_back(MakeOption(ClickOption, L"Spawn Care Package", Callback::ClickCallback));
-        options.emplace_back(MakeOption(RangeOption, L"Some Number", Callback::RangeCallback, 1.0f, 5.0f, 1.0f));
+        options.emplace_back(MakeOption(RangeOption, L"Some Number", Callback::RangeCallback, 1.0f, 1.0f, 5.0f, 1.0f));
         options.emplace_back(MakeOption(ToggleOption, L"Toggle Me", Callback::ToggleCallback));
         m_OptionGroups.emplace_back(OptionGroup(L"Main", options));
     }
@@ -89,6 +92,14 @@ void Menu::CreateStructure()
         options.emplace_back(MakeOption(ClickOption, L"Load Position", Callback::ClickCallback));
         options.emplace_back(MakeOption(ClickOption, L"UFO", Callback::ClickCallback));
         m_OptionGroups.emplace_back(OptionGroup(L"Teleport", options));
+    }
+
+    // Third group
+    {
+        std::vector<std::shared_ptr<Option>> options;
+        options.emplace_back(MakeOption(RangeOption, L"Menu X", nullptr, &Layout::X, Layout::BorderWidth, g_DisplayWidth, 10.0f));
+        options.emplace_back(MakeOption(RangeOption, L"Menu Y", nullptr, &Layout::Y, Layout::BorderWidth, g_DisplayHeight, 10.0f));
+        m_OptionGroups.emplace_back(OptionGroup(L"Customization", options));
     }
 
     CalculateMenuWidth();

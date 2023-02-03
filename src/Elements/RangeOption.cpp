@@ -9,8 +9,8 @@ RangeOption::RangeOption()
 {
 }
 
-RangeOption::RangeOption(const std::wstring &name, Callback callback, float min, float max, float step)
-    : Option(name, callback), m_Min(min), m_Max(max), m_Step(step), m_Current(min)
+RangeOption::RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<float> &value, float min, float max, float step)
+    : Option(name, callback), m_Min(min), m_Max(max), m_Step(step), m_Current(value)
 {
 }
 
@@ -19,18 +19,20 @@ void RangeOption::Update(ATG::GAMEPAD *pGamepad)
     // Allow the user to change the value with DPAD LEFT/DPAD RIGHT
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
     {
-        if (m_Current < m_Max)
+        if (*m_Current < m_Max)
         {
             m_Current += m_Step;
-            m_Callback(&m_Current);
+            if (m_Callback != nullptr)
+                m_Callback(&m_Current);
         }
     }
     else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)
     {
-        if (m_Current > m_Min)
+        if (*m_Current > m_Min)
         {
             m_Current -= m_Step;
-            m_Callback(&m_Current);
+            if (m_Callback != nullptr)
+                m_Callback(&m_Current);
         }
     }
 }
@@ -45,7 +47,7 @@ HRESULT RangeOption::Render(float x, float y)
         return hr;
 
     // Create a wide string from the current number value
-    std::wstring text = std::to_wstring(static_cast<long double>(m_Current));
+    std::wstring text = std::to_wstring(static_cast<long double>(*m_Current));
 
     // Calculate the width of the wide string of the number value
     float textWidth = g_Font.GetTextWidth(text.c_str());
