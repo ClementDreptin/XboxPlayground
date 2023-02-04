@@ -124,6 +124,12 @@
       <DeploymentType>CopyToHardDrive</DeploymentType>
       <DeploymentFiles>$(RemoteRoot)=$(ImagePath);$(RemoteRoot)\Media=$(OutDir)Media</DeploymentFiles>
     </Deploy>
+    <PostBuildEvent>
+      <Command>"$(XEDK)\bin\win32\xbreboot.exe" $(RemotePath)</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Launch $(RemotePath) after it's built</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
