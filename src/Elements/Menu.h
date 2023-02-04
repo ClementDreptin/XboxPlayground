@@ -22,8 +22,6 @@ public:
     HRESULT Render();
 
 private:
-    Rectangle m_Background;
-
     std::vector<OptionGroup> m_OptionGroups;
     size_t m_CurrentOptionGroupIndex;
 
@@ -31,9 +29,6 @@ private:
 
     // Create the structure of the menu.
     void CreateStructure();
-
-    // Render the background of the menu.
-    HRESULT RenderBackground();
 
     // Render the option group headers.
     HRESULT RenderOptionGroupHeaders();

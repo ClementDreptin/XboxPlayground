@@ -1,7 +1,5 @@
 #pragma once
 
-#include <AtgInput.h>
-
 #include "UI\Rectangle.h"
 #include "Elements\Option.h"
 
@@ -21,7 +19,7 @@ public:
     void Update(ATG::GAMEPAD *pGamepad);
 
     // Render the options.
-    HRESULT Render(float x, float y);
+    HRESULT Render(float x, float y, float width = 0.0f, float height = 0.0f);
 
     // Calculate the minimum width required for the option group.
     float GetMinWidth();
@@ -34,4 +32,12 @@ private:
     std::vector<std::shared_ptr<Option>> m_Options;
 
     size_t m_CurrentSelectedOptionIndex;
+
+    float m_CachedMinWidth;
+    float m_CachedMinHeight;
+
+    Rectangle m_Background;
+
+    // Render the background of the option group.
+    HRESULT RenderBackground(float x, float y, float width, float height);
 };

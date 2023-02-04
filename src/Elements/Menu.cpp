@@ -54,18 +54,14 @@ HRESULT Menu::Render()
 {
     HRESULT hr = S_OK;
 
-    // Render the background
-    hr = RenderBackground();
-    if (FAILED(hr))
-        return hr;
-
     // Render the option group headers
     hr = RenderOptionGroupHeaders();
     if (FAILED(hr))
         return hr;
 
     // Render the currently selected option group
-    hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y);
+    float optionGroupHeadersHeight = Layout::LineHeight + Layout::BorderWidth;
+    hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y + optionGroupHeadersHeight, Layout::Width, Layout::Height);
 
     return hr;
 }
@@ -101,21 +97,6 @@ void Menu::CreateStructure()
     }
 
     CalculateMenuDimensions();
-}
-
-HRESULT Menu::RenderBackground()
-{
-    Rectangle::Props props = { 0 };
-    props.X = Layout::X;
-    props.Y = Layout::Y + Layout::LineHeight + Layout::BorderWidth;
-    props.Width = Layout::Width;
-    props.Height = Layout::Height;
-    props.Color = Layout::BackgroundColor;
-    props.BorderWidth = Layout::BorderWidth;
-    props.BorderColor = Layout::Color;
-    props.BorderPosition = Border::Border_All;
-
-    return m_Background.Render(props);
 }
 
 HRESULT Menu::RenderOptionGroupHeaders()
