@@ -1,7 +1,7 @@
 #pragma once
 
 #include "UI\Rectangle.h"
-#include "Elements\Option.h"
+#include "Options\Option.h"
 
 // Class to represent a menu category.
 class OptionGroup

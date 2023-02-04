@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -38,25 +38,25 @@
     <ClCompile Include="src\UI\Rectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Elements\Option.cpp">
+    <ClCompile Include="src\Options\Option.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Callbacks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Elements\OptionGroup.cpp">
+    <ClCompile Include="src\Core\OptionGroup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Elements\ClickOption.cpp">
+    <ClCompile Include="src\Options\ClickOption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Elements\RangeOption.cpp">
+    <ClCompile Include="src\Options\RangeOption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\Layout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Elements\Menu.cpp">
+    <ClCompile Include="src\Core\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\Line.cpp">
@@ -68,7 +68,7 @@
     <ClCompile Include="src\UI\Border.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Elements\ToggleOption.cpp">
+    <ClCompile Include="src\Options\ToggleOption.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,28 +97,28 @@
     <ClInclude Include="src\UI\Rectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Elements\Option.h">
+    <ClInclude Include="src\Options\Option.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Callbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Elements\OptionGroup.h">
+    <ClInclude Include="src\Core\OptionGroup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\D3DDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Elements\ClickOption.h">
+    <ClInclude Include="src\Options\ClickOption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Elements\RangeOption.h">
+    <ClInclude Include="src\Options\RangeOption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\Layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Elements\Menu.h">
+    <ClInclude Include="src\Core\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\Line.h">
@@ -133,7 +133,7 @@
     <ClInclude Include="src\UI\Border.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Elements\ToggleOption.h">
+    <ClInclude Include="src\Options\ToggleOption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\ValueOrPtr.h">

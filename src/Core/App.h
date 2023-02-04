@@ -3,7 +3,7 @@
 #include <AtgApp.h>
 #include <AtgUtil.h>
 
-#include "Elements\Menu.h"
+#include "Core\Menu.h"
 #include "UI\Text.h"
 
 // Main class to run this application. Most functionality is inherited

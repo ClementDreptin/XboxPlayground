@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "Elements\Menu.h"
+#include "Core\Menu.h"
 
 #include "Core\Callbacks.h"
-#include "Elements\ClickOption.h"
-#include "Elements\RangeOption.h"
-#include "Elements\ToggleOption.h"
+#include "Options\ClickOption.h"
+#include "OPtions\RangeOption.h"
+#include "OPtions\ToggleOption.h"
 #include "UI\Layout.h"
 #include "UI\Font.h"
 

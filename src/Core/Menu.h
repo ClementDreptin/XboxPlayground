@@ -4,7 +4,7 @@
 
 #include "UI\Rectangle.h"
 #include "UI\Text.h"
-#include "Elements\OptionGroup.h"
+#include "Core\OptionGroup.h"
 
 // Class to represent to menu
 class Menu
