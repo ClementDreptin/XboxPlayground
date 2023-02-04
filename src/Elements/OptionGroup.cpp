@@ -56,3 +56,23 @@ HRESULT OptionGroup::Render(float x, float y)
 
     return hr;
 }
+
+float OptionGroup::GetMinWidth()
+{
+    float longestOptionNameWidth = 0.0f;
+
+    for (size_t i = 0; i < m_Options.size(); i++)
+    {
+        float optionNameWidth = g_Font.GetTextWidth(m_Options[i]->GetName().c_str()) + Layout::Padding * 2;
+        if (longestOptionNameWidth < optionNameWidth)
+            longestOptionNameWidth = optionNameWidth;
+    }
+
+    // Take into account some space between the option name and the potential text on the right (e.g. the number for RangeOption)
+    return longestOptionNameWidth + 100.0f;
+}
+
+float OptionGroup::GetMinHeight()
+{
+    return m_Options.size() * Layout::LineHeight;
+}

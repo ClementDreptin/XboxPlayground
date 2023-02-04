@@ -23,6 +23,12 @@ public:
     // Render the options.
     HRESULT Render(float x, float y);
 
+    // Calculate the minimum width required for the option group.
+    float GetMinWidth();
+
+    // Calculate the minimum height required for the option group.
+    float GetMinHeight();
+
 private:
     std::wstring m_Name;
     std::vector<std::shared_ptr<Option>> m_Options;

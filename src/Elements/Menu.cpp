@@ -164,37 +164,31 @@ HRESULT Menu::RenderOptionGroupHeaders()
 void Menu::CalculateMenuDimensions()
 {
     float allOptionGroupNamesWidth = 0.0f;
-    float longestOptionNameWidth = 0.0f;
-    size_t biggestAmountOfOptionsInAGroup = 0;
+    float biggestOptionGroupWidth = 0.0f;
+    float biggestOptionGroupHeight = 0.0f;
 
     for (size_t i = 0; i < m_OptionGroups.size(); i++)
     {
         // Accumulate all the option group names width
         allOptionGroupNamesWidth += (g_Font.GetTextWidth(m_OptionGroups[i].GetName().c_str()) + Layout::Padding * 2);
 
-        // Find the biggest amount of options in a single group
-        size_t amountOfOptions = m_OptionGroups[i].GetOptions().size();
-        if (biggestAmountOfOptionsInAGroup < amountOfOptions)
-            biggestAmountOfOptionsInAGroup = amountOfOptions;
+        // Find the option group with the biggest width
+        float optionGroupWidth = m_OptionGroups[i].GetMinWidth();
+        if (biggestOptionGroupWidth < optionGroupWidth)
+            biggestOptionGroupWidth = optionGroupWidth;
 
-        // Find the longest option name
-        for (size_t j = 0; j < m_OptionGroups[i].GetOptions().size(); j++)
-        {
-            float optionNameWidth = g_Font.GetTextWidth(m_OptionGroups[i].GetOptions()[j]->GetName().c_str()) + Layout::Padding * 2;
-            if (longestOptionNameWidth < optionNameWidth)
-                longestOptionNameWidth = optionNameWidth;
-        }
+        // Find the option group with the biggest height
+        float optionGroupHeight = m_OptionGroups[i].GetMinHeight();
+        if (biggestOptionGroupHeight < optionGroupHeight)
+            biggestOptionGroupHeight = optionGroupHeight;
     }
 
     // Take the space between each group header into account
     allOptionGroupNamesWidth += Layout::BorderWidth * (m_OptionGroups.size() - 1);
 
-    // Take into account some space between with option name and the potential text on the right (e.g. the number for RangeOption)
-    longestOptionNameWidth += 100.0f;
-
     // Increase the menu width by the max between all the option names width and the longest option name
-    Layout::Width += std::max<float>(allOptionGroupNamesWidth, longestOptionNameWidth);
+    Layout::Width = std::max<float>(allOptionGroupNamesWidth, biggestOptionGroupWidth);
 
     // Make the menu tall enough for the biggest option group
-    Layout::Height += Layout::LineHeight * biggestAmountOfOptionsInAGroup;
+    Layout::Height = biggestOptionGroupHeight;
 }
