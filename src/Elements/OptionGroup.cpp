@@ -42,9 +42,17 @@ void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
     m_Options[m_CurrentSelectedOptionIndex]->Update(pGamepad);
 }
 
-void OptionGroup::Render()
+HRESULT OptionGroup::Render(float x, float y)
 {
+    HRESULT hr = S_OK;
+
     // Render the options
     for (size_t i = 0; i < m_Options.size(); i++)
-        m_Options[i]->Render(Layout::X, Layout::Y + (i + 1) * Layout::LineHeight + Layout::BorderWidth);
+    {
+        hr = m_Options[i]->Render(x, y + (i + 1) * Layout::LineHeight + Layout::BorderWidth);
+        if (FAILED(hr))
+            return hr;
+    }
+
+    return hr;
 }

@@ -65,7 +65,7 @@ HRESULT Menu::Render()
         return hr;
 
     // Render the currently selected option group
-    m_OptionGroups[m_CurrentOptionGroupIndex].Render();
+    hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y);
 
     return hr;
 }

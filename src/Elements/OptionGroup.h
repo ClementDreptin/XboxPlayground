@@ -20,8 +20,8 @@ public:
     // Change the currently selected option and update it.
     void Update(ATG::GAMEPAD *pGamepad);
 
-    // Render the scroller and the options.
-    void Render();
+    // Render the options.
+    HRESULT Render(float x, float y);
 
 private:
     std::wstring m_Name;
