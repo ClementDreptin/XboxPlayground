@@ -13,7 +13,7 @@ public:
 
     inline const T &operator*() const { return isPtr() ? *m_Ptr : m_Value; }
 
-    inline T *operator&() const { return isPtr() ? m_Ptr : const_cast<float *>(&m_Value); }
+    inline T *operator&() const { return isPtr() ? m_Ptr : const_cast<T *>(&m_Value); }
 
     inline T operator=(const T &value) { return isPtr() ? *m_Ptr = value : m_Value = value; }
 

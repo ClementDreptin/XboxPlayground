@@ -9,12 +9,13 @@
 #pragma warning(disable : 4481)
 
 // Class to represent an option with a changeable number value.
+template <typename T>
 class RangeOption : public Option
 {
 public:
     RangeOption();
 
-    RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<float> &value, float min, float max, float step);
+    RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<T> &value, T min, T max, T step);
 
     // Check for user clicks.
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
@@ -23,10 +24,10 @@ public:
     virtual HRESULT Render(float x, float y) override;
 
 private:
-    float m_Min;
-    float m_Max;
-    float m_Step;
-    ValueOrPtr<float> m_Current;
+    T m_Min;
+    T m_Max;
+    T m_Step;
+    ValueOrPtr<T> m_Current;
 
     Text m_Text;
 };

@@ -13,14 +13,14 @@ class ColorPickerOption : public Option
 public:
     ColorPickerOption();
 
-    ColorPickerOption(const std::wstring &name, Callback callback, D3DCOLOR *pColor);
+    ColorPickerOption(const std::wstring &name, Callback callback, const ValueOrPtr<D3DCOLOR> &color);
 
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
 
     virtual HRESULT Render(float x, float y) override;
 
 private:
-    D3DCOLOR *m_pColor;
+    ValueOrPtr<D3DCOLOR> m_Color;
     uint32_t m_Red;
     uint32_t m_Green;
     uint32_t m_Blue;

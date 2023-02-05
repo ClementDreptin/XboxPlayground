@@ -4,18 +4,18 @@
 #include "Options\RangeOption.h"
 
 ColorPickerOption::ColorPickerOption()
-    : Option(), m_pColor(nullptr), m_Red(0), m_Green(0), m_Blue(0), m_Alpha(0), m_Open(false)
+    : Option(), m_Color(D3DCOLOR(0)), m_Red(0), m_Green(0), m_Blue(0), m_Alpha(0), m_Open(false)
 {
 }
 
-ColorPickerOption::ColorPickerOption(const std::wstring &name, Callback callback, D3DCOLOR *pColor)
-    : Option(name, callback), m_pColor(pColor), m_Red(D3DCOLOR_GETRED(*pColor)), m_Green(D3DCOLOR_GETGREEN(*pColor)), m_Blue(D3DCOLOR_GETBLUE(*pColor)), m_Alpha(D3DCOLOR_GETALPHA(*pColor)), m_Open(false)
+ColorPickerOption::ColorPickerOption(const std::wstring &name, Callback callback, const ValueOrPtr<D3DCOLOR> &color)
+    : Option(name, callback), m_Color(color), m_Red(D3DCOLOR_GETRED(*color)), m_Green(D3DCOLOR_GETGREEN(*color)), m_Blue(D3DCOLOR_GETBLUE(*color)), m_Alpha(D3DCOLOR_GETALPHA(*color)), m_Open(false)
 {
     std::vector<std::shared_ptr<Option>> options;
-    options.emplace_back(MakeOption(RangeOption, L"Red", nullptr, reinterpret_cast<float *>(&m_Red), 0.0f, 255.0f, 1.0f));
-    options.emplace_back(MakeOption(RangeOption, L"Green", nullptr, reinterpret_cast<float *>(&m_Green), 0.0f, 255.0f, 1.0f));
-    options.emplace_back(MakeOption(RangeOption, L"Blue", nullptr, reinterpret_cast<float *>(&m_Blue), 0.0f, 255.0f, 1.0f));
-    options.emplace_back(MakeOption(RangeOption, L"Alpha", nullptr, reinterpret_cast<float *>(&m_Alpha), 0.0f, 255.0f, 1.0f));
+    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Red", nullptr, &m_Red, 0, 255, 1));
+    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Green", nullptr, &m_Green, 0, 255, 1));
+    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Blue", nullptr, &m_Blue, 0, 255, 1));
+    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Alpha", nullptr, &m_Alpha, 0, 255, 1));
     m_OptionGroup = OptionGroup(L"Color Picker", options);
 }
 
@@ -23,14 +23,20 @@ void ColorPickerOption::Update(ATG::GAMEPAD *pGamepad)
 {
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
         m_Open = true;
-
-    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_B)
+    else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_B)
         m_Open = false;
 
-    if (m_Open)
-        m_OptionGroup.Update(pGamepad);
+    if (!m_Open)
+        return;
 
-    *m_pColor = D3DCOLOR_RGBA(m_Red, m_Green, m_Blue, m_Alpha);
+    m_OptionGroup.Update(pGamepad);
+
+    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT || pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
+    {
+        m_Color = D3DCOLOR_RGBA(m_Red, m_Green, m_Blue, m_Alpha);
+        if (m_Callback != nullptr)
+            m_Callback(&m_Color);
+    }
 }
 
 HRESULT ColorPickerOption::Render(float x, float y)
@@ -47,5 +53,4 @@ HRESULT ColorPickerOption::Render(float x, float y)
         hr = m_OptionGroup.Render(x + Layout::Width + Layout::BorderWidth * 2, y);
 
     return hr;
-
 }

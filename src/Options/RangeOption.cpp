@@ -4,17 +4,20 @@
 #include "UI\Layout.h"
 #include "UI\Font.h"
 
-RangeOption::RangeOption()
-    : Option(), m_Min(0.0f), m_Max(0.0f), m_Current(0.0f)
+template <typename T>
+RangeOption<T>::RangeOption()
+    : Option(), m_Min(static_cast<T>(0)), m_Max(static_cast<T>(0)), m_Current(static_cast<T>(0))
 {
 }
 
-RangeOption::RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<float> &value, float min, float max, float step)
+template<typename T>
+RangeOption<T>::RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<T> &value, T min, T max, T step)
     : Option(name, callback), m_Min(min), m_Max(max), m_Step(step), m_Current(value)
 {
 }
 
-void RangeOption::Update(ATG::GAMEPAD *pGamepad)
+template<typename T>
+void RangeOption<T>::Update(ATG::GAMEPAD *pGamepad)
 {
     // Allow the user to change the value with DPAD LEFT/DPAD RIGHT
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
@@ -37,7 +40,8 @@ void RangeOption::Update(ATG::GAMEPAD *pGamepad)
     }
 }
 
-HRESULT RangeOption::Render(float x, float y)
+template<typename T>
+HRESULT RangeOption<T>::Render(float x, float y)
 {
     HRESULT hr = S_OK;
 
@@ -62,3 +66,6 @@ HRESULT RangeOption::Render(float x, float y)
 
     return hr;
 }
+
+template class RangeOption<float>;
+template class RangeOption<uint32_t>;
