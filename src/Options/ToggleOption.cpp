@@ -23,19 +23,19 @@ void ToggleOption::Update(ATG::GAMEPAD *pGamepad)
     }
 }
 
-HRESULT ToggleOption::Render(float x, float y)
+HRESULT ToggleOption::Render(float x, float y, float width)
 {
     HRESULT hr = S_OK;
 
     // Call the parent to render the text
-    hr = Option::Render(x, y);
+    hr = Option::Render(x, y, width);
     if (FAILED(hr))
         return hr;
 
     // Render the radio box
     float radioBoxSize = Layout::LineHeight * 0.5f;
     Rectangle::Props props = { 0 };
-    props.X = x + Layout::Width - radioBoxSize - Layout::Padding;
+    props.X = x + width - radioBoxSize - Layout::Padding;
     props.Y = y + Layout::LineHeight / 2 - radioBoxSize / 2;
     props.Width = radioBoxSize;
     props.Height = radioBoxSize;

@@ -18,8 +18,8 @@ void ClickOption::Update(ATG::GAMEPAD *pGamepad)
         m_Callback(nullptr);
 }
 
-HRESULT ClickOption::Render(float x, float y)
+HRESULT ClickOption::Render(float x, float y, float width)
 {
     // Call the parent to render the text
-    return Option::Render(x, y);
+    return Option::Render(x, y, width);
 }

@@ -41,12 +41,12 @@ void RangeOption<T>::Update(ATG::GAMEPAD *pGamepad)
 }
 
 template<typename T>
-HRESULT RangeOption<T>::Render(float x, float y)
+HRESULT RangeOption<T>::Render(float x, float y, float width)
 {
     HRESULT hr = S_OK;
 
     // Call the parent to render the text
-    hr = Option::Render(x, y);
+    hr = Option::Render(x, y, width);
     if (FAILED(hr))
         return hr;
 
@@ -58,7 +58,7 @@ HRESULT RangeOption<T>::Render(float x, float y)
 
     // Draw the text with the number
     Text::Props props = { 0 };
-    props.X = x + Layout::Width - textWidth - Layout::Padding;
+    props.X = x + width - textWidth - Layout::Padding;
     props.Y = y + Layout::Padding;
     props.Text = text;
     props.Color = Layout::TextColor;

@@ -27,7 +27,10 @@ public:
     virtual void Update(ATG::GAMEPAD *pGamepad) = 0;
 
     // Render the text.
-    virtual HRESULT Render(float x, float y) = 0;
+    virtual HRESULT Render(float x, float y, float width) = 0;
+
+    // Calculate the minimum width required for the option group.
+    float GetMinWidth();
 
 protected:
     std::wstring m_Name;
@@ -36,6 +39,8 @@ protected:
 
     bool m_IsSelected;
     Rectangle m_Background;
+
+    float m_CachedMinWidth;
 };
 
 // Macro to create a shared pointer to an option. Being able to use templated arguments and std::forward

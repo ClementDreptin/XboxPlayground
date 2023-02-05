@@ -17,7 +17,7 @@ public:
 
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
 
-    virtual HRESULT Render(float x, float y) override;
+    virtual HRESULT Render(float x, float y, float width) override;
 
 private:
     ValueOrPtr<D3DCOLOR> m_Color;

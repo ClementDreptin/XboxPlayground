@@ -39,18 +39,18 @@ void ColorPickerOption::Update(ATG::GAMEPAD *pGamepad)
     }
 }
 
-HRESULT ColorPickerOption::Render(float x, float y)
+HRESULT ColorPickerOption::Render(float x, float y, float width)
 {
     HRESULT hr = S_OK;
 
     // Call the parent to render the text
-    hr = Option::Render(x, y);
+    hr = Option::Render(x, y, width);
     if (FAILED(hr))
         return hr;
 
     // Render the option group if it's open
     if (m_Open)
-        hr = m_OptionGroup.Render(x + Layout::Width + Layout::BorderWidth * 2, y);
+        hr = m_OptionGroup.Render(x + width + Layout::BorderWidth * 2, y);
 
     return hr;
 }

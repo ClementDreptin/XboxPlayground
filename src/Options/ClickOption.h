@@ -18,7 +18,7 @@ public:
     virtual void Update(ATG::GAMEPAD *pGamepad) override;
 
     // Render the text.
-    virtual HRESULT Render(float x, float y) override;
+    virtual HRESULT Render(float x, float y, float width) override;
 };
 
 #pragma warning(pop)
