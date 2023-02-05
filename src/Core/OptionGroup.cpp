@@ -16,6 +16,12 @@ OptionGroup::OptionGroup(const std::wstring &name, const std::vector<std::shared
 
 void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
 {
+    // Update the currently selected option and return if the option is blocking (meaning it opened a sub option group
+    // and wants to prevent its parent option group from updating)
+    bool blocking = m_Options[m_CurrentSelectedOptionIndex]->Update(pGamepad);
+    if (blocking)
+        return;
+
     // Allow the user to select options with the DPAD
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP)
     {
@@ -37,9 +43,6 @@ void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
     // Change the option states according to the currently selected option
     for (size_t i = 0; i < m_Options.size(); i++)
         m_Options[i]->Select(i == m_CurrentSelectedOptionIndex);
-
-    // Update the currently selected option
-    m_Options[m_CurrentSelectedOptionIndex]->Update(pGamepad);
 }
 
 HRESULT OptionGroup::Render(float x, float y, float width, float height)

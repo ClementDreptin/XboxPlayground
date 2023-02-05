@@ -18,7 +18,7 @@ public:
     RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<T> &value, T min, T max, T step);
 
     // Check for user clicks.
-    virtual void Update(ATG::GAMEPAD *pGamepad) override;
+    virtual bool Update(ATG::GAMEPAD *pGamepad) override;
 
     // Render the text and the number.
     virtual HRESULT Render(float x, float y, float width) override;

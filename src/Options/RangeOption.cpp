@@ -17,7 +17,7 @@ RangeOption<T>::RangeOption(const std::wstring &name, Callback callback, const V
 }
 
 template<typename T>
-void RangeOption<T>::Update(ATG::GAMEPAD *pGamepad)
+bool RangeOption<T>::Update(ATG::GAMEPAD *pGamepad)
 {
     // Allow the user to change the value with DPAD LEFT/DPAD RIGHT
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
@@ -38,6 +38,8 @@ void RangeOption<T>::Update(ATG::GAMEPAD *pGamepad)
                 m_Callback(&m_Current);
         }
     }
+
+    return false;
 }
 
 template<typename T>

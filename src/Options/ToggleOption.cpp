@@ -13,7 +13,7 @@ ToggleOption::ToggleOption(const std::wstring &name, Callback callback)
 {
 }
 
-void ToggleOption::Update(ATG::GAMEPAD *pGamepad)
+bool ToggleOption::Update(ATG::GAMEPAD *pGamepad)
 {
     // Allow the user to toggle the option
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
@@ -21,6 +21,8 @@ void ToggleOption::Update(ATG::GAMEPAD *pGamepad)
         m_Active = !m_Active;
         m_Callback(&m_Active);
     }
+
+    return false;
 }
 
 HRESULT ToggleOption::Render(float x, float y, float width)

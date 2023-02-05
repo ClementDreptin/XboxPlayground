@@ -24,7 +24,7 @@ public:
     void Select(bool selected) { m_IsSelected = selected; }
 
     // Update the option.
-    virtual void Update(ATG::GAMEPAD *pGamepad) = 0;
+    virtual bool Update(ATG::GAMEPAD *pGamepad) = 0;
 
     // Render the text.
     virtual HRESULT Render(float x, float y, float width) = 0;

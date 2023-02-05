@@ -15,7 +15,7 @@ public:
     ClickOption(const std::wstring &name, Callback callback);
 
     // Check for user clicks.
-    virtual void Update(ATG::GAMEPAD *pGamepad) override;
+    virtual bool Update(ATG::GAMEPAD *pGamepad) override;
 
     // Render the text.
     virtual HRESULT Render(float x, float y, float width) override;

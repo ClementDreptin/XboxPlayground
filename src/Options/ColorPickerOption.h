@@ -15,7 +15,7 @@ public:
 
     ColorPickerOption(const std::wstring &name, Callback callback, const ValueOrPtr<D3DCOLOR> &color);
 
-    virtual void Update(ATG::GAMEPAD *pGamepad) override;
+    virtual bool Update(ATG::GAMEPAD *pGamepad) override;
 
     virtual HRESULT Render(float x, float y, float width) override;
 

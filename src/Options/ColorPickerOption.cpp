@@ -19,7 +19,7 @@ ColorPickerOption::ColorPickerOption(const std::wstring &name, Callback callback
     m_OptionGroup = OptionGroup(L"Color Picker", options);
 }
 
-void ColorPickerOption::Update(ATG::GAMEPAD *pGamepad)
+bool ColorPickerOption::Update(ATG::GAMEPAD *pGamepad)
 {
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
         m_Open = true;
@@ -27,16 +27,18 @@ void ColorPickerOption::Update(ATG::GAMEPAD *pGamepad)
         m_Open = false;
 
     if (!m_Open)
-        return;
+        return false;
 
     m_OptionGroup.Update(pGamepad);
 
-    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT || pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
+    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT || pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
     {
         m_Color = D3DCOLOR_RGBA(m_Red, m_Green, m_Blue, m_Alpha);
         if (m_Callback != nullptr)
             m_Callback(&m_Color);
     }
+
+    return true;
 }
 
 HRESULT ColorPickerOption::Render(float x, float y, float width)
