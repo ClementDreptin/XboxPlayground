@@ -4,12 +4,12 @@
 #include "Options\RangeOption.h"
 
 ColorPickerOption::ColorPickerOption()
-    : Option(), m_Color(D3DCOLOR(0)), m_Red(0), m_Green(0), m_Blue(0), m_Alpha(0), m_Open(false)
+    : SubOptionGroup(), m_Color(D3DCOLOR(0)), m_Red(0), m_Green(0), m_Blue(0), m_Alpha(0)
 {
 }
 
 ColorPickerOption::ColorPickerOption(const std::wstring &name, Callback callback, const ValueOrPtr<D3DCOLOR> &color)
-    : Option(name, callback), m_Color(color), m_Red(D3DCOLOR_GETRED(*color)), m_Green(D3DCOLOR_GETGREEN(*color)), m_Blue(D3DCOLOR_GETBLUE(*color)), m_Alpha(D3DCOLOR_GETALPHA(*color)), m_Open(false)
+    : SubOptionGroup(name, callback, OptionGroup()), m_Color(color), m_Red(D3DCOLOR_GETRED(*color)), m_Green(D3DCOLOR_GETGREEN(*color)), m_Blue(D3DCOLOR_GETBLUE(*color)), m_Alpha(D3DCOLOR_GETALPHA(*color))
 {
     std::vector<std::shared_ptr<Option>> options;
     options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Red", nullptr, &m_Red, 0, 255, 1));
@@ -21,15 +21,9 @@ ColorPickerOption::ColorPickerOption(const std::wstring &name, Callback callback
 
 bool ColorPickerOption::Update(ATG::GAMEPAD *pGamepad)
 {
-    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
-        m_Open = true;
-    else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_B)
-        m_Open = false;
-
-    if (!m_Open)
+    bool open = SubOptionGroup::Update(pGamepad);
+    if (!open)
         return false;
-
-    m_OptionGroup.Update(pGamepad);
 
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT || pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
     {
@@ -39,20 +33,4 @@ bool ColorPickerOption::Update(ATG::GAMEPAD *pGamepad)
     }
 
     return true;
-}
-
-HRESULT ColorPickerOption::Render(float x, float y, float width)
-{
-    HRESULT hr = S_OK;
-
-    // Call the parent to render the text
-    hr = Option::Render(x, y, width);
-    if (FAILED(hr))
-        return hr;
-
-    // Render the option group if it's open
-    if (m_Open)
-        hr = m_OptionGroup.Render(x + width + Layout::BorderWidth * 2, y);
-
-    return hr;
 }

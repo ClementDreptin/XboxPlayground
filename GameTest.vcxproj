@@ -11,6 +11,7 @@
     <ClCompile Include="src\Core\Callbacks.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
     <ClCompile Include="src\Options\ColorPickerOption.cpp" />
+    <ClCompile Include="src\Options\SubOptionGroup.cpp" />
     <ClCompile Include="src\Options\ToggleOption.cpp" />
     <ClCompile Include="src\Options\ClickOption.cpp" />
     <ClCompile Include="src\Core\Menu.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="src\Core\Log.h" />
     <ClInclude Include="src\Core\ValueOrPtr.h" />
     <ClInclude Include="src\Options\ColorPickerOption.h" />
+    <ClInclude Include="src\Options\SubOptionGroup.h" />
     <ClInclude Include="src\Options\ToggleOption.h" />
     <ClInclude Include="src\Options\ClickOption.h" />
     <ClInclude Include="src\Core\Menu.h" />
