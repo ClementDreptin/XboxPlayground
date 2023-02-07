@@ -74,6 +74,7 @@ float OptionGroup::GetMinWidth()
     if (m_CachedMinWidth != 0.0f)
         return m_CachedMinWidth;
 
+    // Find the longest option name
     for (size_t i = 0; i < m_Options.size(); i++)
     {
         float optionNameWidth = m_Options[i]->GetMinWidth();

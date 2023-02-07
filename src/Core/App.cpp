@@ -33,13 +33,11 @@ HRESULT App::Initialize()
         return hr;
     }
 
-    // Calculate the line height;
+    // Calculate the line height
     Layout::LineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
 
     // Create the menu
-    hr = m_Menu.Init();
-    if (FAILED(hr))
-        return hr;
+    m_Menu.Init();
 
     return hr;
 }

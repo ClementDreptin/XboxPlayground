@@ -29,7 +29,7 @@ HRESULT ToggleOption::Render(float x, float y, float width)
 {
     HRESULT hr = S_OK;
 
-    // Call the parent to render the text
+    // Call the parent to render the option name
     hr = Option::Render(x, y, width);
     if (FAILED(hr))
         return hr;
@@ -46,8 +46,6 @@ HRESULT ToggleOption::Render(float x, float y, float width)
     props.BorderColor = D3DCOLOR_XRGB(255, 255, 255);
     props.BorderPosition = Border::Border_All;
     hr = m_RadioBox.Render(props);
-    if (FAILED(hr))
-        return hr;
 
     return hr;
 }

@@ -17,20 +17,11 @@ Menu::Menu()
 {
 }
 
-HRESULT Menu::Init()
+void Menu::Init()
 {
-    HRESULT hr = S_OK;
-
-    // Create menu structure
     CreateStructure();
 
-    // Set the default option group to be the first one
-    m_CurrentOptionGroupIndex = 0;
-
-    // Create the option group headers
     m_OptionGroupHeaders = std::vector<Text>(m_OptionGroups.size(), Text());
-
-    return hr;
 }
 
 void Menu::Update(ATG::GAMEPAD *pGamepad)
@@ -136,6 +127,7 @@ HRESULT Menu::RenderOptionGroupHeaders()
         else if (i > m_CurrentOptionGroupIndex)
             props.BorderPosition = static_cast<Border::Position>(Border::Border_Right | Border::Border_Top);
 
+        // Render m_OptionsGroups[i]
         hr = m_OptionGroupHeaders[i].Render(props);
         if (FAILED(hr))
             return hr;

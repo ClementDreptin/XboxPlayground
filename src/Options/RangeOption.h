@@ -8,7 +8,6 @@
 #pragma warning(push)
 #pragma warning(disable : 4481)
 
-// Class to represent an option with a changeable number value.
 template <typename T>
 class RangeOption : public Option
 {
@@ -17,10 +16,8 @@ public:
 
     RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<T> &value, T min, T max, T step);
 
-    // Check for user clicks.
     virtual bool Update(ATG::GAMEPAD *pGamepad) override;
 
-    // Render the text and the number.
     virtual HRESULT Render(float x, float y, float width) override;
 
 private:

@@ -24,8 +24,6 @@ HRESULT IndexBuffer::Init(uint16_t *pData, size_t numIndices)
 
     // Copy the data into the index buffer
     hr = UpdateBuffer(pData, numIndices);
-    if (FAILED(hr))
-        return hr;
 
     return hr;
 }
@@ -45,7 +43,7 @@ HRESULT IndexBuffer::UpdateBuffer(uint16_t *pData, size_t numIndices)
     void *pIndices = nullptr;
 
     // Lock the buffer
-    hr = m_pBuffer->Lock(0, dataSize, reinterpret_cast<void **>(&pIndices), 0);
+    hr = m_pBuffer->Lock(0, dataSize, &pIndices, 0);
     if (FAILED(hr))
     {
         Log::Error("Couldn't lock the index buffer");
@@ -53,7 +51,12 @@ HRESULT IndexBuffer::UpdateBuffer(uint16_t *pData, size_t numIndices)
     }
 
     // Write to the buffer
-    memcpy_s(pIndices, dataSize, pData, dataSize);
+    errno_t err = memcpy_s(pIndices, dataSize, pData, dataSize);
+    if (err != 0)
+    {
+        Log::Error("Couldn't write to the index buffer");
+        return E_FAIL;
+    }
 
     // Unlock the buffer
     m_pBuffer->Unlock();

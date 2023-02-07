@@ -5,7 +5,6 @@
 #include "Renderer\VertexShader.h"
 #include "Renderer\PixelShader.h"
 
-// Class that represents a line.
 class Line
 {
 public:
@@ -20,7 +19,6 @@ public:
 
     Line();
 
-    // Render the rectangle.
     HRESULT Render(const Props &props);
 
 private:
@@ -39,14 +37,9 @@ private:
     XMMATRIX m_ProjectionMatrix;
     XMMATRIX m_WVPMatrix;
 
-    // Create the vertex and index buffers needed to create a line. Set up the
-    // matrices to project the line.
     HRESULT Init();
 
-    // Apply a translation from the position and recalculate the world view
-    // projection matrix.
     void CalculateWorldViewProjectionMatrix();
 
-    // Update the vertex buffer from the props.
     HRESULT UpdateVertexBuffer();
 };

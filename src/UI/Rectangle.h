@@ -6,7 +6,6 @@
 #include "Renderer\PixelShader.h"
 #include "UI\Border.h"
 
-// Class to create a 2D rectangle.
 class Rectangle
 {
 public:
@@ -24,7 +23,6 @@ public:
 
     Rectangle();
 
-    // Render the rectangle.
     HRESULT Render(const Props &props);
 
 private:
@@ -44,14 +42,9 @@ private:
     XMMATRIX m_ProjectionMatrix;
     XMMATRIX m_WVPMatrix;
 
-    // Create the vertex and index buffers needed to create a rectangle. Set up the
-    // matrices to project the rectangle.
     HRESULT Init();
 
-    // Apply a translation from the position and recalculate the world view
-    // projection matrix.
     void CalculateWorldViewProjectionMatrix();
 
-    // Update the vertex buffer from the props.
     HRESULT UpdateVertexBuffer();
 };

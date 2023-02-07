@@ -21,10 +21,12 @@ ColorPickerOption::ColorPickerOption(const std::wstring &name, Callback callback
 
 bool ColorPickerOption::Update(ATG::GAMEPAD *pGamepad)
 {
+    // Call the parent Update method and return early if the sub option group is not open
     bool open = SubOptionGroup::Update(pGamepad);
     if (!open)
         return false;
 
+    // Update the color value when it's changed with DPAD LEFT/DPAD RIGHT
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT || pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
     {
         m_Color = D3DCOLOR_RGBA(m_Red, m_Green, m_Blue, m_Alpha);

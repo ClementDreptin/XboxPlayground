@@ -2,7 +2,6 @@
 
 #include "UI\Line.h"
 
-// Class to represent a border around a rectangle.
 class Border
 {
 public:
@@ -29,7 +28,6 @@ public:
 
     Border() {}
 
-    // Render the border.
     HRESULT Render(const Props &props);
 
 private:

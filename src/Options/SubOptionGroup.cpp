@@ -13,11 +13,13 @@ SubOptionGroup::SubOptionGroup(const std::wstring &name, Callback callback, cons
 
 bool SubOptionGroup::Update(ATG::GAMEPAD *pGamepad)
 {
+    // Allow the user to open/close the sub option group with A/B
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
         m_Open = true;
     else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_B)
         m_Open = false;
 
+    // Update the sub option group if it's open
     if (m_Open)
         m_OptionGroup.Update(pGamepad);
 
@@ -28,7 +30,7 @@ HRESULT SubOptionGroup::Render(float x, float y, float width)
 {
     HRESULT hr = S_OK;
 
-    // Call the parent to render the text
+    // Call the parent to render the option name
     hr = Option::Render(x, y, width);
     if (FAILED(hr))
         return hr;

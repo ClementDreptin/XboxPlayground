@@ -3,7 +3,6 @@
 #include "UI\Layout.h"
 #include "UI\Rectangle.h"
 
-// Class to represent a piece of text.
 class Text
 {
 public:
@@ -21,7 +20,6 @@ public:
 
     Text() {}
 
-    // Render the text.
     HRESULT Render(const Props &props);
 
 private:

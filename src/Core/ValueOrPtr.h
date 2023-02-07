@@ -1,6 +1,5 @@
 #pragma once
 
-// Class to interact with a value of type T or a pointer of type T* seemlessly
 template <typename T>
 class ValueOrPtr
 {

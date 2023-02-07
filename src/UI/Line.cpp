@@ -19,7 +19,7 @@ HRESULT Line::Render(const Props &props)
 {
     HRESULT hr = S_OK;
 
-    // Check if the world view project matrix and/or the vertex buffer need to be updated
+    // Check if the world view projection matrix and/or the vertex buffer need to be updated
     bool needToUpdateWorldViewProjectionMatrix = m_Props.X != props.X || m_Props.Y != props.Y;
     bool needToUpdateVertexBuffer = m_Props.Width != props.Width || m_Props.Height != props.Height;
 
@@ -120,7 +120,7 @@ HRESULT Line::Init()
         0, 2, 3
     };
 
-    // Create an index buffer
+    // Create the index buffer
     hr = m_IndexBuffer.Init(indices, ARRAYSIZE(indices));
     if (FAILED(hr))
         return hr;

@@ -47,7 +47,7 @@ HRESULT RangeOption<T>::Render(float x, float y, float width)
 {
     HRESULT hr = S_OK;
 
-    // Call the parent to render the text
+    // Call the parent to render the option name
     hr = Option::Render(x, y, width);
     if (FAILED(hr))
         return hr;

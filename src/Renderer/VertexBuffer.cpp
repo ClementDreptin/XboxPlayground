@@ -38,8 +38,6 @@ HRESULT VertexBuffer::Init(Vertex *pData, size_t numVertices)
 
     // Copy the data into the vertex buffer
     hr = UpdateBuffer(pData, numVertices);
-    if (FAILED(hr))
-        return hr;
 
     return hr;
 }
@@ -59,7 +57,7 @@ HRESULT VertexBuffer::UpdateBuffer(Vertex *pData, size_t numVertices)
     void *pVertices = nullptr;
 
     // Lock the buffer
-    hr = m_pBuffer->Lock(0, dataSize, reinterpret_cast<void **>(&pVertices), 0);
+    hr = m_pBuffer->Lock(0, dataSize, &pVertices, 0);
     if (FAILED(hr))
     {
         Log::Error("Couldn't lock the vertex buffer");

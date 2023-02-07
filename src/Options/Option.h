@@ -6,7 +6,6 @@
 #include "UI\Text.h"
 #include "UI\Rectangle.h"
 
-// Abstract class describing an option in a menu (need to be derived to be instantiated).
 class Option
 {
 public:
@@ -20,16 +19,12 @@ public:
 
     inline const std::wstring &GetName() const { return m_Name; }
 
-    // Set the option state (selected or not).
     void Select(bool selected) { m_IsSelected = selected; }
 
-    // Update the option.
     virtual bool Update(ATG::GAMEPAD *pGamepad) = 0;
 
-    // Render the text.
     virtual HRESULT Render(float x, float y, float width) = 0;
 
-    // Calculate the minimum width required for the option group.
     float GetMinWidth();
 
 protected:

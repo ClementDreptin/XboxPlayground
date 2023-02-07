@@ -1,6 +1,5 @@
 #pragma once
 
-// Struct to describe a vertex.
 struct Vertex
 {
     Vertex() {}
@@ -11,7 +10,6 @@ struct Vertex
     XMFLOAT3 Pos;
 };
 
-// Class to wrap common vertex buffer operations.
 class VertexBuffer
 {
 public:
@@ -21,10 +19,8 @@ public:
 
     inline D3DVertexDeclaration *GetVertexDeclaration() const { return m_pVertexDeclaration; }
 
-    // Create the vertex buffer, copy data into it and set the vertex declaration.
     HRESULT Init(Vertex *pData, size_t numVertices);
 
-    // Copy pData into the buffer on the GPU.
     HRESULT UpdateBuffer(Vertex *pData, size_t numVertices);
 
 private:

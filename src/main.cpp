@@ -4,7 +4,6 @@
 
 #include "Core\App.h"
 
-// The application's entry point
 void __cdecl main()
 {
     App app;
