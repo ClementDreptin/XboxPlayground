@@ -8,9 +8,9 @@ float X = 400.0f;
 
 float Y = 150.0f;
 
-D3DCOLOR Color = D3DCOLOR_XRGB(255, 0, 0);
+D3DCOLOR Color = D3DCOLOR_XRGB(210, 20, 20);
 
-D3DCOLOR BackgroundColor = D3DCOLOR_XRGB(20, 20, 20);
+D3DCOLOR BackgroundColor = D3DCOLOR_XRGB(25, 25, 25);
 
 D3DCOLOR TextColor = D3DCOLOR_XRGB(255, 255, 255);
 
