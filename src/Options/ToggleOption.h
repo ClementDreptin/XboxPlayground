@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Options/Option.h"
+#include "Core/ValueOrPtr.h"
 #include "UI/Rectangle.h"
 
 // Disable the C4481 warning for the override keyword
@@ -12,14 +13,14 @@ class ToggleOption : public Option
 public:
     ToggleOption();
 
-    ToggleOption(const std::wstring &name, Callback callback);
+    ToggleOption(const std::wstring &name, Callback callback, const ValueOrPtr<bool> &active = false);
 
     virtual bool Update(ATG::GAMEPAD *pGamepad) override;
 
     virtual HRESULT Render(float x, float y, float width) override;
 
 private:
-    bool m_Active;
+    ValueOrPtr<bool> m_Active;
 
     Rectangle m_RadioBox;
 };

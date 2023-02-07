@@ -8,8 +8,8 @@ ToggleOption::ToggleOption()
 {
 }
 
-ToggleOption::ToggleOption(const std::wstring &name, Callback callback)
-    : Option(name, callback), m_Active(false)
+ToggleOption::ToggleOption(const std::wstring &name, Callback callback, const ValueOrPtr<bool> &active)
+    : Option(name, callback), m_Active(active)
 {
 }
 
@@ -18,8 +18,9 @@ bool ToggleOption::Update(ATG::GAMEPAD *pGamepad)
     // Allow the user to toggle the option
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
     {
-        m_Active = !m_Active;
-        m_Callback(&m_Active);
+        m_Active = !*m_Active;
+        if (m_Callback != nullptr)
+            m_Callback(&m_Active);
     }
 
     return false;
@@ -41,7 +42,7 @@ HRESULT ToggleOption::Render(float x, float y, float width)
     props.Y = y + Layout::LineHeight / 2 - radioBoxSize / 2;
     props.Width = radioBoxSize;
     props.Height = radioBoxSize;
-    props.Color = m_Active ? Layout::Color : D3DCOLOR_XRGB(0, 0, 0);
+    props.Color = *m_Active ? Layout::Color : D3DCOLOR_XRGB(0, 0, 0);
     props.BorderWidth = 1.0f;
     props.BorderColor = D3DCOLOR_XRGB(255, 255, 255);
     props.BorderPosition = Border::Border_All;
