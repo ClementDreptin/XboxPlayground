@@ -16,10 +16,10 @@ public:
     ToggleOption(const std::wstring &name, Callback callback);
 
     // Toggle the option on user clicks.
-    virtual void Update(ATG::GAMEPAD *pGamepad) override;
+    virtual bool Update(ATG::GAMEPAD *pGamepad) override;
 
     // Render the text and the radio box.
-    virtual HRESULT Render(float x, float y) override;
+    virtual HRESULT Render(float x, float y, float width) override;
 
 private:
     bool m_Active;

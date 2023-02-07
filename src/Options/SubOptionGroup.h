@@ -1,24 +1,25 @@
 #pragma once
 
-#include "Options\Option.h"
+#include "Core\OptionGroup.h"
 
 // Disable the C4481 warning for the override keyword
 #pragma warning(push)
 #pragma warning(disable : 4481)
 
-// Class to represent a very basic option
-class ClickOption : public Option
+class SubOptionGroup : public Option
 {
 public:
-    ClickOption();
+    SubOptionGroup();
 
-    ClickOption(const std::wstring &name, Callback callback);
+    SubOptionGroup(const std::wstring &name, Callback callback, const OptionGroup &optionGroup);
 
-    // Check for user clicks.
     virtual bool Update(ATG::GAMEPAD *pGamepad) override;
 
-    // Render the text.
     virtual HRESULT Render(float x, float y, float width) override;
+
+protected:
+    bool m_Open;
+    OptionGroup m_OptionGroup;
 };
 
 #pragma warning(pop)

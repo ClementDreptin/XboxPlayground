@@ -3,8 +3,9 @@
 
 #include "Core\Callbacks.h"
 #include "Options\ClickOption.h"
-#include "OPtions\RangeOption.h"
-#include "OPtions\ToggleOption.h"
+#include "Options\RangeOption.h"
+#include "Options\ToggleOption.h"
+#include "Options\ColorPickerOption.h"
 #include "UI\Layout.h"
 #include "UI\Font.h"
 
@@ -91,8 +92,9 @@ void Menu::CreateStructure()
     // Third group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(RangeOption, L"Menu X", nullptr, &Layout::X, Layout::BorderWidth, g_DisplayWidth, 10.0f));
-        options.emplace_back(MakeOption(RangeOption, L"Menu Y", nullptr, &Layout::Y, Layout::BorderWidth, g_DisplayHeight, 10.0f));
+        options.emplace_back(MakeOption(RangeOption<float>, L"Menu X", nullptr, &Layout::X, Layout::BorderWidth, g_DisplayWidth, 10.0f));
+        options.emplace_back(MakeOption(RangeOption<float>, L"Menu Y", nullptr, &Layout::Y, Layout::BorderWidth, g_DisplayHeight, 10.0f));
+        options.emplace_back(MakeOption(ColorPickerOption, L"Menu Color", nullptr, &Layout::Color));
         m_OptionGroups.emplace_back(OptionGroup(L"Customization", options));
     }
 

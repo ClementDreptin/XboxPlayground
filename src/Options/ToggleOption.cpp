@@ -13,7 +13,7 @@ ToggleOption::ToggleOption(const std::wstring &name, Callback callback)
 {
 }
 
-void ToggleOption::Update(ATG::GAMEPAD *pGamepad)
+bool ToggleOption::Update(ATG::GAMEPAD *pGamepad)
 {
     // Allow the user to toggle the option
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
@@ -21,21 +21,23 @@ void ToggleOption::Update(ATG::GAMEPAD *pGamepad)
         m_Active = !m_Active;
         m_Callback(&m_Active);
     }
+
+    return false;
 }
 
-HRESULT ToggleOption::Render(float x, float y)
+HRESULT ToggleOption::Render(float x, float y, float width)
 {
     HRESULT hr = S_OK;
 
     // Call the parent to render the text
-    hr = Option::Render(x, y);
+    hr = Option::Render(x, y, width);
     if (FAILED(hr))
         return hr;
 
     // Render the radio box
     float radioBoxSize = Layout::LineHeight * 0.5f;
     Rectangle::Props props = { 0 };
-    props.X = x + Layout::Width - radioBoxSize - Layout::Padding;
+    props.X = x + width - radioBoxSize - Layout::Padding;
     props.Y = y + Layout::LineHeight / 2 - radioBoxSize / 2;
     props.Width = radioBoxSize;
     props.Height = radioBoxSize;

@@ -16,6 +16,12 @@ OptionGroup::OptionGroup(const std::wstring &name, const std::vector<std::shared
 
 void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
 {
+    // Update the currently selected option and return if the option is blocking (meaning it opened a sub option group
+    // and wants to prevent its parent option group from updating)
+    bool blocking = m_Options[m_CurrentSelectedOptionIndex]->Update(pGamepad);
+    if (blocking)
+        return;
+
     // Allow the user to select options with the DPAD
     if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP)
     {
@@ -37,9 +43,6 @@ void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
     // Change the option states according to the currently selected option
     for (size_t i = 0; i < m_Options.size(); i++)
         m_Options[i]->Select(i == m_CurrentSelectedOptionIndex);
-
-    // Update the currently selected option
-    m_Options[m_CurrentSelectedOptionIndex]->Update(pGamepad);
 }
 
 HRESULT OptionGroup::Render(float x, float y, float width, float height)
@@ -57,7 +60,7 @@ HRESULT OptionGroup::Render(float x, float y, float width, float height)
     // Render the options
     for (size_t i = 0; i < m_Options.size(); i++)
     {
-        hr = m_Options[i]->Render(x, y + i * Layout::LineHeight);
+        hr = m_Options[i]->Render(x, y + i * Layout::LineHeight, widthToUse);
         if (FAILED(hr))
             return hr;
     }
@@ -71,17 +74,12 @@ float OptionGroup::GetMinWidth()
     if (m_CachedMinWidth != 0.0f)
         return m_CachedMinWidth;
 
-    float longestOptionNameWidth = 0.0f;
-
     for (size_t i = 0; i < m_Options.size(); i++)
     {
-        float optionNameWidth = g_Font.GetTextWidth(m_Options[i]->GetName().c_str()) + Layout::Padding * 2;
-        if (longestOptionNameWidth < optionNameWidth)
-            longestOptionNameWidth = optionNameWidth;
+        float optionNameWidth = m_Options[i]->GetMinWidth();
+        if (m_CachedMinWidth < optionNameWidth)
+            m_CachedMinWidth = optionNameWidth;
     }
-
-    // Take into account some space between the option name and the potential text on the right (e.g. the number for RangeOption)
-    m_CachedMinWidth = longestOptionNameWidth + 100.0f;
 
     return m_CachedMinWidth;
 }
