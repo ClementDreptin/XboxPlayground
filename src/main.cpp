@@ -2,7 +2,7 @@
 
 #include <AtgUtil.h>
 
-#include "Core\App.h"
+#include "Core/App.h"
 
 void __cdecl main()
 {

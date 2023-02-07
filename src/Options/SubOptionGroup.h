@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core\OptionGroup.h"
+#include "Core/OptionGroup.h"
 
 // Disable the C4481 warning for the override keyword
 #pragma warning(push)

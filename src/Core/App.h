@@ -3,8 +3,8 @@
 #include <AtgApp.h>
 #include <AtgUtil.h>
 
-#include "Core\Menu.h"
-#include "UI\Text.h"
+#include "Core/Menu.h"
+#include "UI/Text.h"
 
 class App : public ATG::Application
 {

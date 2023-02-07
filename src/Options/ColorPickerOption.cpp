@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Options\ColorPickerOption.h"
+#include "Options/ColorPickerOption.h"
 
-#include "Options\RangeOption.h"
+#include "Options/RangeOption.h"
 
 ColorPickerOption::ColorPickerOption()
     : SubOptionGroup(), m_Color(D3DCOLOR(0)), m_Red(0), m_Green(0), m_Blue(0), m_Alpha(0)

@@ -1,13 +1,13 @@
 #include "pch.h"
-#include "Core\Menu.h"
+#include "Core/Menu.h"
 
-#include "Core\Callbacks.h"
-#include "Options\ClickOption.h"
-#include "Options\RangeOption.h"
-#include "Options\ToggleOption.h"
-#include "Options\ColorPickerOption.h"
-#include "UI\Layout.h"
-#include "UI\Font.h"
+#include "Core/Callbacks.h"
+#include "Options/ClickOption.h"
+#include "Options/RangeOption.h"
+#include "Options/ToggleOption.h"
+#include "Options/ColorPickerOption.h"
+#include "UI/Layout.h"
+#include "UI/Font.h"
 
 extern float g_DisplayWidth;
 extern float g_DisplayHeight;

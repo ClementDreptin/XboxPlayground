@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Options\ToggleOption.h"
+#include "Options/ToggleOption.h"
 
-#include "UI\Layout.h"
+#include "UI/Layout.h"
 
 ToggleOption::ToggleOption()
     : Option(), m_Active(false)

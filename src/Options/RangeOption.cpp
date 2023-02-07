@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "Options\RangeOption.h"
+#include "Options/RangeOption.h"
 
-#include "UI\Layout.h"
-#include "UI\Font.h"
+#include "UI/Layout.h"
+#include "UI/Font.h"
 
 template <typename T>
 RangeOption<T>::RangeOption()

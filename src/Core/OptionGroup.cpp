@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "Core\OptionGroup.h"
+#include "Core/OptionGroup.h"
 
-#include "UI\Layout.h"
-#include "UI\Font.h"
+#include "UI/Layout.h"
+#include "UI/Font.h"
 
 OptionGroup::OptionGroup()
     : m_CurrentSelectedOptionIndex(0), m_CachedMinWidth(0.0f), m_CachedMinHeight(0.0f)

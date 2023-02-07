@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "UI\Text.h"
+#include "UI/Text.h"
 
-#include "UI\Font.h"
+#include "UI/Font.h"
 
 HRESULT Text::Render(const Props &props)
 {

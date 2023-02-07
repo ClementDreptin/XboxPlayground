@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "UI\Rectangle.h"
+#include "UI/Rectangle.h"
 
-#include "Renderer\D3DDevice.h"
+#include "Renderer/D3DDevice.h"
 
 extern float g_DisplayWidth;
 extern float g_DisplayHeight;

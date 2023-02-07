@@ -2,9 +2,9 @@
 
 #include <AtgInput.h>
 
-#include "UI\Rectangle.h"
-#include "UI\Text.h"
-#include "Core\OptionGroup.h"
+#include "UI/Rectangle.h"
+#include "UI/Text.h"
+#include "Core/OptionGroup.h"
 
 class Menu
 {

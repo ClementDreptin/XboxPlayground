@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Renderer\PixelShader.h"
+#include "Renderer/PixelShader.h"
 
-#include "Renderer\D3DDevice.h"
+#include "Renderer/D3DDevice.h"
 
 // Pixel shader source code
 static const char shaderSource[] =

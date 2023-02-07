@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Options\SubOptionGroup.h"
-#include "Core\ValueOrPtr.h"
+#include "Options/SubOptionGroup.h"
+#include "Core/ValueOrPtr.h"
 
 // Disable the C4481 warning for the override keyword
 #pragma warning(push)

@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Renderer\IndexBuffer.h"
+#include "Renderer/IndexBuffer.h"
 
-#include "Renderer\D3DDevice.h"
+#include "Renderer/D3DDevice.h"
 
 IndexBuffer::IndexBuffer()
     : m_pBuffer(nullptr)

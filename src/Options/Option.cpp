@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Options\Option.h"
+#include "Options/Option.h"
 
-#include "UI\Font.h"
+#include "UI/Font.h"
 
 Option::Option()
     : m_Callback(nullptr), m_IsSelected(false), m_CachedMinWidth(0.0f)

@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Renderer\VertexShader.h"
+#include "Renderer/VertexShader.h"
 
-#include "Renderer\D3DDevice.h"
+#include "Renderer/D3DDevice.h"
 
 // Vertex shader source code
 static const char shaderSource[] =

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Options\Option.h"
-#include "UI\Rectangle.h"
+#include "Options/Option.h"
+#include "UI/Rectangle.h"
 
 // Disable the C4481 warning for the override keyword
 #pragma warning(push)

@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Renderer\VertexBuffer.h"
+#include "Renderer/VertexBuffer.h"
 
-#include "Renderer\D3DDevice.h"
+#include "Renderer/D3DDevice.h"
 
 VertexBuffer::VertexBuffer()
     : m_pBuffer(nullptr), m_pVertexDeclaration(nullptr)

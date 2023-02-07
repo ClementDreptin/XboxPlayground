@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Options\SubOptionGroup.h"
+#include "Options/SubOptionGroup.h"
 
 SubOptionGroup::SubOptionGroup()
     : Option(), m_Open(false)

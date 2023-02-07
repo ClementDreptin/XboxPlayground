@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Renderer\VertexBuffer.h"
-#include "Renderer\IndexBuffer.h"
-#include "Renderer\VertexShader.h"
-#include "Renderer\PixelShader.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/IndexBuffer.h"
+#include "Renderer/VertexShader.h"
+#include "Renderer/PixelShader.h"
 
 class Line
 {

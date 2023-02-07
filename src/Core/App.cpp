@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Core\App.h"
+#include "Core/App.h"
 
 #include <AtgInput.h>
 #include <AtgFont.h>

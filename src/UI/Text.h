@@ -1,7 +1,7 @@
 #pragma once
 
-#include "UI\Layout.h"
-#include "UI\Rectangle.h"
+#include "UI/Layout.h"
+#include "UI/Rectangle.h"
 
 class Text
 {

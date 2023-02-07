@@ -1,7 +1,7 @@
 #pragma once
 
-#include "UI\Rectangle.h"
-#include "Options\Option.h"
+#include "UI/Rectangle.h"
+#include "Options/Option.h"
 
 class OptionGroup
 {

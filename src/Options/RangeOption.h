@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Options\Option.h"
-#include "Core\ValueOrPtr.h"
-#include "UI\Text.h"
+#include "Options/Option.h"
+#include "Core/ValueOrPtr.h"
+#include "UI/Text.h"
 
 // Disable the C4481 warning for the override keyword
 #pragma warning(push)
