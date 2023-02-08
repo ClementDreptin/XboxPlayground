@@ -13,10 +13,10 @@ ToggleOption::ToggleOption(const std::wstring &name, Callback callback, const Va
 {
 }
 
-bool ToggleOption::Update(ATG::GAMEPAD *pGamepad)
+bool ToggleOption::Update(Input::Gamepad *pGamepad)
 {
     // Allow the user to toggle the option
-    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
+    if (pGamepad->PressedButtons & XINPUT_GAMEPAD_A)
     {
         m_Active = !*m_Active;
         if (m_Callback != nullptr)

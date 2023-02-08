@@ -1,7 +1,8 @@
 #pragma once
 
-#include "UI/Rectangle.h"
+#include "Core/Input.h"
 #include "Options/Option.h"
+#include "UI/Rectangle.h"
 
 class OptionGroup
 {
@@ -14,7 +15,7 @@ public:
 
     inline const std::vector<std::shared_ptr<Option>> &GetOptions() const { return m_Options; }
 
-    void Update(ATG::GAMEPAD *pGamepad);
+    void Update(Input::Gamepad *pGamepad);
 
     HRESULT Render(float x, float y, float width = 0.0f, float height = 0.0f);
 

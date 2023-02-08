@@ -77,6 +77,9 @@
     <ClCompile Include="src\Options\SubOptionGroup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Log.h">
@@ -149,6 +152,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Options\SubOptionGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

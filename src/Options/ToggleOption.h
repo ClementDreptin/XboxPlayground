@@ -15,7 +15,7 @@ public:
 
     ToggleOption(const std::wstring &name, Callback callback, const ValueOrPtr<bool> &active = false);
 
-    virtual bool Update(ATG::GAMEPAD *pGamepad) override;
+    virtual bool Update(Input::Gamepad *pGamepad) override;
 
     virtual HRESULT Render(float x, float y, float width) override;
 

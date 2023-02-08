@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "Core/App.h"
 
-#include <AtgInput.h>
 #include <AtgFont.h>
 #include <AtgUtil.h>
+
+#include "Core/Input.h"
 
 ATG::Font g_Font;
 float g_DisplayWidth = 0.0f;
@@ -47,10 +48,10 @@ HRESULT App::Update()
     HRESULT hr = S_OK;
 
     // Get the current gamepad state
-    ATG::GAMEPAD *pGamepad = ATG::Input::GetMergedInput();
+    Input::Gamepad *pGamepad = Input::GetInput();
 
     // Toggle the menu by pressing LT and DPAD LEFT
-    if (pGamepad->bLastLeftTrigger && pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)
+    if (pGamepad->LastLeftTrigger && pGamepad->PressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)
     {
         m_MenuOpen = !m_MenuOpen;
         return hr;

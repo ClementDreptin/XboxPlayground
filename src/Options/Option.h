@@ -1,7 +1,6 @@
 #pragma once
 
-#include <AtgInput.h>
-
+#include "Core/Input.h"
 #include "UI/Layout.h"
 #include "UI/Text.h"
 #include "UI/Rectangle.h"
@@ -21,7 +20,7 @@ public:
 
     void Select(bool selected) { m_IsSelected = selected; }
 
-    virtual bool Update(ATG::GAMEPAD *pGamepad) = 0;
+    virtual bool Update(Input::Gamepad *pGamepad) = 0;
 
     virtual HRESULT Render(float x, float y, float width) = 0;
 

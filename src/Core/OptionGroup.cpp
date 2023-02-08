@@ -14,7 +14,7 @@ OptionGroup::OptionGroup(const std::wstring &name, const std::vector<std::shared
 {
 }
 
-void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
+void OptionGroup::Update(Input::Gamepad *pGamepad)
 {
     // Update the currently selected option and return if the option is blocking (meaning it opened a sub option group
     // and wants to prevent its parent option group from updating)
@@ -23,7 +23,7 @@ void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
         return;
 
     // Allow the user to select options with the DPAD
-    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP)
+    if (pGamepad->PressedButtons & XINPUT_GAMEPAD_DPAD_UP)
     {
         // If the scroller is already at the top, send it to the bottom
         if (m_CurrentSelectedOptionIndex == 0)
@@ -31,7 +31,7 @@ void OptionGroup::Update(ATG::GAMEPAD *pGamepad)
         else
             m_CurrentSelectedOptionIndex--;
     }
-    else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_DPAD_DOWN)
+    else if (pGamepad->PressedButtons & XINPUT_GAMEPAD_DPAD_DOWN)
     {
         // If the scroller is already at the bottom, send it to the top
         if (m_CurrentSelectedOptionIndex == m_Options.size() - 1)

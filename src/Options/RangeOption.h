@@ -16,7 +16,7 @@ public:
 
     RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<T> &value, T min, T max, T step);
 
-    virtual bool Update(ATG::GAMEPAD *pGamepad) override;
+    virtual bool Update(Input::Gamepad *pGamepad) override;
 
     virtual HRESULT Render(float x, float y, float width) override;
 

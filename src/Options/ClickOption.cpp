@@ -11,10 +11,10 @@ ClickOption::ClickOption(const std::wstring &name, Callback callback)
 {
 }
 
-bool ClickOption::Update(ATG::GAMEPAD *pGamepad)
+bool ClickOption::Update(Input::Gamepad *pGamepad)
 {
     // Allow the user to click on the option
-    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_A)
+    if (pGamepad->PressedButtons & XINPUT_GAMEPAD_A)
         m_Callback(nullptr);
 
     return false;

@@ -1,10 +1,9 @@
 #pragma once
 
-#include <AtgInput.h>
-
+#include "Core/Input.h"
+#include "Core/OptionGroup.h"
 #include "UI/Rectangle.h"
 #include "UI/Text.h"
-#include "Core/OptionGroup.h"
 
 class Menu
 {
@@ -13,7 +12,7 @@ public:
 
     void Init();
 
-    void Update(ATG::GAMEPAD *pGamepad);
+    void Update(Input::Gamepad *pGamepad);
 
     HRESULT Render();
 

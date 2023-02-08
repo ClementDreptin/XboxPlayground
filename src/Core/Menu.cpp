@@ -24,15 +24,15 @@ void Menu::Init()
     m_OptionGroupHeaders = std::vector<Text>(m_OptionGroups.size(), Text());
 }
 
-void Menu::Update(ATG::GAMEPAD *pGamepad)
+void Menu::Update(Input::Gamepad *pGamepad)
 {
     // Allow the user to change the current option group with LB/RB
-    if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+    if (pGamepad->PressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
     {
         if (m_CurrentOptionGroupIndex > 0)
             m_CurrentOptionGroupIndex--;
     }
-    else if (pGamepad->wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+    else if (pGamepad->PressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
     {
         if (m_CurrentOptionGroupIndex < m_OptionGroups.size() - 1)
             m_CurrentOptionGroupIndex++;

@@ -13,7 +13,7 @@ public:
 
     SubOptionGroup(const std::wstring &name, Callback callback, const OptionGroup &optionGroup);
 
-    virtual bool Update(ATG::GAMEPAD *pGamepad) override;
+    virtual bool Update(Input::Gamepad *pGamepad) override;
 
     virtual HRESULT Render(float x, float y, float width) override;
 
