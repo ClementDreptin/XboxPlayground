@@ -26,7 +26,7 @@ public:
     static Gamepad *GetInput();
 
 private:
-    static Gamepad m_Gamepad;
+    static Gamepad s_Gamepad;
 
     static uint16_t ButtonForVirtualKey(uint16_t virtualKey);
 };
