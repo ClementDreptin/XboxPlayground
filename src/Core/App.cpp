@@ -15,6 +15,7 @@
 ATG::Font g_Font;
 float g_DisplayWidth = 0.0f;
 float g_DisplayHeight = 0.0f;
+bool g_ShowControlsText = true;
 
 App::App()
     : m_MenuOpen(false)
@@ -85,10 +86,13 @@ HRESULT App::Render()
             return hr;
     }
 
-    // Render the controls text
-    hr = RenderControlsText();
-    if (FAILED(hr))
-        return hr;
+    // Render the controls text if enabled
+    if (g_ShowControlsText)
+    {
+        hr = RenderControlsText();
+        if (FAILED(hr))
+            return hr;
+    }
 
     // Render the frame rate text
     hr = RenderFrameRateText();
