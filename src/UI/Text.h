@@ -11,6 +11,7 @@ public:
         float X;
         float Y;
         std::wstring Text;
+        float FontScale;
         D3DCOLOR Color;
         D3DCOLOR BackgroundColor;
         float BorderWidth;
