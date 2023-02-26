@@ -3,10 +3,10 @@
 namespace Callback
 {
 
-void ClickCallback(void *);
+bool ClickCallback(void *);
 
-void RangeCallback(void *);
+bool RangeCallback(void *);
 
-void ToggleCallback(void *);
+bool ToggleCallback(void *);
 
 }

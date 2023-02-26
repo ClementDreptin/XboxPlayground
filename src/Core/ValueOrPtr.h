@@ -16,7 +16,11 @@ public:
 
     inline T operator=(const T &value) { return isPtr() ? *m_Ptr = value : m_Value = value; }
 
+    inline T operator+(const T &value) { return isPtr() ? *m_Ptr + value : m_Value + value; }
+
     inline const T &operator+=(const T &value) { return isPtr() ? *m_Ptr += value : m_Value += value; }
+
+    inline T operator-(const T &value) { return isPtr() ? *m_Ptr - value : m_Value - value; }
 
     inline const T &operator-=(const T &value) { return isPtr() ? *m_Ptr -= value : m_Value -= value; }
 

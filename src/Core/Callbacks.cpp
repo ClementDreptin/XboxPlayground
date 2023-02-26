@@ -4,23 +4,29 @@
 namespace Callback
 {
 
-void ClickCallback(void *)
+bool ClickCallback(void *)
 {
     Log::Info("Clicked");
+
+    return true;
 }
 
-void RangeCallback(void *pParameters)
+bool RangeCallback(void *pParameters)
 {
     float value = *reinterpret_cast<float *>(pParameters);
 
     Log::Info("number: %f", value);
+
+    return true;
 }
 
-void ToggleCallback(void *pParameters)
+bool ToggleCallback(void *pParameters)
 {
     bool value = *reinterpret_cast<bool *>(pParameters);
 
     Log::Info(value ? "On" : "Off");
+
+    return true;
 }
 
 }
