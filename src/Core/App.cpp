@@ -5,6 +5,12 @@
 #include <AtgUtil.h>
 
 #include "Core/Input.h"
+#include "Core/Callbacks.h"
+#include "Core/OptionGroup.h"
+#include "Options/ClickOption.h"
+#include "Options/ToggleOption.h"
+#include "Options/RangeOption.h"
+#include "Options/ColorPickerOption.h"
 
 ATG::Font g_Font;
 float g_DisplayWidth = 0.0f;
@@ -38,7 +44,7 @@ HRESULT App::Initialize()
     Layout::LineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
 
     // Create the menu
-    m_Menu.Init();
+    InitMenu();
 
     return hr;
 }
@@ -93,6 +99,42 @@ HRESULT App::Render()
     m_pd3dDevice->Present(nullptr, nullptr, nullptr, nullptr);
 
     return hr;
+}
+
+void App::InitMenu()
+{
+    std::vector<OptionGroup> optionGroups;
+
+    // First group
+    {
+        std::vector<std::shared_ptr<Option>> options;
+        options.emplace_back(MakeOption(ToggleOption, L"God Mode", Callback::ToggleCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"Fall Damage", Callback::ToggleCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"Ammo", Callback::ToggleCallback));
+        options.emplace_back(MakeOption(ClickOption, L"Spawn Care Package", Callback::ClickCallback));
+        optionGroups.emplace_back(OptionGroup(L"Main", options));
+    }
+
+    // Second group
+    {
+        std::vector<std::shared_ptr<Option>> options;
+        options.emplace_back(MakeOption(ToggleOption, L"Save/Load Binds", Callback::ToggleCallback));
+        options.emplace_back(MakeOption(ClickOption, L"Save Position", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ClickOption, L"Load Position", Callback::ClickCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"UFO", Callback::ToggleCallback));
+        optionGroups.emplace_back(OptionGroup(L"Teleport", options));
+    }
+
+    // Third group
+    {
+        std::vector<std::shared_ptr<Option>> options;
+        options.emplace_back(MakeOption(RangeOption<float>, L"Menu X", nullptr, &Layout::X, Layout::BorderWidth, g_DisplayWidth, 10.0f));
+        options.emplace_back(MakeOption(RangeOption<float>, L"Menu Y", nullptr, &Layout::Y, Layout::BorderWidth, g_DisplayHeight, 10.0f));
+        options.emplace_back(MakeOption(ColorPickerOption, L"Menu Color", nullptr, &Layout::Color));
+        optionGroups.emplace_back(OptionGroup(L"Customization", options));
+    }
+
+    m_Menu.Init(optionGroups);
 }
 
 HRESULT App::RenderControlsText()

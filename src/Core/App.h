@@ -26,6 +26,8 @@ private:
     ATG::Timer m_Timer;
     Text m_FrameRateText;
 
+    void InitMenu();
+
     HRESULT RenderControlsText();
 
     HRESULT RenderFrameRateText();

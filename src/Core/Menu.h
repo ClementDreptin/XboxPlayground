@@ -10,7 +10,7 @@ class Menu
 public:
     Menu();
 
-    void Init();
+    void Init(const std::vector<OptionGroup> &optionGroups);
 
     void Update(Input::Gamepad *pGamepad);
 
@@ -21,8 +21,6 @@ private:
     size_t m_CurrentOptionGroupIndex;
 
     std::vector<Text> m_OptionGroupHeaders;
-
-    void CreateStructure();
 
     HRESULT RenderOptionGroupHeaders();
 
