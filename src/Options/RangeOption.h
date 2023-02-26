@@ -4,10 +4,6 @@
 #include "Core/ValueOrPtr.h"
 #include "UI/Text.h"
 
-// Disable the C4481 warning for the override keyword
-#pragma warning(push)
-#pragma warning(disable : 4481)
-
 template <typename T>
 class RangeOption : public Option
 {
@@ -28,5 +24,3 @@ private:
 
     Text m_Text;
 };
-
-#pragma warning(pop)
