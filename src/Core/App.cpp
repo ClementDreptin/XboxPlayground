@@ -125,15 +125,6 @@ void App::InitMenu()
         optionGroups.emplace_back(OptionGroup(L"Teleport", options));
     }
 
-    // Third group
-    {
-        std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(RangeOption<float>, L"Menu X", nullptr, &Layout::X, Layout::BorderWidth, g_DisplayWidth, 10.0f));
-        options.emplace_back(MakeOption(RangeOption<float>, L"Menu Y", nullptr, &Layout::Y, Layout::BorderWidth, g_DisplayHeight, 10.0f));
-        options.emplace_back(MakeOption(ColorPickerOption, L"Menu Color", nullptr, &Layout::Color));
-        optionGroups.emplace_back(OptionGroup(L"Customization", options));
-    }
-
     m_Menu.Init(optionGroups);
 }
 
