@@ -13,10 +13,10 @@ SubOptionGroup::SubOptionGroup(const std::wstring &name, Callback callback, cons
 
 bool SubOptionGroup::Update(Input::Gamepad *pGamepad)
 {
-    // Allow the user to open/close the sub option group with A/B
-    if (pGamepad->PressedButtons & XINPUT_GAMEPAD_A)
+    // Allow the user to open/close the sub option group with X/RS
+    if (pGamepad->PressedButtons & XINPUT_GAMEPAD_X)
         m_Open = true;
-    else if (pGamepad->PressedButtons & XINPUT_GAMEPAD_B)
+    else if (pGamepad->PressedButtons & XINPUT_GAMEPAD_RIGHT_THUMB)
         m_Open = false;
 
     // Update the sub option group if it's open
