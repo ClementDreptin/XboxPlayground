@@ -21,14 +21,14 @@ private:
     Menu m_Menu;
     bool m_MenuOpen;
 
-    Text m_ControlsText;
+    Text m_ControlsTexts[3];
 
     ATG::Timer m_Timer;
     Text m_FrameRateText;
 
     void InitMenu();
 
-    HRESULT RenderControlsText();
+    HRESULT RenderControlsTexts();
 
     HRESULT RenderFrameRateText();
 };

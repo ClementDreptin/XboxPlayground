@@ -15,7 +15,7 @@
 ATG::Font g_Font;
 float g_DisplayWidth = 0.0f;
 float g_DisplayHeight = 0.0f;
-bool g_ShowControlsText = true;
+bool g_ShowControlsTexts = true;
 
 App::App()
     : m_MenuOpen(false)
@@ -86,10 +86,10 @@ HRESULT App::Render()
             return hr;
     }
 
-    // Render the controls text if enabled
-    if (g_ShowControlsText)
+    // Render the controls texts if enabled
+    if (g_ShowControlsTexts)
     {
-        hr = RenderControlsText();
+        hr = RenderControlsTexts();
         if (FAILED(hr))
             return hr;
     }
@@ -132,19 +132,38 @@ void App::InitMenu()
     m_Menu.Init(optionGroups);
 }
 
-HRESULT App::RenderControlsText()
+HRESULT App::RenderControlsTexts()
 {
+    HRESULT hr = S_OK;
+
+    float baseY = 10.0f;
+    float textHeight = g_Font.GetFontHeight() + Layout::Padding * 2 + Layout::BorderWidth * 2;
+
     Text::Props props = { 0 };
     props.X = 10.0f;
-    props.Y = 10.0f;
-    props.Text = L"Press " GLYPH_LEFT_BUTTON L" + " GLYPH_LEFT_TICK L" to " + std::wstring(!m_MenuOpen ? L"Open" : L"Close");
     props.Color = Layout::TextColor;
     props.BackgroundColor = Layout::BackgroundColor;
     props.BorderWidth = Layout::BorderWidth;
     props.BorderColor = Layout::Color;
     props.BorderPosition = Border::Border_All;
 
-    return m_ControlsText.Render(props);
+    props.Y = baseY;
+    props.Text = L"Hold " GLYPH_LEFT_BUTTON L" & press " GLYPH_LEFT_TICK L" to " + std::wstring(!m_MenuOpen ? L"Open." : L"Close.");
+    hr = m_ControlsTexts[0].Render(props);
+    if (FAILED(hr))
+        return hr;
+
+    props.Y = baseY + textHeight + Layout::Padding;
+    props.Text = L"Use " GLYPH_UP_TICK GLYPH_DOWN_TICK L" to scroll, " GLYPH_X_BUTTON L" to select, " GLYPH_RIGHT_BUTTON L" to go back.";
+    hr = m_ControlsTexts[1].Render(props);
+    if (FAILED(hr))
+        return hr;
+
+    props.Y = baseY + ((textHeight + Layout::Padding) * 2);
+    props.Text = L"Use " GLYPH_LEFT_ARROW L" & " GLYPH_RIGHT_ARROW L" to switch menus.";
+    hr = m_ControlsTexts[2].Render(props);
+
+    return hr;
 }
 
 HRESULT App::RenderFrameRateText()
