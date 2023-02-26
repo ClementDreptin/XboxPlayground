@@ -12,6 +12,9 @@ extern float g_DisplayWidth;
 extern float g_DisplayHeight;
 extern bool g_ShowControlsTexts;
 
+// Take a color and override its alpha channel.
+#define D3DCOLOR_ALPHA(color, alpha) D3DCOLOR_ARGB(alpha, D3DCOLOR_GETRED(color), D3DCOLOR_GETGREEN(color), D3DCOLOR_GETBLUE(color))
+
 Menu::Menu()
     : m_CurrentOptionGroupIndex(0)
 {
@@ -92,9 +95,10 @@ HRESULT Menu::RenderOptionGroupHeaders()
         props.BorderWidth = Layout::BorderWidth;
 
         // Make the header more transparent when the option group header is not selected
-        props.Color = i == m_CurrentOptionGroupIndex ? Layout::TextColor : D3DCOLOR_ARGB(30, D3DCOLOR_GETRED(Layout::TextColor), D3DCOLOR_GETGREEN(Layout::TextColor), D3DCOLOR_GETBLUE(Layout::TextColor));
-        props.BackgroundColor = i == m_CurrentOptionGroupIndex ? Layout::BackgroundColor : D3DCOLOR_ARGB(30, D3DCOLOR_GETRED(Layout::BackgroundColor), D3DCOLOR_GETGREEN(Layout::BackgroundColor), D3DCOLOR_GETBLUE(Layout::BackgroundColor));
-        props.BorderColor = i == m_CurrentOptionGroupIndex ? Layout::Color : D3DCOLOR_ARGB(30, D3DCOLOR_GETRED(Layout::Color), D3DCOLOR_GETGREEN(Layout::Color), D3DCOLOR_GETBLUE(Layout::Color));
+        uint8_t alpha = 100;
+        props.Color = i == m_CurrentOptionGroupIndex ? Layout::TextColor : D3DCOLOR_ALPHA(Layout::TextColor, alpha);
+        props.BackgroundColor = i == m_CurrentOptionGroupIndex ? Layout::BackgroundColor : D3DCOLOR_ALPHA(Layout::BackgroundColor, alpha);
+        props.BorderColor = i == m_CurrentOptionGroupIndex ? Layout::Color : D3DCOLOR_ALPHA(Layout::Color, alpha);
 
         // m_OptionGroups[i] is selected
         if (i == m_CurrentOptionGroupIndex)
