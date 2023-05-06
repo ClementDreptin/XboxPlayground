@@ -13,8 +13,11 @@
 #include "Options/ColorPickerOption.h"
 
 ATG::Font g_Font;
-float g_DisplayWidth = 0.0f;
-float g_DisplayHeight = 0.0f;
+
+// The resolution is always 720p, 1080p is created by the hardware scaler
+float g_DisplayWidth = 1280.0f;
+float g_DisplayHeight = 720.0f;
+
 bool g_ShowControlsTexts = true;
 
 App::App()
@@ -25,13 +28,6 @@ App::App()
 HRESULT App::Initialize()
 {
     HRESULT hr = S_OK;
-
-    // Save the display dimensions
-    uint32_t displayWidth = 0;
-    uint32_t displayHeight = 0;
-    ATG::GetVideoSettings(&displayWidth, &displayHeight);
-    g_DisplayWidth = static_cast<float>(displayWidth);
-    g_DisplayHeight = static_cast<float>(displayHeight);
 
     // Create the font
     hr = g_Font.Create("game:\\Media\\Fonts\\Arial_16.xpr");
