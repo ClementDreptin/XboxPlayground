@@ -1,5 +1,7 @@
 #pragma once
 
+#include "pch.h"
+
 #include <AtgApp.h>
 #include <AtgUtil.h>
 
