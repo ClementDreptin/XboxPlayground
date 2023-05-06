@@ -10,9 +10,9 @@ class ToggleOption : public Option
 public:
     ToggleOption();
 
-    ToggleOption(const std::wstring &name, const ValueOrPtr<bool> &active = false);
+    ToggleOption(const std::wstring &name, const ValueOrPtr<bool> &activefalse);
 
-    ToggleOption(const std::wstring &name, Callback callback, const ValueOrPtr<bool> &active = false);
+    ToggleOption(const std::wstring &name, Callback callback, const ValueOrPtr<bool> &active);
 
     virtual bool Update(Input::Gamepad *pGamepad) override;
 

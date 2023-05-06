@@ -108,9 +108,9 @@ void App::InitMenu()
     // First group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ToggleOption, L"God Mode", Callback::ToggleCallback));
-        options.emplace_back(MakeOption(ToggleOption, L"Fall Damage", Callback::ToggleCallback));
-        options.emplace_back(MakeOption(ToggleOption, L"Ammo", Callback::ToggleCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"God Mode", Callback::ToggleCallback, false));
+        options.emplace_back(MakeOption(ToggleOption, L"Fall Damage", Callback::ToggleCallback, false));
+        options.emplace_back(MakeOption(ToggleOption, L"Ammo", Callback::ToggleCallback, false));
         options.emplace_back(MakeOption(ClickOption, L"Spawn Care Package", Callback::ClickCallback));
         optionGroups.emplace_back(OptionGroup(L"Main", options));
     }
@@ -118,10 +118,10 @@ void App::InitMenu()
     // Second group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ToggleOption, L"Save/Load Binds", Callback::ToggleCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"Save/Load Binds", Callback::ToggleCallback, false));
         options.emplace_back(MakeOption(ClickOption, L"Save Position", Callback::ClickCallback));
         options.emplace_back(MakeOption(ClickOption, L"Load Position", Callback::ClickCallback));
-        options.emplace_back(MakeOption(ToggleOption, L"UFO", Callback::ToggleCallback));
+        options.emplace_back(MakeOption(ToggleOption, L"UFO", Callback::ToggleCallback, false));
         optionGroups.emplace_back(OptionGroup(L"Teleport", options));
     }
 

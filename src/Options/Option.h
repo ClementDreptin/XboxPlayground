@@ -1,5 +1,6 @@
 #pragma once
 
+#include "pch.h"
 #include "Core/Input.h"
 #include "UI/Layout.h"
 #include "UI/Text.h"
@@ -8,7 +9,7 @@
 class Option
 {
 public:
-    typedef bool (*Callback)(void *pParameters);
+    typedef std::function<bool(void *)> Callback;
 
     Option();
 

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <memory>
 #include <utility>
+#include <functional>
 
 // Rarely changed headers
 #include "Core/Log.h"
