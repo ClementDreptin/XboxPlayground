@@ -1,6 +1,5 @@
 #pragma once
 
-#include "pch.h"
 #include "Options/Option.h"
 #include "Core/ValueOrPtr.h"
 #include "UI/Rectangle.h"

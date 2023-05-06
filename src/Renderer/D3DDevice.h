@@ -1,7 +1,5 @@
 #pragma once
 
-#include "pch.h"
-
 #include <AtgDevice.h>
 
 namespace ATG

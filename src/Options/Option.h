@@ -1,6 +1,5 @@
 #pragma once
 
-#include "pch.h"
 #include "Core/Input.h"
 #include "UI/Layout.h"
 #include "UI/Text.h"

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "pch.h"
 #include "Options/SubOptionGroup.h"
 #include "Core/ValueOrPtr.h"
 
