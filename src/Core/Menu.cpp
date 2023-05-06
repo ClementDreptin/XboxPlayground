@@ -25,7 +25,6 @@ void Menu::Init(const std::vector<OptionGroup> &optionGroups)
 {
     m_OptionGroups = optionGroups;
 
-    // Append the customization option group to the existing option groups
     AddCustomizationGroup();
 
     CalculateMenuDimensions();
@@ -47,7 +46,6 @@ void Menu::Update(Input::Gamepad *pGamepad)
             m_CurrentOptionGroupIndex++;
     }
 
-    // Update the currently selected option group
     m_OptionGroups[m_CurrentOptionGroupIndex].Update(pGamepad);
 }
 
@@ -55,12 +53,10 @@ HRESULT Menu::Render()
 {
     HRESULT hr = S_OK;
 
-    // Render the option group headers
     hr = RenderOptionGroupHeaders();
     if (FAILED(hr))
         return hr;
 
-    // Render the currently selected option group
     float optionGroupHeadersHeight = Layout::LineHeight + Layout::BorderWidth;
     hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y + optionGroupHeadersHeight, Layout::Width, Layout::Height);
 
@@ -93,7 +89,6 @@ HRESULT Menu::RenderOptionGroupHeaders()
         for (size_t j = 0; j < i; j++)
             offset += (g_Font.GetTextWidth(m_OptionGroups[j].GetName().c_str()) + Layout::Padding * 2 + Layout::BorderWidth);
 
-        // Create the props
         Text::Props props = { 0 };
         props.X = offset;
         props.Y = Layout::Y;
@@ -118,7 +113,6 @@ HRESULT Menu::RenderOptionGroupHeaders()
         else if (i > m_CurrentOptionGroupIndex)
             props.BorderPosition = static_cast<Border::Position>(Border::Border_Right | Border::Border_Top);
 
-        // Render m_OptionsGroups[i]
         hr = m_OptionGroupHeaders[i].Render(props);
         if (FAILED(hr))
             return hr;

@@ -50,7 +50,6 @@ HRESULT App::Update()
 {
     HRESULT hr = S_OK;
 
-    // Get the current gamepad state
     Input::Gamepad *pGamepad = Input::GetInput();
 
     // Toggle the menu by pressing LT and DPAD LEFT
@@ -60,7 +59,6 @@ HRESULT App::Update()
         return hr;
     }
 
-    // Update the menu if it's open
     if (m_MenuOpen)
         m_Menu.Update(pGamepad);
 
@@ -74,7 +72,6 @@ HRESULT App::Render()
     // Clear the viewport
     m_pd3dDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
-    // Render the menu if it's open
     if (m_MenuOpen)
     {
         hr = m_Menu.Render();
@@ -82,7 +79,6 @@ HRESULT App::Render()
             return hr;
     }
 
-    // Render the controls texts if enabled
     if (g_ShowControlsTexts)
     {
         hr = RenderControlsTexts();
