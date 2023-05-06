@@ -9,6 +9,11 @@ OptionGroup::OptionGroup()
 {
 }
 
+OptionGroup::OptionGroup(const std::vector<std::shared_ptr<Option>> &options)
+    : m_Name(L""), m_Options(options), m_CurrentSelectedOptionIndex(0), m_CachedMinWidth(0.0f), m_CachedMinHeight(0.0f)
+{
+}
+
 OptionGroup::OptionGroup(const std::wstring &name, const std::vector<std::shared_ptr<Option>> &options)
     : m_Name(name), m_Options(options), m_CurrentSelectedOptionIndex(0), m_CachedMinWidth(0.0f), m_CachedMinHeight(0.0f)
 {

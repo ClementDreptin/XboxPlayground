@@ -4,6 +4,7 @@
 #include "Core/OptionGroup.h"
 #include "Options/ToggleOption.h"
 #include "Options/RangeOption.h"
+#include "Options/SubOptionGroup.h"
 #include "Options/ColorPickerOption.h"
 #include "UI/Layout.h"
 #include "UI/Font.h"
@@ -69,9 +70,14 @@ HRESULT Menu::Render()
 void Menu::AddCustomizationGroup()
 {
     std::vector<std::shared_ptr<Option>> options;
+
     options.emplace_back(MakeOption(ToggleOption, L"Show Controls", &g_ShowControlsTexts));
-    options.emplace_back(MakeOption(RangeOption<float>, L"Menu X", &Layout::X, Layout::BorderWidth, g_DisplayWidth, 10.0f));
-    options.emplace_back(MakeOption(RangeOption<float>, L"Menu Y", &Layout::Y, Layout::BorderWidth, g_DisplayHeight, 10.0f));
+
+    std::vector<std::shared_ptr<Option>> menuPositionOptions;
+    menuPositionOptions.emplace_back(MakeOption(RangeOption<float>, L"X", &Layout::X, Layout::BorderWidth, g_DisplayWidth, 10.0f));
+    menuPositionOptions.emplace_back(MakeOption(RangeOption<float>, L"Y", &Layout::Y, Layout::BorderWidth, g_DisplayHeight, 10.0f));
+    options.emplace_back(MakeOption(SubOptionGroup, L"Menu Position", menuPositionOptions));
+
     options.emplace_back(MakeOption(ColorPickerOption, L"Menu Color", &Layout::Color));
     m_OptionGroups.emplace_back(OptionGroup(L"Customization", options));
 }

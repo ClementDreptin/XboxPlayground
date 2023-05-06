@@ -8,7 +8,7 @@ class SubOptionGroup : public Option
 public:
     SubOptionGroup();
 
-    SubOptionGroup(const std::wstring &name, const OptionGroup &optionGroup);
+    SubOptionGroup(const std::wstring &name, const std::vector<std::shared_ptr<Option>> &options);
 
     virtual bool Update(Input::Gamepad *pGamepad) override;
 

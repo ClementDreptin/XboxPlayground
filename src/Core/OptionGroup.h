@@ -1,5 +1,6 @@
 #pragma once
 
+#include "pch.h"
 #include "Core/Input.h"
 #include "Options/Option.h"
 #include "UI/Rectangle.h"
@@ -8,6 +9,8 @@ class OptionGroup
 {
 public:
     OptionGroup();
+
+    OptionGroup(const std::vector<std::shared_ptr<Option>> &options);
 
     OptionGroup(const std::wstring &name, const std::vector<std::shared_ptr<Option>> &options);
 
