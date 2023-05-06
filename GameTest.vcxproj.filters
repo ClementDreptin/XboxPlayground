@@ -44,7 +44,7 @@
     <ClCompile Include="src\Core\Callbacks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\OptionGroup.cpp">
+    <ClCompile Include="src\Options\OptionGroup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Options\ClickOption.cpp">
@@ -112,7 +112,7 @@
     <ClInclude Include="src\Core\Callbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\OptionGroup.h">
+    <ClInclude Include="src\Options\OptionGroup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\D3DDevice.h">

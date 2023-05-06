@@ -17,7 +17,7 @@
     <ClCompile Include="src\Options\ClickOption.cpp" />
     <ClCompile Include="src\Core\Menu.cpp" />
     <ClCompile Include="src\Options\Option.cpp" />
-    <ClCompile Include="src\Core\OptionGroup.cpp" />
+    <ClCompile Include="src\Options\OptionGroup.cpp" />
     <ClCompile Include="src\Options\RangeOption.cpp" />
     <ClCompile Include="src\UI\Border.cpp" />
     <ClCompile Include="src\UI\Layout.cpp" />
@@ -45,7 +45,7 @@
     <ClInclude Include="src\Options\ClickOption.h" />
     <ClInclude Include="src\Core\Menu.h" />
     <ClInclude Include="src\Options\Option.h" />
-    <ClInclude Include="src\Core\OptionGroup.h" />
+    <ClInclude Include="src\Options\OptionGroup.h" />
     <ClInclude Include="src\Options\RangeOption.h" />
     <ClInclude Include="src\Renderer\D3DDevice.h" />
     <ClInclude Include="src\UI\Border.h" />

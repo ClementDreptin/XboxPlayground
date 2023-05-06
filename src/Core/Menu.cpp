@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Core/Menu.h"
 
-#include "Core/OptionGroup.h"
+#include "Options/OptionGroup.h"
 #include "Options/ToggleOption.h"
 #include "Options/RangeOption.h"
 #include "Options/SubOptionGroup.h"

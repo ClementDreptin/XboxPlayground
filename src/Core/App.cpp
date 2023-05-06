@@ -6,7 +6,7 @@
 
 #include "Core/Input.h"
 #include "Core/Callbacks.h"
-#include "Core/OptionGroup.h"
+#include "Options/OptionGroup.h"
 #include "Options/ClickOption.h"
 #include "Options/ToggleOption.h"
 #include "Options/RangeOption.h"
