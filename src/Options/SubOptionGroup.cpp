@@ -21,7 +21,6 @@ bool SubOptionGroup::Update(Input::Gamepad *pGamepad)
     else if (pGamepad->PressedButtons & XINPUT_GAMEPAD_RIGHT_THUMB)
         m_Open = false;
 
-    // Update the sub option group if it's open
     if (m_Open)
         m_OptionGroup.Update(pGamepad);
 
@@ -37,23 +36,21 @@ HRESULT SubOptionGroup::Render(float x, float y, float width)
     if (FAILED(hr))
         return hr;
 
-    // Render the option group if it's open
-    if (m_Open)
-    {
-        // Render the sub option group on the left or the right of the menu, depending on where there's space
-        float subOptionGroupWidth = m_OptionGroup.GetMinWidth() + Layout::BorderWidth * 2;
-        float currentOptionWidth = width + Layout::BorderWidth * 2;
-        float leftX = x - subOptionGroupWidth;
-        float rightX = x + currentOptionWidth;
+    // If the option group is not open, don't go further
+    if (!m_Open)
+        return hr;
 
-        float finalX = rightX;
-        if (leftX < 0.0f)
-            finalX = rightX;
-        else if (rightX + subOptionGroupWidth > g_DisplayWidth)
-            finalX = leftX;
+    // Render the sub option group on the left or the right of the menu, depending on where there's space
+    float subOptionGroupWidth = m_OptionGroup.GetMinWidth() + Layout::BorderWidth * 2;
+    float currentOptionWidth = width + Layout::BorderWidth * 2;
+    float leftX = x - subOptionGroupWidth;
+    float rightX = x + currentOptionWidth;
 
-        hr = m_OptionGroup.Render(finalX, y);
-    }
+    float finalX = rightX;
+    if (leftX < 0.0f)
+        finalX = rightX;
+    else if (rightX + subOptionGroupWidth > g_DisplayWidth)
+        finalX = leftX;
 
-    return hr;
+    return m_OptionGroup.Render(finalX, y);
 }
