@@ -11,7 +11,6 @@
 #include "Options/ToggleOption.h"
 #include "Options/RangeOption.h"
 #include "Options/ColorPickerOption.h"
-#include "Options/SubOptionGroup.h"
 
 ATG::Font g_Font;
 
@@ -120,22 +119,6 @@ void App::InitMenu()
         options.emplace_back(MakeOption(ClickOption, L"Load Position", Callback::ClickCallback));
         options.emplace_back(MakeOption(ToggleOption, L"UFO", Callback::ToggleCallback, false));
         optionGroups.emplace_back(OptionGroup(L"Teleport", options));
-    }
-
-    // Test group
-    {
-        std::vector<std::shared_ptr<Option>> options;
-
-        std::vector<std::shared_ptr<Option>> subOptions;
-        std::vector<std::shared_ptr<Option>> subSubOptions;
-        subSubOptions.emplace_back(MakeOption(ClickOption, L"1.1", Callback::ClickCallback));
-        subSubOptions.emplace_back(MakeOption(ClickOption, L"1.2", Callback::ClickCallback));
-        subOptions.emplace_back(MakeOption(SubOptionGroup, L"1", subSubOptions));
-        /* subOptions.emplace_back(MakeOption(ClickOption, L"1", Callback::ClickCallback)); */
-        subOptions.emplace_back(MakeOption(ClickOption, L"2", Callback::ClickCallback));
-        options.emplace_back(MakeOption(SubOptionGroup, L"SubOptions", subOptions));
-
-        optionGroups.emplace_back(OptionGroup(L"Test", options));
     }
 
     m_Menu.Init(optionGroups);
