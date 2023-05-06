@@ -8,14 +8,14 @@ ColorPickerOption::ColorPickerOption()
 {
 }
 
-ColorPickerOption::ColorPickerOption(const std::wstring &name, Callback callback, const ValueOrPtr<D3DCOLOR> &color)
-    : SubOptionGroup(name, callback, OptionGroup()), m_Color(color), m_Red(D3DCOLOR_GETRED(*color)), m_Green(D3DCOLOR_GETGREEN(*color)), m_Blue(D3DCOLOR_GETBLUE(*color)), m_Alpha(D3DCOLOR_GETALPHA(*color))
+ColorPickerOption::ColorPickerOption(const std::wstring &name, const ValueOrPtr<D3DCOLOR> &color)
+    : SubOptionGroup(name, OptionGroup()), m_Color(color), m_Red(D3DCOLOR_GETRED(*color)), m_Green(D3DCOLOR_GETGREEN(*color)), m_Blue(D3DCOLOR_GETBLUE(*color)), m_Alpha(D3DCOLOR_GETALPHA(*color))
 {
     std::vector<std::shared_ptr<Option>> options;
-    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Red", nullptr, &m_Red, 0, 255, 1));
-    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Green", nullptr, &m_Green, 0, 255, 1));
-    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Blue", nullptr, &m_Blue, 0, 255, 1));
-    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Alpha", nullptr, &m_Alpha, 0, 255, 1));
+    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Red", &m_Red, 0, 255, 1));
+    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Green", &m_Green, 0, 255, 1));
+    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Blue", &m_Blue, 0, 255, 1));
+    options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Alpha", &m_Alpha, 0, 255, 1));
     m_OptionGroup = OptionGroup(L"Color Picker", options);
 }
 
@@ -28,17 +28,7 @@ bool ColorPickerOption::Update(Input::Gamepad *pGamepad)
 
     // Update the color value when it's changed with DPAD LEFT/DPAD RIGHT
     if (pGamepad->PressedButtons & XINPUT_GAMEPAD_DPAD_LEFT || pGamepad->PressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
-    {
-        D3DCOLOR newColor = D3DCOLOR_RGBA(m_Red, m_Green, m_Blue, m_Alpha);
-        if (m_Callback != nullptr)
-        {
-            bool success = m_Callback(&newColor);
-            if (success)
-                m_Color = newColor;
-        }
-        else
-            m_Color = newColor;
-    }
+        m_Color = D3DCOLOR_RGBA(m_Red, m_Green, m_Blue, m_Alpha);
 
     return true;
 }

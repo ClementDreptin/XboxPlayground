@@ -1,5 +1,6 @@
 #pragma once
 
+#include "pch.h"
 #include "Options/SubOptionGroup.h"
 #include "Core/ValueOrPtr.h"
 
@@ -8,7 +9,7 @@ class ColorPickerOption : public SubOptionGroup
 public:
     ColorPickerOption();
 
-    ColorPickerOption(const std::wstring &name, Callback callback, const ValueOrPtr<D3DCOLOR> &color);
+    ColorPickerOption(const std::wstring &name, const ValueOrPtr<D3DCOLOR> &color);
 
     virtual bool Update(Input::Gamepad *pGamepad) override;
 

@@ -1,14 +1,17 @@
 #pragma once
 
+#include "pch.h"
 #include "Options/Option.h"
 #include "Core/ValueOrPtr.h"
 #include "UI/Text.h"
 
-template <typename T>
+template<typename T>
 class RangeOption : public Option
 {
 public:
     RangeOption();
+
+    RangeOption(const std::wstring &name, const ValueOrPtr<T> &value, T min, T max, T step);
 
     RangeOption(const std::wstring &name, Callback callback, const ValueOrPtr<T> &value, T min, T max, T step);
 

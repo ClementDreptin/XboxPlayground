@@ -4,9 +4,15 @@
 #include "UI/Layout.h"
 #include "UI/Font.h"
 
-template <typename T>
+template<typename T>
 RangeOption<T>::RangeOption()
     : Option(), m_Min(static_cast<T>(0)), m_Max(static_cast<T>(0)), m_Current(static_cast<T>(0))
+{
+}
+
+template<typename T>
+RangeOption<T>::RangeOption(const std::wstring &name, const ValueOrPtr<T> &value, T min, T max, T step)
+    : Option(name, nullptr), m_Min(min), m_Max(max), m_Step(step), m_Current(value)
 {
 }
 
