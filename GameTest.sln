@@ -16,14 +16,19 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|Xbox 360 = Release|Xbox 360
+		Xenia|Xbox 360 = Xenia|Xbox 360
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D65EA7DE-FBA2-441D-BE74-B376437D08E0}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
 		{D65EA7DE-FBA2-441D-BE74-B376437D08E0}.Release|Xbox 360.Build.0 = Release|Xbox 360
 		{D65EA7DE-FBA2-441D-BE74-B376437D08E0}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
+		{D65EA7DE-FBA2-441D-BE74-B376437D08E0}.Xenia|Xbox 360.ActiveCfg = Xenia|Xbox 360
+		{D65EA7DE-FBA2-441D-BE74-B376437D08E0}.Xenia|Xbox 360.Build.0 = Xenia|Xbox 360
 		{91D208A6-9936-47FD-9659-67205C3EB0AB}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
 		{91D208A6-9936-47FD-9659-67205C3EB0AB}.Release|Xbox 360.Build.0 = Release|Xbox 360
 		{91D208A6-9936-47FD-9659-67205C3EB0AB}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
+		{91D208A6-9936-47FD-9659-67205C3EB0AB}.Xenia|Xbox 360.ActiveCfg = Xenia|Xbox 360
+		{91D208A6-9936-47FD-9659-67205C3EB0AB}.Xenia|Xbox 360.Build.0 = Xenia|Xbox 360
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
