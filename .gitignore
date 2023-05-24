@@ -6,4 +6,5 @@ compile_flags.txt
 
 # Visual Studio files
 .vs/
+.vscode/
 *.user
