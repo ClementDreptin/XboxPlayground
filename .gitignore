@@ -8,3 +8,7 @@ compile_flags.txt
 .vs/
 .vscode/
 *.user
+
+# Xenia
+tools/xenia/*
+*xenia.log
