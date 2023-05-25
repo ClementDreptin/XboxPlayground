@@ -1,13 +1,15 @@
 #include "pch.h"
 
-#include <AtgUtil.h>
-
 #include "Core/App.h"
+
+extern float g_DisplayWidth;
+extern float g_DisplayHeight;
 
 void __cdecl main()
 {
     App app;
-    ATG::GetVideoSettings(&app.m_d3dpp.BackBufferWidth, &app.m_d3dpp.BackBufferHeight);
+    app.m_d3dpp.BackBufferWidth = g_DisplayWidth;
+    app.m_d3dpp.BackBufferHeight = g_DisplayHeight;
 
     // Make sure display gamma is correct.
     app.m_d3dpp.BackBufferFormat = static_cast<D3DFORMAT>(MAKESRGBFMT(D3DFMT_A8R8G8B8));
