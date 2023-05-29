@@ -5,7 +5,7 @@ $XeniaZipPath = "$($XeniaDir)\xenia.zip"
 $XeniaDownloadUri = "https://github.com/xenia-project/release-builds-windows/releases/latest/download/xenia_master.zip"
 
 if (!$XeniaDir) {
-    echo "You need to provide a SolutionDir argument!"
+    echo "You need to provide a XeniaDir argument!"
     Exit 1
 }
 
