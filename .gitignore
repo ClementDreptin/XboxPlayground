@@ -11,4 +11,5 @@ tools/xenia/*
 *xenia.log
 
 # AtgFramework source code
-deps/AtgFramework/*(!.vcxproj*)
+deps/AtgFramework/*
+!deps/AtgFramework/*.vcxproj*
