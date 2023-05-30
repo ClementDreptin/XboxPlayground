@@ -104,21 +104,21 @@ void App::InitMenu()
     // First group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ToggleOption, L"God Mode", Callback::ToggleCallback, false));
-        options.emplace_back(MakeOption(ToggleOption, L"Fall Damage", Callback::ToggleCallback, false));
-        options.emplace_back(MakeOption(ToggleOption, L"Ammo", Callback::ToggleCallback, false));
-        options.emplace_back(MakeOption(ClickOption, L"Spawn Care Package", Callback::ClickCallback));
-        optionGroups.emplace_back(OptionGroup(L"Main", options));
+        options.emplace_back(MakeOption(ClickOption, L"Click 1", Callback::ClickCallback));
+        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 1", Callback::RangeCallback, 2, 0, 1, 1));
+        options.emplace_back(MakeOption(RangeOption<float>, L"Float Range 1", Callback::RangeCallback, 0.2f, 0.0f, 1.0f, 0.1f));
+        options.emplace_back(MakeOption(ToggleOption, L"Toggle 1", Callback::ToggleCallback, false));
+        optionGroups.emplace_back(OptionGroup(L"First", options));
     }
 
     // Second group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ToggleOption, L"Save/Load Binds", Callback::ToggleCallback, false));
-        options.emplace_back(MakeOption(ClickOption, L"Save Position", Callback::ClickCallback));
-        options.emplace_back(MakeOption(ClickOption, L"Load Position", Callback::ClickCallback));
-        options.emplace_back(MakeOption(ToggleOption, L"UFO", Callback::ToggleCallback, false));
-        optionGroups.emplace_back(OptionGroup(L"Teleport", options));
+        options.emplace_back(MakeOption(ClickOption, L"Click 1", Callback::ClickCallback));
+        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 1", Callback::RangeCallback, 2, 0, 1, 1));
+        options.emplace_back(MakeOption(RangeOption<float>, L"Float Range 1", Callback::RangeCallback, 0.2f, 0.0f, 1.0f, 0.1f));
+        options.emplace_back(MakeOption(ToggleOption, L"Toggle 1", Callback::ToggleCallback, false));
+        optionGroups.emplace_back(OptionGroup(L"Second", options));
     }
 
     m_Menu.Init(optionGroups);
