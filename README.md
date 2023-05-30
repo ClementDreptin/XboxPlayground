@@ -1,5 +1,5 @@
 # XboxPlayground
-XboxPlayground is a minimal Xbox 360 application I use as a test playground.
+Minimal Xbox 360 application I use as a test playground.
 
 ## Why?
 While doing Xbox 360 development (especially on [Hayzen](https://github.com/ClementDreptin/Hayzen)), the workflow is a little bit tedious. I have to compile the code, deploy it to the console, unload then reload the module, and restart the game I'm currently working on.
