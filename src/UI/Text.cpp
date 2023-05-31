@@ -17,8 +17,9 @@ HRESULT Text::Render(const Props &props)
         Rectangle::Props rectProps = { 0 };
         rectProps.X = props.X;
         rectProps.Y = props.Y;
-        rectProps.Width = g_Font.GetTextWidth(props.Text.c_str()) * fontScale + padding * 2;
-        rectProps.Height = g_Font.GetFontHeight() * fontScale + padding * 2;
+        g_Font.GetTextExtent(props.Text.c_str(), &rectProps.Width, &rectProps.Height);
+        rectProps.Width = rectProps.Width * fontScale + padding * 2;
+        rectProps.Height = rectProps.Height * fontScale + padding * 2;
         rectProps.Color = props.BackgroundColor;
         rectProps.BorderWidth = props.BorderWidth;
         rectProps.BorderColor = props.BorderColor;

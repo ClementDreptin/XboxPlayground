@@ -128,11 +128,12 @@ HRESULT App::RenderControlsTexts()
 {
     HRESULT hr = S_OK;
 
-    float baseY = 10.0f;
+    float yOffset = 10.0f;
     float fontScale = 0.8f;
     float padding = Layout::Padding * fontScale;
     float borderWidth = Layout::BorderWidth * fontScale;
-    float textHeight = g_Font.GetFontHeight() * fontScale + padding * 2 + borderWidth * 2;
+    float textWidth = 0.0f;
+    float textHeight = 0.0f;
 
     Text::Props props = { 0 };
     props.X = 10.0f;
@@ -143,20 +144,26 @@ HRESULT App::RenderControlsTexts()
     props.BorderColor = Layout::Color;
     props.BorderPosition = Border::Border_All;
 
-    props.Y = baseY;
+    props.Y = yOffset;
     props.Text = L"Hold " GLYPH_LEFT_BUTTON L" & press " GLYPH_LEFT_TICK L" to " + std::wstring(!m_MenuOpen ? L"Open." : L"Close.");
+    g_Font.GetTextExtent(props.Text.c_str(), &textWidth, &textHeight);
+    yOffset += textHeight * fontScale + padding * 3 + borderWidth * 2;
     hr = m_ControlsTexts[0].Render(props);
     if (FAILED(hr))
         return hr;
 
-    props.Y = baseY + textHeight + padding;
+    props.Y = yOffset;
     props.Text = L"Use " GLYPH_UP_TICK GLYPH_DOWN_TICK L" to scroll, " GLYPH_X_BUTTON L" to select, " GLYPH_RIGHT_BUTTON L" to go back.";
+    g_Font.GetTextExtent(props.Text.c_str(), &textWidth, &textHeight);
+    yOffset += textHeight * fontScale + padding * 3 + borderWidth * 2;
     hr = m_ControlsTexts[1].Render(props);
     if (FAILED(hr))
         return hr;
 
-    props.Y = baseY + ((textHeight + padding) * 2);
+    props.Y = yOffset;
     props.Text = L"Use " GLYPH_LEFT_ARROW L" & " GLYPH_RIGHT_ARROW L" to switch menus.";
+    g_Font.GetTextExtent(props.Text.c_str(), &textWidth, &textHeight);
+    yOffset += textHeight * fontScale + padding * 3 + borderWidth * 2;
     hr = m_ControlsTexts[2].Render(props);
 
     return hr;
