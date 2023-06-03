@@ -63,7 +63,8 @@ HRESULT OptionGroup::Render(float x, float y, float width, float height)
 
     for (size_t i = 0; i < m_Options.size(); i++)
     {
-        hr = m_Options[i]->Render(x, y + i * m_Options[i]->GetMinHeight(), widthToUse);
+        hr = m_Options[i]->Render(x, y, widthToUse);
+        y += m_Options[i]->GetMinHeight();
         if (FAILED(hr))
             return hr;
     }

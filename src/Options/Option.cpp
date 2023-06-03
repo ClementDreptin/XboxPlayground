@@ -4,12 +4,12 @@
 #include "UI/Font.h"
 
 Option::Option()
-    : m_Callback(nullptr), m_IsSelected(false), m_CachedMinWidth(0.0f)
+    : m_Callback(nullptr), m_IsSelected(false), m_CachedMinWidth(0.0f), m_CachedMinHeight(0.0f)
 {
 }
 
 Option::Option(const std::wstring &name, Callback callback)
-    : m_Name(name), m_Callback(callback), m_CachedMinWidth(0.0f)
+    : m_Name(name), m_Callback(callback), m_CachedMinWidth(0.0f), m_CachedMinHeight(0.0f)
 {
 }
 
@@ -24,7 +24,7 @@ HRESULT Option::Render(float x, float y, float width)
         props.X = x + Layout::Gap;
         props.Y = y + Layout::Gap;
         props.Width = width - Layout::Gap * 2;
-        props.Height = (g_Font.GetTextHeight(m_Name) + Layout::Padding * 2) - Layout::Gap * 2;
+        props.Height = GetMinHeight() - Layout::Gap * 2;
         props.Color = Layout::Color;
         hr = m_Background.Render(props);
         if (FAILED(hr))
