@@ -87,7 +87,7 @@ HRESULT Menu::RenderOptionGroupHeaders()
         // The X offset is the sum of the previous option group header widths
         float offset = Layout::X;
         for (size_t j = 0; j < i; j++)
-            offset += (g_Font.GetTextWidth(m_OptionGroups[j].GetName().c_str()) + Layout::Padding * 2 + Layout::BorderWidth);
+            offset += (g_Font.GetTextWidth(m_OptionGroups[j].GetName()) + Layout::Padding * 2 + Layout::BorderWidth);
 
         Text::Props props = { 0 };
         props.X = offset;
@@ -130,7 +130,7 @@ void Menu::CalculateMenuDimensions()
     for (size_t i = 0; i < m_OptionGroups.size(); i++)
     {
         // Accumulate all the option group names width
-        allOptionGroupNamesWidth += (g_Font.GetTextWidth(m_OptionGroups[i].GetName().c_str()) + Layout::Padding * 2);
+        allOptionGroupNamesWidth += (g_Font.GetTextWidth(m_OptionGroups[i].GetName()) + Layout::Padding * 2);
 
         // Find the option group with the biggest width
         float optionGroupWidth = m_OptionGroups[i].GetMinWidth();
