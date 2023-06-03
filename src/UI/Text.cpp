@@ -10,6 +10,7 @@ HRESULT Text::Render(const Props &props)
     bool hasBackgroundOrBorder = props.BackgroundColor != 0 || (props.BorderWidth > 0 && props.BorderPosition != Border::Border_None);
     float fontScale = props.FontScale != 0.0f ? props.FontScale : 1.0f;
     float padding = Layout::Padding * fontScale;
+    g_Font.SetScaleFactors(fontScale, fontScale);
 
     // Render the background if needed
     if (hasBackgroundOrBorder)
@@ -17,9 +18,9 @@ HRESULT Text::Render(const Props &props)
         Rectangle::Props rectProps = { 0 };
         rectProps.X = props.X;
         rectProps.Y = props.Y;
-        g_Font.GetTextExtent(props.Text.c_str(), &rectProps.Width, &rectProps.Height);
-        rectProps.Width = rectProps.Width * fontScale + padding * 2;
-        rectProps.Height = rectProps.Height * fontScale + padding * 2;
+        g_Font.GetTextDimensions(props.Text, &rectProps.Width, &rectProps.Height);
+        rectProps.Width = rectProps.Width + padding * 2;
+        rectProps.Height = rectProps.Height + padding * 2;
         rectProps.Color = props.BackgroundColor;
         rectProps.BorderWidth = props.BorderWidth;
         rectProps.BorderColor = props.BorderColor;
@@ -32,7 +33,6 @@ HRESULT Text::Render(const Props &props)
     // Render the text
     float x = props.X + (hasBackgroundOrBorder ? padding : 0.0f);
     float y = props.Y + (hasBackgroundOrBorder ? padding : 0.0f);
-    g_Font.SetScaleFactors(fontScale, fontScale);
     g_Font.DrawText(x, y, props.Color, props.Text.c_str());
     g_Font.SetScaleFactors(1.0f, 1.0f);
 
