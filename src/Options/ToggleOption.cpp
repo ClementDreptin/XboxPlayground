@@ -2,6 +2,7 @@
 #include "Options/ToggleOption.h"
 
 #include "UI/Layout.h"
+#include "UI/Font.h"
 
 ToggleOption::ToggleOption()
     : Option(), m_Active(false)
@@ -49,10 +50,11 @@ HRESULT ToggleOption::Render(float x, float y, float width)
         return hr;
 
     // Render the radio box
-    float radioBoxSize = Layout::LineHeight * 0.5f;
+    float lineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
+    float radioBoxSize = lineHeight * 0.5f;
     Rectangle::Props props = { 0 };
     props.X = x + width - radioBoxSize - Layout::Padding;
-    props.Y = y + Layout::LineHeight / 2 - radioBoxSize / 2;
+    props.Y = y + lineHeight / 2 - radioBoxSize / 2;
     props.Width = radioBoxSize;
     props.Height = radioBoxSize;
     props.Color = m_Active ? Layout::Color : D3DCOLOR_XRGB(0, 0, 0);

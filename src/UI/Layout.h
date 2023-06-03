@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace Layout
 {
 
@@ -23,7 +22,5 @@ extern float X;
 extern float Width;
 
 extern float Height;
-
-extern float LineHeight;
 
 }

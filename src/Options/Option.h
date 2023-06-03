@@ -24,7 +24,9 @@ public:
 
     virtual HRESULT Render(float x, float y, float width) = 0;
 
-    float GetMinWidth();
+    float GetMinWidth() const;
+
+    float GetMinHeight() const;
 
 protected:
     std::wstring m_Name;
@@ -34,7 +36,8 @@ protected:
     bool m_IsSelected;
     Rectangle m_Background;
 
-    float m_CachedMinWidth;
+    mutable float m_CachedMinWidth;
+    mutable float m_CachedMinHeight;
 };
 
 // Macro to create a shared pointer to an option. Being able to use templated arguments and std::forward

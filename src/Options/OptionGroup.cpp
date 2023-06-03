@@ -63,7 +63,7 @@ HRESULT OptionGroup::Render(float x, float y, float width, float height)
 
     for (size_t i = 0; i < m_Options.size(); i++)
     {
-        hr = m_Options[i]->Render(x, y + i * Layout::LineHeight, widthToUse);
+        hr = m_Options[i]->Render(x, y + i * m_Options[i]->GetMinHeight(), widthToUse);
         if (FAILED(hr))
             return hr;
     }
@@ -94,7 +94,8 @@ float OptionGroup::GetMinHeight()
     if (m_CachedMinHeight != 0.0f)
         return m_CachedMinHeight;
 
-    m_CachedMinHeight = m_Options.size() * Layout::LineHeight;
+    for (size_t i = 0; i < m_Options.size(); i++)
+        m_CachedMinHeight += m_Options[i]->GetMinHeight();
 
     return m_CachedMinHeight;
 }

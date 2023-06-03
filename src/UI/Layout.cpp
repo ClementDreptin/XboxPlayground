@@ -26,6 +26,4 @@ float Width = 0.0f;
 
 float Height = 0.0f;
 
-float LineHeight = 0.0f;
-
 }

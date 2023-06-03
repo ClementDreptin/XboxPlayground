@@ -24,7 +24,7 @@ HRESULT Option::Render(float x, float y, float width)
         props.X = x + Layout::Gap;
         props.Y = y + Layout::Gap;
         props.Width = width - Layout::Gap * 2;
-        props.Height = Layout::LineHeight - Layout::Gap * 2;
+        props.Height = (g_Font.GetTextHeight(m_Name) + Layout::Padding * 2) - Layout::Gap * 2;
         props.Color = Layout::Color;
         hr = m_Background.Render(props);
         if (FAILED(hr))
@@ -42,7 +42,7 @@ HRESULT Option::Render(float x, float y, float width)
     return hr;
 }
 
-float Option::GetMinWidth()
+float Option::GetMinWidth() const
 {
     // Return the cached value if the minimum width has already been calculated
     if (m_CachedMinWidth != 0.0f)
@@ -54,4 +54,15 @@ float Option::GetMinWidth()
     m_CachedMinWidth += 100.0f;
 
     return m_CachedMinWidth;
+}
+
+float Option::GetMinHeight() const
+{
+    // Return the cached value if the minimum width has already been calculated
+    if (m_CachedMinHeight != 0.0f)
+        return m_CachedMinHeight;
+
+    m_CachedMinHeight = g_Font.GetTextHeight(m_Name) + Layout::Padding * 2;
+
+    return m_CachedMinHeight;
 }

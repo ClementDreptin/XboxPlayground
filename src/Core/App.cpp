@@ -37,9 +37,6 @@ HRESULT App::Initialize()
         return hr;
     }
 
-    // Calculate the line height
-    Layout::LineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
-
     // Create the menu
     InitMenu();
 
@@ -105,7 +102,7 @@ void App::InitMenu()
     {
         std::vector<std::shared_ptr<Option>> options;
         options.emplace_back(MakeOption(ClickOption, L"Click 1", Callback::ClickCallback));
-        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 1", Callback::RangeCallback, 2, 0, 1, 1));
+        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 1", Callback::RangeCallback, 2, 0, 10, 1));
         options.emplace_back(MakeOption(RangeOption<float>, L"Float Range 1", Callback::RangeCallback, 0.2f, 0.0f, 1.0f, 0.1f));
         options.emplace_back(MakeOption(ToggleOption, L"Toggle 1", Callback::ToggleCallback, false));
         optionGroups.emplace_back(OptionGroup(L"First", options));
@@ -114,10 +111,10 @@ void App::InitMenu()
     // Second group
     {
         std::vector<std::shared_ptr<Option>> options;
-        options.emplace_back(MakeOption(ClickOption, L"Click 1", Callback::ClickCallback));
-        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 1", Callback::RangeCallback, 2, 0, 1, 1));
-        options.emplace_back(MakeOption(RangeOption<float>, L"Float Range 1", Callback::RangeCallback, 0.2f, 0.0f, 1.0f, 0.1f));
-        options.emplace_back(MakeOption(ToggleOption, L"Toggle 1", Callback::ToggleCallback, false));
+        options.emplace_back(MakeOption(ClickOption, L"Click 2", Callback::ClickCallback));
+        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 2", Callback::RangeCallback, 2, 0, 10, 1));
+        options.emplace_back(MakeOption(RangeOption<float>, L"Float Range 2", Callback::RangeCallback, 0.2f, 0.0f, 1.0f, 0.1f));
+        options.emplace_back(MakeOption(ToggleOption, L"Toggle 2", Callback::ToggleCallback, false));
         optionGroups.emplace_back(OptionGroup(L"Second", options));
     }
 
@@ -168,10 +165,12 @@ HRESULT App::RenderFrameRateText()
 {
     m_Timer.MarkFrame();
 
+    const wchar_t *text = m_Timer.GetFrameRate();
+
     Text::Props props = { 0 };
     props.X = 10.0f;
-    props.Y = g_DisplayHeight - Layout::LineHeight - 10.0f;
-    props.Text = m_Timer.GetFrameRate();
+    props.Y = g_DisplayHeight - (g_Font.GetTextHeight(text) + Layout::Padding * 2) - 10.0f;
+    props.Text = text;
     props.Color = Layout::TextColor;
     props.BackgroundColor = Layout::BackgroundColor;
     props.BorderWidth = Layout::BorderWidth;

@@ -57,8 +57,16 @@ HRESULT Menu::Render()
     if (FAILED(hr))
         return hr;
 
-    float optionGroupHeadersHeight = Layout::LineHeight + Layout::BorderWidth;
-    hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y + optionGroupHeadersHeight, Layout::Width, Layout::Height);
+    float highestOptionGroupHeader = 0.0f;
+    for (size_t i = 0; i < m_OptionGroupHeaders.size(); i++)
+    {
+        float currentOptionGroupHeaderHeight = g_Font.GetTextHeight(m_OptionGroups[i].GetName()) + Layout::Padding * 2;
+        if (currentOptionGroupHeaderHeight > highestOptionGroupHeader)
+            highestOptionGroupHeader = currentOptionGroupHeaderHeight;
+    }
+    highestOptionGroupHeader += Layout::BorderWidth;
+
+    hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y + highestOptionGroupHeader, Layout::Width, Layout::Height);
 
     return hr;
 }
