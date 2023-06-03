@@ -19,7 +19,8 @@ float Font::GetTextHeight(const std::wstring &text)
 
 void Font::GetTextDimensions(const std::wstring &text, float *pWidth, float *pHeight) const
 {
-    float width = 0.0f;
+    float biggestWidth = 0.0f;
+    float currentLineWidth = 0.0f;
     float height = m_fFontHeight;
     const wchar_t *str = text.c_str();
 
@@ -28,31 +29,39 @@ void Font::GetTextDimensions(const std::wstring &text, float *pWidth, float *pHe
     {
         ++str;
 
+        // Handle newline characters
         if (letter == L'\n')
         {
-            width = 0.0f;
+            // Reset the current line width and increase the height by the font height
+            currentLineWidth = 0.0f;
             height += m_fFontYAdvance;
 
             continue;
         }
 
+        // Just ignore carriage return characters
         if (letter == L'\r')
             continue;
 
+        // Clamp the character if it's out of bounds and get its corresponding glyph index
         if (letter > m_cMaxGlyph)
             letter = L'\0';
         else
             letter = m_TranslatorTable[letter];
 
+        // Get the glyph from the glyph index and increment the current line width by the glyph width
         const ATG::GLYPH_ATTR *pGlyph = &m_Glyphs[letter];
-        width += pGlyph->wOffset + pGlyph->wAdvance;
+        currentLineWidth += pGlyph->wOffset + pGlyph->wAdvance;
+
+        if (currentLineWidth > biggestWidth)
+            biggestWidth = currentLineWidth;
     }
 
-    width *= m_fXScaleFactor;
+    biggestWidth *= m_fXScaleFactor;
     height *= m_fYScaleFactor;
 
     if (pWidth != nullptr)
-        *pWidth = width;
+        *pWidth = biggestWidth;
 
     if (pHeight != nullptr)
         *pHeight = height;
