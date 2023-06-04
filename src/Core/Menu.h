@@ -22,6 +22,8 @@ private:
 
     std::vector<Text> m_OptionGroupHeaders;
 
+    mutable float m_CachedOptionGroupHeadersHeight;
+
     void AddCustomizationGroup();
 
     float GetOptionGroupHeadersHeight() const;

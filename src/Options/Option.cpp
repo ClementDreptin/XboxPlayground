@@ -58,7 +58,7 @@ float Option::GetMinWidth() const
 
 float Option::GetMinHeight() const
 {
-    // Return the cached value if the minimum width has already been calculated
+    // Return the cached value if the minimum height has already been calculated
     if (m_CachedMinHeight != 0.0f)
         return m_CachedMinHeight;
 

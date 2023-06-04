@@ -17,7 +17,7 @@ extern bool g_ShowControlsTexts;
 #define D3DCOLOR_ALPHA(color, alpha) D3DCOLOR_ARGB(alpha, D3DCOLOR_GETRED(color), D3DCOLOR_GETGREEN(color), D3DCOLOR_GETBLUE(color))
 
 Menu::Menu()
-    : m_CurrentOptionGroupIndex(0)
+    : m_CurrentOptionGroupIndex(0), m_CachedOptionGroupHeadersHeight(0.0f)
 {
 }
 
@@ -80,16 +80,20 @@ void Menu::AddCustomizationGroup()
 
 float Menu::GetOptionGroupHeadersHeight() const
 {
-    float highestOptionGroupHeader = 0.0f;
+    // Return the cached value if the minimum width has already been calculated
+    if (m_CachedOptionGroupHeadersHeight != 0.0f)
+        return m_CachedOptionGroupHeadersHeight;
+
+    float m_CachedOptionGroupHeadersHeight = 0.0f;
     for (size_t i = 0; i < m_OptionGroupHeaders.size(); i++)
     {
         float currentOptionGroupHeaderHeight = g_Font.GetTextHeight(m_OptionGroups[i].GetName()) + Layout::Padding * 2;
-        if (currentOptionGroupHeaderHeight > highestOptionGroupHeader)
-            highestOptionGroupHeader = currentOptionGroupHeaderHeight;
+        if (currentOptionGroupHeaderHeight > m_CachedOptionGroupHeadersHeight)
+            m_CachedOptionGroupHeadersHeight = currentOptionGroupHeaderHeight;
     }
-    highestOptionGroupHeader += Layout::BorderWidth;
+    m_CachedOptionGroupHeadersHeight += Layout::BorderWidth;
 
-    return highestOptionGroupHeader;
+    return m_CachedOptionGroupHeadersHeight;
 }
 
 HRESULT Menu::RenderOptionGroupHeaders()
