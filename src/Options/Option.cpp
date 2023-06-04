@@ -34,7 +34,7 @@ HRESULT Option::Render(float x, float y, float width)
     // Render the text
     Text::Props props = { 0 };
     props.X = x + Layout::Padding;
-    props.Y = y + Layout::Padding;
+    props.Y = y;
     props.Text = m_Name;
     props.Color = Layout::TextColor;
     hr = m_Text.Render(props);
