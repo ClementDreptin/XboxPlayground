@@ -12,5 +12,5 @@ public:
     inline static void Error(const std::string &message) { Error(message.c_str()); }
 
 private:
-    static void Print(const char *format, const va_list args, std::ostream &outputStream);
+    static void Print(const char *format, const va_list args);
 };

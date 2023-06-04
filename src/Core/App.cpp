@@ -4,14 +4,16 @@
 #include <AtgUtil.h>
 
 #include "Core/Input.h"
-#include "UI/Font.h"
 #include "Core/Callbacks.h"
+#include "UI/Console.h"
+#include "UI/Font.h"
 #include "Options/OptionGroup.h"
 #include "Options/ClickOption.h"
 #include "Options/ToggleOption.h"
 #include "Options/RangeOption.h"
 #include "Options/ColorPickerOption.h"
 
+Console g_Console;
 Font g_Font;
 
 // The resolution is always 720p, 1080p is created by the hardware scaler
@@ -85,6 +87,11 @@ HRESULT App::Render()
 
     // Render the frame rate text
     hr = RenderFrameRateText();
+    if (FAILED(hr))
+        return hr;
+
+    // Render the console
+    hr = g_Console.Render(300.0f, 300.0f);
     if (FAILED(hr))
         return hr;
 

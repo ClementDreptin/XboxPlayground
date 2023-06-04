@@ -12,6 +12,7 @@
 #include <memory>
 #include <utility>
 #include <functional>
+#include <deque>
 
 // Rarely changed headers
 #include "Core/Log.h"
