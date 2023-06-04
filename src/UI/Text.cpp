@@ -37,8 +37,8 @@ HRESULT Text::Render(const Props &props)
 
     // Render the text
     float x = props.X + (hasBackgroundOrBorder ? padding : 0.0f);
-    float y = props.Y + rectHeight / 2;
-    g_Font.DrawText(x, y, props.Color, props.Text.c_str(), ATGFONT_CENTER_Y);
+    float y = props.Y + rectHeight / 2 - textHeight / 2;
+    g_Font.DrawText(x, y, props.Color, props.Text.c_str());
     g_Font.SetScaleFactors(1.0f, 1.0f);
 
     return hr;
