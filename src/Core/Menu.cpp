@@ -57,15 +57,7 @@ HRESULT Menu::Render()
     if (FAILED(hr))
         return hr;
 
-    float highestOptionGroupHeader = 0.0f;
-    for (size_t i = 0; i < m_OptionGroupHeaders.size(); i++)
-    {
-        float currentOptionGroupHeaderHeight = g_Font.GetTextHeight(m_OptionGroups[i].GetName()) + Layout::Padding * 2;
-        if (currentOptionGroupHeaderHeight > highestOptionGroupHeader)
-            highestOptionGroupHeader = currentOptionGroupHeaderHeight;
-    }
-    highestOptionGroupHeader += Layout::BorderWidth;
-
+    float highestOptionGroupHeader = GetOptionGroupHeadersHeight();
     hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y + highestOptionGroupHeader, Layout::Width, Layout::Height);
 
     return hr;
@@ -86,9 +78,25 @@ void Menu::AddCustomizationGroup()
     m_OptionGroups.emplace_back(OptionGroup(L"Customization", options));
 }
 
+float Menu::GetOptionGroupHeadersHeight() const
+{
+    float highestOptionGroupHeader = 0.0f;
+    for (size_t i = 0; i < m_OptionGroupHeaders.size(); i++)
+    {
+        float currentOptionGroupHeaderHeight = g_Font.GetTextHeight(m_OptionGroups[i].GetName()) + Layout::Padding * 2;
+        if (currentOptionGroupHeaderHeight > highestOptionGroupHeader)
+            highestOptionGroupHeader = currentOptionGroupHeaderHeight;
+    }
+    highestOptionGroupHeader += Layout::BorderWidth;
+
+    return highestOptionGroupHeader;
+}
+
 HRESULT Menu::RenderOptionGroupHeaders()
 {
     HRESULT hr = S_OK;
+
+    float highestOptionGroupHeader = GetOptionGroupHeadersHeight();
 
     for (size_t i = 0; i < m_OptionGroupHeaders.size(); i++)
     {
@@ -101,6 +109,7 @@ HRESULT Menu::RenderOptionGroupHeaders()
         props.X = offset;
         props.Y = Layout::Y;
         props.Text = m_OptionGroups[i].GetName();
+        props.BackgroundHeight = highestOptionGroupHeader;
         props.BorderWidth = Layout::BorderWidth;
 
         // Make the header more transparent when the option group header is not selected

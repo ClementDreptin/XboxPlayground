@@ -24,6 +24,8 @@ private:
 
     void AddCustomizationGroup();
 
+    float GetOptionGroupHeadersHeight() const;
+
     HRESULT RenderOptionGroupHeaders();
 
     void CalculateMenuDimensions();
