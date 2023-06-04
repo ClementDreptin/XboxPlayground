@@ -91,7 +91,7 @@ HRESULT App::Render()
         return hr;
 
     // Render the console
-    hr = g_Console.Render(300.0f, 300.0f);
+    hr = g_Console.Render(10.0f, 300.0f);
     if (FAILED(hr))
         return hr;
 
@@ -109,8 +109,8 @@ void App::InitMenu()
     {
         std::vector<std::shared_ptr<Option>> options;
         options.emplace_back(MakeOption(ClickOption, L"Click 1", Callback::ClickCallback));
-        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 1", Callback::RangeCallback, 2, 0, 10, 1));
-        options.emplace_back(MakeOption(RangeOption<float>, L"Float Range 1", Callback::RangeCallback, 0.2f, 0.0f, 1.0f, 0.1f));
+        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 1", Callback::IntegerRangeCallback, 2, 0, 10, 1));
+        options.emplace_back(MakeOption(RangeOption<float>, L"Float Range 1", Callback::FloatRangeCallback, 0.2f, 0.0f, 1.0f, 0.1f));
         options.emplace_back(MakeOption(ToggleOption, L"Toggle 1", Callback::ToggleCallback, false));
         optionGroups.emplace_back(OptionGroup(L"First", options));
     }
@@ -119,8 +119,8 @@ void App::InitMenu()
     {
         std::vector<std::shared_ptr<Option>> options;
         options.emplace_back(MakeOption(ClickOption, L"Click 2", Callback::ClickCallback));
-        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 2", Callback::RangeCallback, 2, 0, 10, 1));
-        options.emplace_back(MakeOption(RangeOption<float>, L"Float Range 2", Callback::RangeCallback, 0.2f, 0.0f, 1.0f, 0.1f));
+        options.emplace_back(MakeOption(RangeOption<uint32_t>, L"Integer Range 2", Callback::IntegerRangeCallback, 2, 0, 10, 1));
+        options.emplace_back(MakeOption(RangeOption<float>, L"Float Range 2", Callback::FloatRangeCallback, 0.2f, 0.0f, 1.0f, 0.1f));
         options.emplace_back(MakeOption(ToggleOption, L"Toggle 2", Callback::ToggleCallback, false));
         optionGroups.emplace_back(OptionGroup(L"Second", options));
     }

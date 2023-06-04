@@ -5,7 +5,9 @@ namespace Callback
 
 bool ClickCallback(void *);
 
-bool RangeCallback(void *);
+bool IntegerRangeCallback(void *);
+
+bool FloatRangeCallback(void *);
 
 bool ToggleCallback(void *);
 

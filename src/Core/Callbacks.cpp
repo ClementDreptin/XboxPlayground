@@ -11,7 +11,16 @@ bool ClickCallback(void *)
     return true;
 }
 
-bool RangeCallback(void *pParameters)
+bool IntegerRangeCallback(void *pParameters)
+{
+    uint32_t value = *reinterpret_cast<uint32_t *>(pParameters);
+
+    Log::Info("number: %d", value);
+
+    return true;
+}
+
+bool FloatRangeCallback(void *pParameters)
 {
     float value = *reinterpret_cast<float *>(pParameters);
 
