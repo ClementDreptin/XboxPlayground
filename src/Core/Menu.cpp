@@ -57,8 +57,8 @@ HRESULT Menu::Render()
     if (FAILED(hr))
         return hr;
 
-    float highestOptionGroupHeader = GetOptionGroupHeadersHeight();
-    hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y + highestOptionGroupHeader, Layout::Width, Layout::Height);
+    float optionGroupHeadersHeight = GetOptionGroupHeadersHeight();
+    hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y + optionGroupHeadersHeight, Layout::Width, Layout::Height);
 
     return hr;
 }
@@ -100,7 +100,7 @@ HRESULT Menu::RenderOptionGroupHeaders()
 {
     HRESULT hr = S_OK;
 
-    float highestOptionGroupHeader = GetOptionGroupHeadersHeight();
+    float optionGroupHeadersHeight = GetOptionGroupHeadersHeight();
 
     for (size_t i = 0; i < m_OptionGroupHeaders.size(); i++)
     {
@@ -113,7 +113,7 @@ HRESULT Menu::RenderOptionGroupHeaders()
         props.X = offset;
         props.Y = Layout::Y;
         props.Text = m_OptionGroups[i].GetName();
-        props.BackgroundHeight = highestOptionGroupHeader;
+        props.BackgroundHeight = optionGroupHeadersHeight;
         props.BorderWidth = Layout::BorderWidth;
 
         // Make the header more transparent when the option group header is not selected
