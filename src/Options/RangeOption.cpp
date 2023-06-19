@@ -84,13 +84,10 @@ HRESULT RangeOption<T>::Render(float x, float y, float width)
     // Create a wide string from the current number value
     std::wstring text = std::to_wstring(static_cast<long double>(m_Current));
 
-    // Calculate the width of the wide string of the number value
-    float textWidth = g_Font.GetTextWidth(text);
-
     // Draw the text with the number
     Text::Props props = { 0 };
-    props.X = x + width - textWidth - Layout::Padding;
-    props.Y = y + Layout::Padding;
+    props.X = x + width - g_Font.GetTextWidth(text) - Layout::Padding;
+    props.Y = y;
     props.Text = text;
     props.Color = Layout::TextColor;
 
