@@ -76,6 +76,34 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\App.h" />
+    <ClInclude Include="src\Core\Callbacks.h" />
+    <ClInclude Include="src\Core\Input.h" />
+    <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Core\Menu.h" />
+    <ClInclude Include="src\Core\ValueOrPtr.h" />
+    <ClInclude Include="src\Options\ClickOption.h" />
+    <ClInclude Include="src\Options\ColorPickerOption.h" />
+    <ClInclude Include="src\Options\Option.h" />
+    <ClInclude Include="src\Options\OptionGroup.h" />
+    <ClInclude Include="src\Options\RangeOption.h" />
+    <ClInclude Include="src\Options\SubOptionGroup.h" />
+    <ClInclude Include="src\Options\ToggleOption.h" />
+    <ClInclude Include="src\Renderer\D3DDevice.h" />
+    <ClInclude Include="src\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\Renderer\PixelShader.h" />
+    <ClInclude Include="src\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\Renderer\VertexShader.h" />
+    <ClInclude Include="src\UI\Border.h" />
+    <ClInclude Include="src\UI\Console.h" />
+    <ClInclude Include="src\UI\Font.h" />
+    <ClInclude Include="src\UI\Layout.h" />
+    <ClInclude Include="src\UI\Line.h" />
+    <ClInclude Include="src\UI\Rectangle.h" />
+    <ClInclude Include="src\UI\Text.h" />
+    <ClInclude Include="src\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\Core\App.cpp" />
     <ClCompile Include="src\Core\Callbacks.cpp" />
     <ClCompile Include="src\Core\Input.cpp" />
@@ -103,34 +131,6 @@
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Core\App.h" />
-    <ClInclude Include="src\Core\Callbacks.h" />
-    <ClInclude Include="src\Core\Input.h" />
-    <ClInclude Include="src\Core\Log.h" />
-    <ClInclude Include="src\Core\Menu.h" />
-    <ClInclude Include="src\Core\ValueOrPtr.h" />
-    <ClInclude Include="src\Options\ClickOption.h" />
-    <ClInclude Include="src\Options\ColorPickerOption.h" />
-    <ClInclude Include="src\Options\Option.h" />
-    <ClInclude Include="src\Options\OptionGroup.h" />
-    <ClInclude Include="src\Options\RangeOption.h" />
-    <ClInclude Include="src\Options\SubOptionGroup.h" />
-    <ClInclude Include="src\Options\ToggleOption.h" />
-    <ClInclude Include="src\Renderer\D3DDevice.h" />
-    <ClInclude Include="src\Renderer\IndexBuffer.h" />
-    <ClInclude Include="src\Renderer\PixelShader.h" />
-    <ClInclude Include="src\Renderer\VertexBuffer.h" />
-    <ClInclude Include="src\Renderer\VertexShader.h" />
-    <ClInclude Include="src\UI\Border.h" />
-    <ClInclude Include="src\UI\Console.h" />
-    <ClInclude Include="src\UI\Font.h" />
-    <ClInclude Include="src\UI\Layout.h" />
-    <ClInclude Include="src\UI\Line.h" />
-    <ClInclude Include="src\UI\Rectangle.h" />
-    <ClInclude Include="src\UI\Text.h" />
-    <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\Resources\Fonts\Arial_16.rdf">
