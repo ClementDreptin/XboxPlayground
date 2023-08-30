@@ -7,12 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XboxPlayground", "XboxPlayg
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AtgFramework", "deps\AtgFramework\AtgFramework2010.vcxproj", "{91D208A6-9936-47FD-9659-67205C3EB0AB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FormatConfig", "FormatConfig", "{0E9BB604-7AF6-41E2-9651-2596DFB3E986}"
-	ProjectSection(SolutionItems) = preProject
-		.clang-format = .clang-format
-		.editorconfig = .editorconfig
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|Xbox 360 = Release|Xbox 360
