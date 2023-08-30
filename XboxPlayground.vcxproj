@@ -10,129 +10,56 @@
       <Platform>Xbox 360</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Core\App.cpp" />
-    <ClCompile Include="src\Core\Callbacks.cpp" />
-    <ClCompile Include="src\Core\Input.cpp" />
-    <ClCompile Include="src\Core\Log.cpp" />
-    <ClCompile Include="src\Options\ColorPickerOption.cpp" />
-    <ClCompile Include="src\Options\SubOptionGroup.cpp" />
-    <ClCompile Include="src\Options\ToggleOption.cpp" />
-    <ClCompile Include="src\Options\ClickOption.cpp" />
-    <ClCompile Include="src\Core\Menu.cpp" />
-    <ClCompile Include="src\Options\Option.cpp" />
-    <ClCompile Include="src\Options\OptionGroup.cpp" />
-    <ClCompile Include="src\Options\RangeOption.cpp" />
-    <ClCompile Include="src\UI\Border.cpp" />
-    <ClCompile Include="src\UI\Console.cpp" />
-    <ClCompile Include="src\UI\Font.cpp" />
-    <ClCompile Include="src\UI\Layout.cpp" />
-    <ClCompile Include="src\UI\Line.cpp" />
-    <ClCompile Include="src\UI\Rectangle.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
-    <ClCompile Include="src\Renderer\PixelShader.cpp" />
-    <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
-    <ClCompile Include="src\Renderer\VertexShader.cpp" />
-    <ClCompile Include="src\UI\Text.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Core\App.h" />
-    <ClInclude Include="src\Core\Callbacks.h" />
-    <ClInclude Include="src\Core\Input.h" />
-    <ClInclude Include="src\Core\Log.h" />
-    <ClInclude Include="src\Core\ValueOrPtr.h" />
-    <ClInclude Include="src\Options\ColorPickerOption.h" />
-    <ClInclude Include="src\Options\SubOptionGroup.h" />
-    <ClInclude Include="src\Options\ToggleOption.h" />
-    <ClInclude Include="src\Options\ClickOption.h" />
-    <ClInclude Include="src\Core\Menu.h" />
-    <ClInclude Include="src\Options\Option.h" />
-    <ClInclude Include="src\Options\OptionGroup.h" />
-    <ClInclude Include="src\Options\RangeOption.h" />
-    <ClInclude Include="src\Renderer\D3DDevice.h" />
-    <ClInclude Include="src\UI\Border.h" />
-    <ClInclude Include="src\UI\Console.h" />
-    <ClInclude Include="src\UI\Font.h" />
-    <ClInclude Include="src\UI\Layout.h" />
-    <ClInclude Include="src\UI\Line.h" />
-    <ClInclude Include="src\UI\Rectangle.h" />
-    <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Renderer\IndexBuffer.h" />
-    <ClInclude Include="src\Renderer\PixelShader.h" />
-    <ClInclude Include="src\Renderer\VertexBuffer.h" />
-    <ClInclude Include="src\Renderer\VertexShader.h" />
-    <ClInclude Include="src\UI\Text.h" />
-  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D65EA7DE-FBA2-441D-BE74-B376437D08E0}</ProjectGuid>
+    <Keyword>Xbox360Proj</Keyword>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="deps\AtgFramework\AtgFramework2010.vcxproj">
       <Project>{91d208a6-9936-47fd-9659-67205c3eb0ab}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="src\Resources\Fonts\Arial_16.rdf">
-      <FileType>Document</FileType>
-      <Command>bundler "%(FullPath)" -o "$(OutDir)Media\Fonts\%(Filename).xpr"</Command>
-      <Message>Create a bundled resource file from %(FullPath)</Message>
-      <Outputs>$(OutDir)Media\Fonts\%(Filename).xpr</Outputs>
-    </CustomBuild>
-  </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>{D65EA7DE-FBA2-441D-BE74-B376437D08E0}</ProjectGuid>
-    <Keyword>Xbox360Proj</Keyword>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>2010-01</PlatformToolset>
     <BuildLogFile>$(IntDir)$(ProjectName)\BuildLog.txt</BuildLogFile>
   </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)build\$(Configuration)\bin\</OutDir>
     <IntDir>$(SolutionDir)build\$(Configuration)\obj\</IntDir>
     <RemoteRoot>hdd:\Games\$(ProjectName)</RemoteRoot>
     <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     <ImageXexOutput>$(OutDir)$(ProjectName).xex</ImageXexOutput>
   </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ItemDefinitionGroup>
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <StringPooling>true</StringPooling>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <ExceptionHandling>false</ExceptionHandling>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PreprocessorDefinitions>NDEBUG;_XBOX</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;$(SolutionDir)deps\AtgFramework</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <Optimization>Full</Optimization>
+      <PreprocessorDefinitions>NDEBUG;_XBOX</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
       <ObjectFileName>$(IntDir)$(ProjectName)\%(RelativeDir)</ObjectFileName>
       <DisableSpecificWarnings>4481</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <ProgramDatabaseFile>$(IntDir)$(ProjectName)\$(ProjectName).pdb</ProgramDatabaseFile>
-      <SetChecksum>true</SetChecksum>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;xgraphics.lib</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(IntDir)$(ProjectName)\$(ProjectName).pdb</ProgramDatabaseFile>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SetChecksum>true</SetChecksum>
     </Link>
     <Deploy>
       <DeploymentType>CopyToHardDrive</DeploymentType>
@@ -148,7 +75,69 @@
       <Message>Download Xenia if necessary then launch the output binary into it</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Core\App.cpp" />
+    <ClCompile Include="src\Core\Callbacks.cpp" />
+    <ClCompile Include="src\Core\Input.cpp" />
+    <ClCompile Include="src\Core\Log.cpp" />
+    <ClCompile Include="src\Core\Menu.cpp" />
+    <ClCompile Include="src\Options\ClickOption.cpp" />
+    <ClCompile Include="src\Options\ColorPickerOption.cpp" />
+    <ClCompile Include="src\Options\Option.cpp" />
+    <ClCompile Include="src\Options\OptionGroup.cpp" />
+    <ClCompile Include="src\Options\RangeOption.cpp" />
+    <ClCompile Include="src\Options\SubOptionGroup.cpp" />
+    <ClCompile Include="src\Options\ToggleOption.cpp" />
+    <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\PixelShader.cpp" />
+    <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\VertexShader.cpp" />
+    <ClCompile Include="src\UI\Border.cpp" />
+    <ClCompile Include="src\UI\Console.cpp" />
+    <ClCompile Include="src\UI\Font.cpp" />
+    <ClCompile Include="src\UI\Layout.cpp" />
+    <ClCompile Include="src\UI\Line.cpp" />
+    <ClCompile Include="src\UI\Rectangle.cpp" />
+    <ClCompile Include="src\UI\Text.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Core\App.h" />
+    <ClInclude Include="src\Core\Callbacks.h" />
+    <ClInclude Include="src\Core\Input.h" />
+    <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Core\Menu.h" />
+    <ClInclude Include="src\Core\ValueOrPtr.h" />
+    <ClInclude Include="src\Options\ClickOption.h" />
+    <ClInclude Include="src\Options\ColorPickerOption.h" />
+    <ClInclude Include="src\Options\Option.h" />
+    <ClInclude Include="src\Options\OptionGroup.h" />
+    <ClInclude Include="src\Options\RangeOption.h" />
+    <ClInclude Include="src\Options\SubOptionGroup.h" />
+    <ClInclude Include="src\Options\ToggleOption.h" />
+    <ClInclude Include="src\Renderer\D3DDevice.h" />
+    <ClInclude Include="src\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\Renderer\PixelShader.h" />
+    <ClInclude Include="src\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\Renderer\VertexShader.h" />
+    <ClInclude Include="src\UI\Border.h" />
+    <ClInclude Include="src\UI\Console.h" />
+    <ClInclude Include="src\UI\Font.h" />
+    <ClInclude Include="src\UI\Layout.h" />
+    <ClInclude Include="src\UI\Line.h" />
+    <ClInclude Include="src\UI\Rectangle.h" />
+    <ClInclude Include="src\UI\Text.h" />
+    <ClInclude Include="src\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\Resources\Fonts\Arial_16.rdf">
+      <FileType>Document</FileType>
+      <Command>bundler "%(FullPath)" -o "$(OutDir)Media\Fonts\%(Filename).xpr"</Command>
+      <Message>Create a bundled resource file from %(FullPath)</Message>
+      <Outputs>$(OutDir)Media\Fonts\%(Filename).xpr</Outputs>
+    </CustomBuild>
+  </ItemGroup>
 </Project>
