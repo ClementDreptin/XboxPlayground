@@ -173,6 +173,6 @@ void Menu::CalculateMenuDimensions()
     // Make the menu tall enough for the biggest option group
     Layout::Height = biggestOptionGroupHeight;
 
-    // Move the menu to right side of the screen (double cast to rounded to closest integer value)
+    // Move the menu to right side of the screen (double cast to round to closest integer value)
     Layout::X = static_cast<float>(static_cast<uint32_t>(g_DisplayWidth - Layout::Width - 10.0f));
 }
