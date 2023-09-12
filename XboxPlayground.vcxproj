@@ -15,7 +15,7 @@
     <Keyword>Xbox360Proj</Keyword>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="deps\AtgFramework\AtgFramework2010.vcxproj">
+    <ProjectReference Include="deps\AtgFramework\AtgFramework.vcxproj">
       <Project>{91d208a6-9936-47fd-9659-67205c3eb0ab}</Project>
     </ProjectReference>
   </ItemGroup>
