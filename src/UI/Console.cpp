@@ -24,7 +24,7 @@ void Console::Log(const std::wstring &message)
 
 void Console::Render(float x, float y)
 {
-    Text::Props props = { 0 };
+    Text::Props props = {};
     props.X = x;
     props.Y = y;
     props.Text = L"";

@@ -119,7 +119,7 @@ void App::RenderControlsTexts()
     float padding = Layout::Padding * fontScale;
     float borderWidth = Layout::BorderWidth * fontScale;
 
-    Text::Props props = { 0 };
+    Text::Props props = {};
     props.X = 10.0f;
     props.FontScale = fontScale;
     props.Color = Layout::TextColor;
@@ -150,7 +150,7 @@ void App::RenderFrameRateText()
 
     const wchar_t *text = m_Timer.GetFrameRate();
 
-    Text::Props props = { 0 };
+    Text::Props props = {};
     props.X = 10.0f;
     props.Y = g_DisplayHeight - (g_Font.GetTextHeight(text) + Layout::Padding * 2) - 10.0f;
     props.Text = text;

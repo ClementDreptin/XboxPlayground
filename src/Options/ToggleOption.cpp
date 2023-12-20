@@ -48,7 +48,7 @@ void ToggleOption::Render(float x, float y, float width)
     // Render the radio box
     float lineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
     float radioBoxSize = lineHeight * 0.5f;
-    Rectangle::Props props = { 0 };
+    Rectangle::Props props = {};
     props.X = x + width - radioBoxSize - Layout::Padding;
     props.Y = y + GetMinHeight() / 2 - radioBoxSize / 2;
     props.Width = radioBoxSize;

@@ -6,7 +6,7 @@ Input::Gamepad Input::s_Gamepad;
 Input::Gamepad *Input::GetInput()
 {
     // Get the gamepad state
-    XINPUT_STATE state = { 0 };
+    XINPUT_STATE state = {};
     DWORD result = XInputGetState(0, &state);
 
     // If the first controller is not connected, just return early
@@ -23,7 +23,7 @@ Input::Gamepad *Input::GetInput()
     s_Gamepad.LastButtons = s_Gamepad.wButtons;
 
     // Get the keystrokes
-    XINPUT_KEYSTROKE keystroke = { 0 };
+    XINPUT_KEYSTROKE keystroke = {};
     result = XInputGetKeystroke(0, XINPUT_FLAG_GAMEPAD, &keystroke);
 
     // If no button is pressed, just return early

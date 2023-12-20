@@ -70,7 +70,7 @@ void Rectangle::Render(const Props &props)
     // Render the border if needed
     if (hasBorder)
     {
-        Border::Props props = { 0 };
+        Border::Props props = {};
         props.X = m_Props.X;
         props.Y = m_Props.Y;
         props.Thickness = m_Props.BorderWidth;
