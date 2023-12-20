@@ -72,26 +72,22 @@ bool RangeOption<T>::Update(Input::Gamepad *pGamepad)
 }
 
 template<typename T>
-HRESULT RangeOption<T>::Render(float x, float y, float width)
+void RangeOption<T>::Render(float x, float y, float width)
 {
-    HRESULT hr = S_OK;
-
     // Call the parent to render the option name
-    hr = Option::Render(x, y, width);
-    if (FAILED(hr))
-        return hr;
+    Option::Render(x, y, width);
 
     // Create a wide string from the current number value
     std::wstring text = std::to_wstring(static_cast<long double>(m_Current));
 
     // Draw the text with the number
-    Text::Props props = { 0 };
+    Text::Props props = {};
     props.X = x + width - g_Font.GetTextWidth(text) - Layout::Padding;
     props.Y = y;
     props.Text = text;
     props.Color = Layout::TextColor;
 
-    return m_Text.Render(props);
+    m_Text.Render(props);
 }
 
 template class RangeOption<float>;

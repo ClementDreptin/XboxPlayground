@@ -1,13 +1,11 @@
 #include "pch.h"
 #include "UI/Border.h"
 
-HRESULT Border::Render(const Props &props)
+void Border::Render(const Props &props)
 {
-    HRESULT hr = S_OK;
-
     // Return early if no borders need to be rendered
     if (props.Position == Border_None || props.Thickness == 0)
-        return hr;
+        return;
 
     // Render the left border if needed
     if (props.Position & Border_Left)
@@ -18,9 +16,8 @@ HRESULT Border::Render(const Props &props)
         lineProps.Width = props.Thickness;
         lineProps.Height = props.Height + (props.Position & Border_Bottom ? props.Thickness : 0.0f);
         lineProps.Color = props.Color;
-        hr = m_Left.Render(lineProps);
-        if (FAILED(hr))
-            return hr;
+
+        m_Left.Render(lineProps);
     }
 
     // Render the right border if needed
@@ -32,9 +29,8 @@ HRESULT Border::Render(const Props &props)
         lineProps.Width = props.Thickness;
         lineProps.Height = props.Height + (props.Position & Border_Top ? props.Thickness : 0.0f);
         lineProps.Color = props.Color;
-        hr = m_Right.Render(lineProps);
-        if (FAILED(hr))
-            return hr;
+
+        m_Right.Render(lineProps);
     }
 
     // Render the top border if needed
@@ -46,9 +42,8 @@ HRESULT Border::Render(const Props &props)
         lineProps.Width = props.Width + (props.Position & Border_Left ? props.Thickness : 0.0f);
         lineProps.Height = props.Thickness;
         lineProps.Color = props.Color;
-        hr = m_Top.Render(lineProps);
-        if (FAILED(hr))
-            return hr;
+
+        m_Top.Render(lineProps);
     }
 
     // Render the bottom border if needed
@@ -60,10 +55,7 @@ HRESULT Border::Render(const Props &props)
         lineProps.Width = props.Width + (props.Position & Border_Right ? props.Thickness : 0.0f);
         lineProps.Height = props.Thickness;
         lineProps.Color = props.Color;
-        hr = m_Bottom.Render(lineProps);
-        if (FAILED(hr))
-            return hr;
-    }
 
-    return hr;
+        m_Bottom.Render(lineProps);
+    }
 }

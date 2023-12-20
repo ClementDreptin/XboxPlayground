@@ -19,7 +19,7 @@ public:
 
     void Update(Input::Gamepad *pGamepad);
 
-    HRESULT Render(float x, float y, float width = 0.0f, float height = 0.0f);
+    void Render(float x, float y, float width = 0.0f, float height = 0.0f);
 
     float GetMinWidth();
 
@@ -36,5 +36,5 @@ private:
 
     Rectangle m_Background;
 
-    HRESULT RenderBackground(float x, float y, float width, float height);
+    void RenderBackground(float x, float y, float width, float height);
 };

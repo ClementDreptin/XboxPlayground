@@ -23,7 +23,7 @@ public:
 
     Text() {}
 
-    HRESULT Render(const Props &props);
+    void Render(const Props &props);
 
 private:
     Rectangle m_Background;

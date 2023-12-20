@@ -93,10 +93,7 @@
     <ClInclude Include="src\Options\SubOptionGroup.h" />
     <ClInclude Include="src\Options\ToggleOption.h" />
     <ClInclude Include="src\Renderer\D3DDevice.h" />
-    <ClInclude Include="src\Renderer\IndexBuffer.h" />
-    <ClInclude Include="src\Renderer\PixelShader.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
-    <ClInclude Include="src\Renderer\VertexShader.h" />
     <ClInclude Include="src\UI\Border.h" />
     <ClInclude Include="src\UI\Console.h" />
     <ClInclude Include="src\UI\Font.h" />
@@ -119,10 +116,7 @@
     <ClCompile Include="src\Options\RangeOption.cpp" />
     <ClCompile Include="src\Options\SubOptionGroup.cpp" />
     <ClCompile Include="src\Options\ToggleOption.cpp" />
-    <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
-    <ClCompile Include="src\Renderer\PixelShader.cpp" />
     <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
-    <ClCompile Include="src\Renderer\VertexShader.cpp" />
     <ClCompile Include="src\UI\Border.cpp" />
     <ClCompile Include="src\UI\Console.cpp" />
     <ClCompile Include="src\UI\Font.cpp" />
@@ -141,6 +135,16 @@
       <Command>bundler "%(FullPath)" -o "$(OutDir)Media\Fonts\%(Filename).xpr"</Command>
       <Message>Create a bundled resource file from %(FullPath)</Message>
       <Outputs>$(OutDir)Media\Fonts\%(Filename).xpr</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\Resources\Shaders\Rectangle.hlsl">
+      <Command>
+        fxc.exe "%(FullPath)" /nologo /Tvs_3_0 /ERectangleVertex /Fo"$(OutDir)Media\Shaders\Rectangle.xvu"
+        fxc.exe "%(FullPath)" /nologo /Tps_3_0 /ERectanglePixel /Fo"$(OutDir)Media\Shaders\Rectangle.xpu"
+      </Command>
+      <Message>Compile shaders in %(FullPath)</Message>
+      <Outputs>$(OutDir)Media\Shaders\Rectangle.xvu;$(OutDir)Media\Shaders\Rectangle.xpu</Outputs>
     </CustomBuild>
   </ItemGroup>
 </Project>

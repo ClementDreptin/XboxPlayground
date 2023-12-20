@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "Core/App.h"
 
-#include <AtgUtil.h>
-
 #include "Core/Input.h"
 #include "Core/Callbacks.h"
 #include "UI/Console.h"
@@ -66,39 +64,25 @@ HRESULT App::Update()
 
 HRESULT App::Render()
 {
-    HRESULT hr = S_OK;
-
     // Clear the viewport
     m_pd3dDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
     if (m_MenuOpen)
-    {
-        hr = m_Menu.Render();
-        if (FAILED(hr))
-            return hr;
-    }
+        m_Menu.Render();
 
     if (g_ShowControlsTexts)
-    {
-        hr = RenderControlsTexts();
-        if (FAILED(hr))
-            return hr;
-    }
+        RenderControlsTexts();
 
     // Render the frame rate text
-    hr = RenderFrameRateText();
-    if (FAILED(hr))
-        return hr;
+    RenderFrameRateText();
 
     // Render the console
-    hr = g_Console.Render(10.0f, 300.0f);
-    if (FAILED(hr))
-        return hr;
+    g_Console.Render(10.0f, 300.0f);
 
     // Present the scene
     m_pd3dDevice->Present(nullptr, nullptr, nullptr, nullptr);
 
-    return hr;
+    return S_OK;
 }
 
 void App::InitMenu()
@@ -128,10 +112,8 @@ void App::InitMenu()
     m_Menu.Init(optionGroups);
 }
 
-HRESULT App::RenderControlsTexts()
+void App::RenderControlsTexts()
 {
-    HRESULT hr = S_OK;
-
     float yOffset = 10.0f;
     float fontScale = 0.8f;
     float padding = Layout::Padding * fontScale;
@@ -149,26 +131,20 @@ HRESULT App::RenderControlsTexts()
     props.Y = yOffset;
     props.Text = L"Hold " GLYPH_LEFT_BUTTON L" & press " GLYPH_LEFT_TICK L" to " + std::wstring(!m_MenuOpen ? L"Open." : L"Close.");
     yOffset += g_Font.GetTextHeight(props.Text) * fontScale + padding * 3 + borderWidth * 2;
-    hr = m_ControlsTexts[0].Render(props);
-    if (FAILED(hr))
-        return hr;
+    m_ControlsTexts[0].Render(props);
 
     props.Y = yOffset;
     props.Text = L"Use " GLYPH_UP_TICK GLYPH_DOWN_TICK L" to scroll, " GLYPH_X_BUTTON L" to select, " GLYPH_RIGHT_BUTTON L" to go back.";
     yOffset += g_Font.GetTextHeight(props.Text) * fontScale + padding * 3 + borderWidth * 2;
-    hr = m_ControlsTexts[1].Render(props);
-    if (FAILED(hr))
-        return hr;
+    m_ControlsTexts[1].Render(props);
 
     props.Y = yOffset;
     props.Text = L"Use " GLYPH_LEFT_ARROW L" & " GLYPH_RIGHT_ARROW L" to switch menus.";
     yOffset += g_Font.GetTextHeight(props.Text) * fontScale + padding * 3 + borderWidth * 2;
-    hr = m_ControlsTexts[2].Render(props);
-
-    return hr;
+    m_ControlsTexts[2].Render(props);
 }
 
-HRESULT App::RenderFrameRateText()
+void App::RenderFrameRateText()
 {
     m_Timer.MarkFrame();
 
@@ -184,5 +160,5 @@ HRESULT App::RenderFrameRateText()
     props.BorderColor = Layout::Color;
     props.BorderPosition = Border::Border_All;
 
-    return m_FrameRateText.Render(props);
+    m_FrameRateText.Render(props);
 }

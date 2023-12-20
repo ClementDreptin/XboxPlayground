@@ -11,5 +11,5 @@ public:
 
     virtual bool Update(Input::Gamepad *pGamepad) override;
 
-    virtual HRESULT Render(float x, float y, float width) override;
+    virtual void Render(float x, float y, float width) override;
 };

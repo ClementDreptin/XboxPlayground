@@ -40,14 +40,10 @@ bool ToggleOption::Update(Input::Gamepad *pGamepad)
     return false;
 }
 
-HRESULT ToggleOption::Render(float x, float y, float width)
+void ToggleOption::Render(float x, float y, float width)
 {
-    HRESULT hr = S_OK;
-
     // Call the parent to render the option name
-    hr = Option::Render(x, y, width);
-    if (FAILED(hr))
-        return hr;
+    Option::Render(x, y, width);
 
     // Render the radio box
     float lineHeight = g_Font.GetFontHeight() + Layout::Padding * 2;
@@ -61,7 +57,6 @@ HRESULT ToggleOption::Render(float x, float y, float width)
     props.BorderWidth = 1.0f;
     props.BorderColor = D3DCOLOR_XRGB(255, 255, 255);
     props.BorderPosition = Border::Border_All;
-    hr = m_RadioBox.Render(props);
 
-    return hr;
+    m_RadioBox.Render(props);
 }

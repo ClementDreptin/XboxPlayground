@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Renderer/VertexBuffer.h"
-#include "Renderer/IndexBuffer.h"
-#include "Renderer/VertexShader.h"
-#include "Renderer/PixelShader.h"
 
 class Line
 {
@@ -19,18 +16,17 @@ public:
 
     Line();
 
-    HRESULT Render(const Props &props);
+    void Render(const Props &props);
 
 private:
     Props m_Props;
     bool m_IsInitialized;
 
     VertexBuffer m_VertexBuffer;
-    IndexBuffer m_IndexBuffer;
 
-    static VertexShader s_VertexShader;
-    static PixelShader s_PixelShader;
     static bool s_ShadersInitialized;
+    static D3DVertexShader *s_pVertexShader;
+    static D3DPixelShader *s_pPixelShader;
 
     XMMATRIX m_WorldMatrix;
     XMMATRIX m_ViewMatrix;
@@ -39,7 +35,9 @@ private:
 
     HRESULT Init();
 
+    static HRESULT InitShaders();
+
     void CalculateWorldViewProjectionMatrix();
 
-    HRESULT UpdateVertexBuffer();
+    void UpdateVertexBuffer();
 };

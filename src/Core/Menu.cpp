@@ -49,18 +49,13 @@ void Menu::Update(Input::Gamepad *pGamepad)
     m_OptionGroups[m_CurrentOptionGroupIndex].Update(pGamepad);
 }
 
-HRESULT Menu::Render()
+void Menu::Render()
 {
-    HRESULT hr = S_OK;
-
-    hr = RenderOptionGroupHeaders();
-    if (FAILED(hr))
-        return hr;
+    RenderOptionGroupHeaders();
 
     float optionGroupHeadersHeight = GetOptionGroupHeadersHeight();
-    hr = m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y + optionGroupHeadersHeight, Layout::Width, Layout::Height);
 
-    return hr;
+    m_OptionGroups[m_CurrentOptionGroupIndex].Render(Layout::X, Layout::Y + optionGroupHeadersHeight, Layout::Width, Layout::Height);
 }
 
 void Menu::AddCustomizationGroup()
@@ -96,10 +91,8 @@ float Menu::GetOptionGroupHeadersHeight() const
     return m_CachedOptionGroupHeadersHeight;
 }
 
-HRESULT Menu::RenderOptionGroupHeaders()
+void Menu::RenderOptionGroupHeaders()
 {
-    HRESULT hr = S_OK;
-
     float optionGroupHeadersHeight = GetOptionGroupHeadersHeight();
 
     for (size_t i = 0; i < m_OptionGroupHeaders.size(); i++)
@@ -134,12 +127,8 @@ HRESULT Menu::RenderOptionGroupHeaders()
         else if (i > m_CurrentOptionGroupIndex)
             props.BorderPosition = static_cast<Border::Position>(Border::Border_Right | Border::Border_Top);
 
-        hr = m_OptionGroupHeaders[i].Render(props);
-        if (FAILED(hr))
-            return hr;
+        m_OptionGroupHeaders[i].Render(props);
     }
-
-    return hr;
 }
 
 void Menu::CalculateMenuDimensions()

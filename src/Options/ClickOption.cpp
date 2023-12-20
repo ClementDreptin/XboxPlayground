@@ -20,8 +20,8 @@ bool ClickOption::Update(Input::Gamepad *pGamepad)
     return false;
 }
 
-HRESULT ClickOption::Render(float x, float y, float width)
+void ClickOption::Render(float x, float y, float width)
 {
     // Call the parent to render the option name
-    return Option::Render(x, y, width);
+    Option::Render(x, y, width);
 }

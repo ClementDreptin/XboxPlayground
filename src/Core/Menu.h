@@ -14,7 +14,7 @@ public:
 
     void Update(Input::Gamepad *pGamepad);
 
-    HRESULT Render();
+    void Render();
 
 private:
     std::vector<OptionGroup> m_OptionGroups;
@@ -28,7 +28,7 @@ private:
 
     float GetOptionGroupHeadersHeight() const;
 
-    HRESULT RenderOptionGroupHeaders();
+    void RenderOptionGroupHeaders();
 
     void CalculateMenuDimensions();
 };

@@ -32,18 +32,14 @@ bool SubOptionGroup::Update(Input::Gamepad *pGamepad)
     return m_Open;
 }
 
-HRESULT SubOptionGroup::Render(float x, float y, float width)
+void SubOptionGroup::Render(float x, float y, float width)
 {
-    HRESULT hr = S_OK;
-
     // Call the parent to render the option name
-    hr = Option::Render(x, y, width);
-    if (FAILED(hr))
-        return hr;
+    Option::Render(x, y, width);
 
     // If the option group is not open, don't go further
     if (!m_Open)
-        return hr;
+        return;
 
     // Render the sub option group on the left or the right of the menu, depending on where there's space
     float subOptionGroupWidth = m_OptionGroup.GetMinWidth() + Layout::BorderWidth * 2;
@@ -57,5 +53,5 @@ HRESULT SubOptionGroup::Render(float x, float y, float width)
     else if (rightX + subOptionGroupWidth > g_DisplayWidth)
         finalX = leftX;
 
-    return m_OptionGroup.Render(finalX, y);
+    m_OptionGroup.Render(finalX, y);
 }

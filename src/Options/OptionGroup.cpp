@@ -50,26 +50,18 @@ void OptionGroup::Update(Input::Gamepad *pGamepad)
         m_Options[i]->Select(i == m_CurrentSelectedOptionIndex);
 }
 
-HRESULT OptionGroup::Render(float x, float y, float width, float height)
+void OptionGroup::Render(float x, float y, float width, float height)
 {
-    HRESULT hr = S_OK;
-
     float widthToUse = width != 0.0f ? width : GetMinWidth();
     float heightToUse = height != 0.0f ? height : GetMinHeight();
 
-    hr = RenderBackground(x, y, widthToUse, heightToUse);
-    if (FAILED(hr))
-        return hr;
+    RenderBackground(x, y, widthToUse, heightToUse);
 
     for (size_t i = 0; i < m_Options.size(); i++)
     {
-        hr = m_Options[i]->Render(x, y, widthToUse);
+        m_Options[i]->Render(x, y, widthToUse);
         y += m_Options[i]->GetMinHeight();
-        if (FAILED(hr))
-            return hr;
     }
-
-    return hr;
 }
 
 float OptionGroup::GetMinWidth()
@@ -101,7 +93,7 @@ float OptionGroup::GetMinHeight()
     return m_CachedMinHeight;
 }
 
-HRESULT OptionGroup::RenderBackground(float x, float y, float width, float height)
+void OptionGroup::RenderBackground(float x, float y, float width, float height)
 {
     Rectangle::Props props = { 0 };
     props.X = x;
@@ -113,5 +105,5 @@ HRESULT OptionGroup::RenderBackground(float x, float y, float width, float heigh
     props.BorderColor = Layout::Color;
     props.BorderPosition = Border::Border_All;
 
-    return m_Background.Render(props);
+    m_Background.Render(props);
 }

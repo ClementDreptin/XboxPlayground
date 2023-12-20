@@ -8,6 +8,15 @@ VertexBuffer::VertexBuffer()
 {
 }
 
+VertexBuffer::~VertexBuffer()
+{
+    if (m_pBuffer != nullptr)
+        m_pBuffer->Release();
+
+    if (m_pVertexDeclaration != nullptr)
+        m_pVertexDeclaration->Release();
+}
+
 HRESULT VertexBuffer::Init(Vertex *pData, size_t numVertices)
 {
     HRESULT hr = S_OK;
@@ -29,51 +38,22 @@ HRESULT VertexBuffer::Init(Vertex *pData, size_t numVertices)
     };
 
     // Create a vertex declaration from the element descriptions
-    hr = g_pd3dDevice->CreateVertexDeclaration(vertexElements, &m_pVertexDeclaration);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't create the vertex declaration");
-        return hr;
-    }
+    g_pd3dDevice->CreateVertexDeclaration(vertexElements, &m_pVertexDeclaration);
 
     // Copy the data into the vertex buffer
-    hr = UpdateBuffer(pData, numVertices);
+    UpdateBuffer(pData, numVertices);
 
     return hr;
 }
 
-HRESULT VertexBuffer::UpdateBuffer(Vertex *pData, size_t numVertices)
+void VertexBuffer::UpdateBuffer(Vertex *pData, size_t numVertices)
 {
-    HRESULT hr = S_OK;
-
-    // Make sure the vertex buffer is initialized
-    if (m_pBuffer == nullptr)
-    {
-        Log::Error("Can't update the vertex buffer before initializing it");
-        return hr;
-    }
+    assert(m_pBuffer != nullptr);
 
     size_t dataSize = sizeof(Vertex) * numVertices;
     void *pVertices = nullptr;
 
-    // Lock the buffer
-    hr = m_pBuffer->Lock(0, dataSize, &pVertices, 0);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't lock the vertex buffer");
-        return hr;
-    }
-
-    // Write to the buffer
-    errno_t err = memcpy_s(pVertices, dataSize, pData, dataSize);
-    if (err != 0)
-    {
-        Log::Error("Couldn't write to the vertex buffer");
-        return E_FAIL;
-    }
-
-    // Unlock the buffer
+    m_pBuffer->Lock(0, dataSize, &pVertices, 0);
+    memcpy(pVertices, pData, dataSize);
     m_pBuffer->Unlock();
-
-    return hr;
 }

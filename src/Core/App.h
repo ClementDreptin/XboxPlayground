@@ -1,8 +1,5 @@
 #pragma once
 
-#include <AtgApp.h>
-#include <AtgUtil.h>
-
 #include "Core/Menu.h"
 #include "UI/Text.h"
 
@@ -28,7 +25,7 @@ private:
 
     void InitMenu();
 
-    HRESULT RenderControlsTexts();
+    void RenderControlsTexts();
 
-    HRESULT RenderFrameRateText();
+    void RenderFrameRateText();
 };

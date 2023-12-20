@@ -22,7 +22,7 @@ public:
 
     virtual bool Update(Input::Gamepad *pGamepad) = 0;
 
-    virtual HRESULT Render(float x, float y, float width) = 0;
+    virtual void Render(float x, float y, float width) = 0;
 
     float GetMinWidth() const;
 

@@ -22,13 +22,13 @@ public:
         float Thickness;
         D3DCOLOR Color;
         Position Position;
-        float Width; // Width of the rectangle surrounded by the border.
+        float Width;  // Width of the rectangle surrounded by the border.
         float Height; // Height of the rectangle surrounded by the border.
     };
 
     Border() {}
 
-    HRESULT Render(const Props &props);
+    void Render(const Props &props);
 
 private:
     Line m_Left;

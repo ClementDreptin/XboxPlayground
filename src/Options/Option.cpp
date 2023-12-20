@@ -13,10 +13,8 @@ Option::Option(const std::wstring &name, Callback callback)
 {
 }
 
-HRESULT Option::Render(float x, float y, float width)
+void Option::Render(float x, float y, float width)
 {
-    HRESULT hr = S_OK;
-
     // Render the background if the option is selected
     if (m_IsSelected)
     {
@@ -26,9 +24,8 @@ HRESULT Option::Render(float x, float y, float width)
         props.Width = width - Layout::Gap * 2;
         props.Height = GetMinHeight() - Layout::Gap * 2;
         props.Color = Layout::Color;
-        hr = m_Background.Render(props);
-        if (FAILED(hr))
-            return hr;
+
+        m_Background.Render(props);
     }
 
     // Render the text
@@ -37,9 +34,8 @@ HRESULT Option::Render(float x, float y, float width)
     props.Y = y;
     props.Text = m_Name;
     props.Color = Layout::TextColor;
-    hr = m_Text.Render(props);
 
-    return hr;
+    m_Text.Render(props);
 }
 
 float Option::GetMinWidth() const

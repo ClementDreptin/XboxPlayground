@@ -6,19 +6,17 @@
 extern float g_DisplayWidth;
 extern float g_DisplayHeight;
 
-VertexShader Line::s_VertexShader;
-PixelShader Line::s_PixelShader;
 bool Line::s_ShadersInitialized = false;
+D3DVertexShader *Line::s_pVertexShader = nullptr;
+D3DPixelShader *Line::s_pPixelShader = nullptr;
 
 Line::Line()
-    : m_Props(), m_IsInitialized(false)
+    : m_IsInitialized(false)
 {
 }
 
-HRESULT Line::Render(const Props &props)
+void Line::Render(const Props &props)
 {
-    HRESULT hr = S_OK;
-
     // Check if the world view projection matrix and/or the vertex buffer need to be updated
     bool needToUpdateWorldViewProjectionMatrix = m_Props.X != props.X || m_Props.Y != props.Y;
     bool needToUpdateVertexBuffer = m_Props.Width != props.Width || m_Props.Height != props.Height;
@@ -27,18 +25,17 @@ HRESULT Line::Render(const Props &props)
 
     // If this is the first time Render is called, just initialize the line and return
     if (!m_IsInitialized)
-        return Init();
+    {
+        Init();
+        return;
+    }
 
     // Perform the updates if needed
     if (needToUpdateWorldViewProjectionMatrix)
         CalculateWorldViewProjectionMatrix();
 
     if (needToUpdateVertexBuffer)
-    {
-        hr = UpdateVertexBuffer();
-        if (FAILED(hr))
-            return hr;
-    }
+        UpdateVertexBuffer();
 
     // Initialize default device states
     g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
@@ -50,9 +47,8 @@ HRESULT Line::Render(const Props &props)
 
     g_pd3dDevice->SetVertexDeclaration(m_VertexBuffer.GetVertexDeclaration());
     g_pd3dDevice->SetStreamSource(0, &m_VertexBuffer, 0, sizeof(Vertex));
-    g_pd3dDevice->SetVertexShader(&s_VertexShader);
-    g_pd3dDevice->SetPixelShader(&s_PixelShader);
-    g_pd3dDevice->SetIndices(&m_IndexBuffer);
+    g_pd3dDevice->SetVertexShader(s_pVertexShader);
+    g_pd3dDevice->SetPixelShader(s_pPixelShader);
 
     // Pass the world view projection matrix to the vertex shader
     g_pd3dDevice->SetVertexShaderConstantF(0, reinterpret_cast<float *>(&m_WVPMatrix), 4);
@@ -68,10 +64,16 @@ HRESULT Line::Render(const Props &props)
     g_pd3dDevice->SetPixelShaderConstantF(0, color, 1);
 
     // Draw the line
-    g_pd3dDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 0, 0, 2);
-
-    return hr;
+    g_pd3dDevice->DrawPrimitive(D3DPT_QUADLIST, 0, 1);
 }
+
+#define VERTICES \
+    { \
+        Vertex(0.0f, 0.0f - m_Props.Height, 0.0f),                        /* Bottom Left */ \
+            Vertex(0.0f, m_Props.Height - m_Props.Height, 0.0f),          /* Top Left */ \
+            Vertex(m_Props.Width, m_Props.Height - m_Props.Height, 0.0f), /* Top Right */ \
+            Vertex(m_Props.Width, 0.0f - m_Props.Height, 0.0f),           /* Bottom Right */ \
+    }
 
 HRESULT Line::Init()
 {
@@ -82,46 +84,17 @@ HRESULT Line::Init()
     m_ProjectionMatrix = XMMatrixOrthographicOffCenterLH(0.0f, g_DisplayWidth, 0.0f, g_DisplayHeight, -1.0f, 1.0f);
     CalculateWorldViewProjectionMatrix();
 
-    // Create the vertices
-    // Since the Y axis goes upwards, if we want a height increase to make our
-    // line grow downwards along the Y axis, we need to substract its height
-    // to the Y coordinate of each vertex.
-    Vertex vertices[] = {
-        Vertex(0.0f, 0.0f - m_Props.Height, 0.0f),                    // Bottom Left
-        Vertex(0.0f, m_Props.Height - m_Props.Height, 0.0f),          // Top Left
-        Vertex(m_Props.Width, m_Props.Height - m_Props.Height, 0.0f), // Top Right
-        Vertex(m_Props.Width, 0.0f - m_Props.Height, 0.0f)            // Bottom Right
-    };
-
     // Create the shaders when the first line is instantiated
     if (!s_ShadersInitialized)
     {
-        // Create the vertex shader
-        hr = s_VertexShader.Init();
+        hr = InitShaders();
         if (FAILED(hr))
             return hr;
-
-        // Create the pixel shader
-        hr = s_PixelShader.Init();
-        if (FAILED(hr))
-            return hr;
-
-        s_ShadersInitialized = true;
     }
 
     // Create the vertex buffer
+    Vertex vertices[] = VERTICES;
     hr = m_VertexBuffer.Init(vertices, ARRAYSIZE(vertices));
-    if (FAILED(hr))
-        return hr;
-
-    // Create the indices
-    uint16_t indices[] = {
-        0, 1, 2,
-        0, 2, 3
-    };
-
-    // Create the index buffer
-    hr = m_IndexBuffer.Init(indices, ARRAYSIZE(indices));
     if (FAILED(hr))
         return hr;
 
@@ -130,27 +103,37 @@ HRESULT Line::Init()
     return hr;
 }
 
+HRESULT Line::InitShaders()
+{
+    HRESULT hr = S_OK;
+
+    hr = ATG::LoadVertexShader("game:\\Media\\Shaders\\Rectangle.xvu", &s_pVertexShader);
+    if (FAILED(hr))
+    {
+        Log::Error("Couldn't load vertex shader");
+        return hr;
+    }
+
+    hr = ATG::LoadPixelShader("game:\\Media\\Shaders\\Rectangle.xpu", &s_pPixelShader);
+    if (FAILED(hr))
+    {
+        Log::Error("Couldn't load pixel shader");
+        return hr;
+    }
+
+    s_ShadersInitialized = true;
+
+    return hr;
+}
+
 void Line::CalculateWorldViewProjectionMatrix()
 {
-    // Direct3D uses an upwards Y axis system which is a bit unintuitive when dealing
-    // with 2D rendering, so we flip the Y axis
     m_WorldMatrix = XMMatrixTranslation(m_Props.X, g_DisplayHeight - m_Props.Y, 0.0f);
     m_WVPMatrix = m_WorldMatrix * m_ViewMatrix * m_ProjectionMatrix;
 }
 
-HRESULT Line::UpdateVertexBuffer()
+void Line::UpdateVertexBuffer()
 {
-    // Create the vertices
-    // Since the Y axis goes upwards, if we want a height increase to make our
-    // rectangle grow downwards along the Y axis, we need to substract its height
-    // to the Y coordinate of each vertex.
-    Vertex vertices[] = {
-        Vertex(0.0f, 0.0f - m_Props.Height, 0.0f),                    // Bottom Left
-        Vertex(0.0f, m_Props.Height - m_Props.Height, 0.0f),          // Top Left
-        Vertex(m_Props.Width, m_Props.Height - m_Props.Height, 0.0f), // Top Right
-        Vertex(m_Props.Width, 0.0f - m_Props.Height, 0.0f)            // Bottom Right
-    };
-
-    // Send the new vertices to the vertex buffer
-    return m_VertexBuffer.UpdateBuffer(vertices, ARRAYSIZE(vertices));
+    Vertex vertices[] = VERTICES;
+    m_VertexBuffer.UpdateBuffer(vertices, ARRAYSIZE(vertices));
 }
