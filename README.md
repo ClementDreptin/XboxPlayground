@@ -13,7 +13,6 @@ Not having to rely on a separate game also allows me launch the playground in an
 ### Requirements
 
 -   Having the Xbox 360 Software Development Kit (XDK) installed.
--   Having a PowerShell execution policy that allows to run scripts. Check the [Microsoft documentation](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies) for details.
 
 ### Visual Studio 2019
 
