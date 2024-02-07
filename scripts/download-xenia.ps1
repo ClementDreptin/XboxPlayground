@@ -1,6 +1,6 @@
 $XeniaDir = "$PSScriptRoot\..\tools\xenia"
-$XeniaExePath = "$($XeniaDir)\xenia.exe"
-$XeniaZipPath = "$($XeniaDir)\xenia.zip"
+$XeniaExePath = "$XeniaDir\xenia.exe"
+$XeniaZipPath = "$XeniaDir\xenia.zip"
 $XeniaDownloadUri = "https://github.com/xenia-project/release-builds-windows/releases/latest/download/xenia_master.zip"
 
 # Exit early if the file already exists
@@ -24,7 +24,7 @@ try {
     Expand-Archive $XeniaZipPath -Destination $XeniaDir
 }
 catch {
-    Write-Host -ForegroundColor Red "Could not unzip $($XeniaZipPath)"
+    Write-Host -ForegroundColor Red "Could not unzip $XeniaZipPath"
     Exit 1
 }
 
@@ -33,6 +33,6 @@ try {
     Remove-Item $XeniaZipPath
 }
 catch {
-    Write-Host -ForegroundColor Red "Could not delete $($XeniaZipPath)"
+    Write-Host -ForegroundColor Red "Could not delete $XeniaZipPath"
     Exit 1
 }
