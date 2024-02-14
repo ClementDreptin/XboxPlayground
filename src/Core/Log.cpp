@@ -43,6 +43,7 @@ void Log::Print(const char *format, const va_list args)
     wchar_t wideBuffer[2048] = {};
     mbstowcs_s(nullptr, wideBuffer, buffer, _TRUNCATE);
 
-    // Print
+    // Print to stdout and the in-app console
+    puts(buffer);
     g_Console.Log(wideBuffer);
 }
