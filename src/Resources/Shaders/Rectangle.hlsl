@@ -1,26 +1,21 @@
-float4x4 c_matWP : register(c0);
+float4x4 c_WVPMatrix : register(c0);
 
-struct VS_IN
+struct Vertex
 {
-    float4 inPos    : POSITION;
+    float4 Position : POSITION;
 };
 
-struct VS_OUT
+Vertex RectangleVertex(Vertex input)
 {
-    float4 outPos   : POSITION;
-};
-
-VS_OUT RectangleVertex(VS_IN input)
-{
-    VS_OUT output;
-    output.outPos = mul(c_matWP, input.inPos);
+    Vertex output;
+    output.Position = mul(c_WVPMatrix, input.Position);
 
     return output;
 }
 
-float4 c_color : register(c0);
+float4 c_Color : register(c0);
 
 float4 RectanglePixel() : COLOR
 {
-    return c_color;
+    return c_Color;
 }
