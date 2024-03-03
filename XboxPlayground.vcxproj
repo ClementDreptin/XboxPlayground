@@ -130,7 +130,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="src\Resources\Fonts\Arial_16.rdf">
+    <CustomBuild Include="src\Fonts\Arial_16.rdf">
       <FileType>Document</FileType>
       <Command>bundler "%(FullPath)" -o "$(OutDir)Media\Fonts\%(Filename).xpr"</Command>
       <Message>Create a bundled resource file from %(FullPath)</Message>
@@ -138,7 +138,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="src\Resources\Shaders\Rectangle.hlsl">
+    <CustomBuild Include="src\Shaders\Rectangle.hlsl">
       <Command>
         fxc.exe "%(FullPath)" /nologo /Tvs_3_0 /ERectangleVertex /Fo"$(OutDir)Media\Shaders\Rectangle.xvu"
         fxc.exe "%(FullPath)" /nologo /Tps_3_0 /ERectanglePixel /Fo"$(OutDir)Media\Shaders\Rectangle.xpu"
