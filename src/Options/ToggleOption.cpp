@@ -21,6 +21,8 @@ ToggleOption::ToggleOption(const std::wstring &name, Callback callback, const Va
 
 bool ToggleOption::Update(Input::Gamepad *pGamepad)
 {
+    XASSERT(pGamepad != nullptr);
+
     // Allow the user to toggle the option
     if (pGamepad->PressedButtons & XINPUT_GAMEPAD_X)
     {

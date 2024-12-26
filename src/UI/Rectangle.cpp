@@ -85,10 +85,10 @@ void Rectangle::Render(const Props &props)
 
 #define VERTICES \
     { \
-        Vertex(0.0f, 0.0f - m_Props.Height, 0.0f),                        /* Bottom Left */ \
-            Vertex(0.0f, m_Props.Height - m_Props.Height, 0.0f),          /* Top Left */ \
-            Vertex(m_Props.Width, m_Props.Height - m_Props.Height, 0.0f), /* Top Right */ \
-            Vertex(m_Props.Width, 0.0f - m_Props.Height, 0.0f),           /* Bottom Right */ \
+        Vertex(0.0f, 0.0f - m_Props.Height, 0.0f),                    /* Bottom Left */ \
+        Vertex(0.0f, m_Props.Height - m_Props.Height, 0.0f),          /* Top Left */ \
+        Vertex(m_Props.Width, m_Props.Height - m_Props.Height, 0.0f), /* Top Right */ \
+        Vertex(m_Props.Width, 0.0f - m_Props.Height, 0.0f),           /* Bottom Right */ \
     }
 
 HRESULT Rectangle::Init()
@@ -104,15 +104,13 @@ HRESULT Rectangle::Init()
     if (!s_ShadersInitialized)
     {
         hr = InitShaders();
-        if (FAILED(hr))
-            return hr;
+        XASSERT(SUCCEEDED(hr));
     }
 
     // Create the vertex buffer
     Vertex vertices[] = VERTICES;
     hr = m_VertexBuffer.Init(vertices, ARRAYSIZE(vertices));
-    if (FAILED(hr))
-        return hr;
+    XASSERT(SUCCEEDED(hr));
 
     m_IsInitialized = true;
 
@@ -124,18 +122,10 @@ HRESULT Rectangle::InitShaders()
     HRESULT hr = S_OK;
 
     hr = ATG::LoadVertexShader("game:\\Media\\Shaders\\Rectangle.xvu", &s_pVertexShader);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't load vertex shader");
-        return hr;
-    }
+    XASSERT(SUCCEEDED(hr));
 
     hr = ATG::LoadPixelShader("game:\\Media\\Shaders\\Rectangle.xpu", &s_pPixelShader);
-    if (FAILED(hr))
-    {
-        Log::Error("Couldn't load pixel shader");
-        return hr;
-    }
+    XASSERT(SUCCEEDED(hr));
 
     s_ShadersInitialized = true;
 

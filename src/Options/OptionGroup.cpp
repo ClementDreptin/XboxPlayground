@@ -41,6 +41,8 @@ OptionGroup::OptionGroup(const std::wstring &name, const std::vector<std::shared
 
 void OptionGroup::Update(Input::Gamepad *pGamepad)
 {
+    XASSERT(pGamepad != nullptr);
+
     // Update the currently selected option and return if the option is blocking (meaning it opened a sub option group
     // and wants to prevent its parent option group from updating)
     bool blocking = m_Options[m_CurrentSelectedOptionIndex]->Update(pGamepad);

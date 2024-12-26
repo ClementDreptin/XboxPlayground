@@ -5,7 +5,6 @@
 #include <xboxmath.h>
 
 // C++ standard library
-#include <cassert>
 #include <cstdint>
 #include <deque>
 #include <functional>
@@ -22,4 +21,5 @@
 #include <AtgUtil.h>
 
 // Rarely changed headers
+#include "Core/Assert.h"
 #include "Core/Log.h"

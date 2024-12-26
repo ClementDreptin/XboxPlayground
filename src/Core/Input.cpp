@@ -1,63 +1,17 @@
 #include "pch.h"
 #include "Core/Input.h"
 
-Input::Gamepad Input::s_Gamepad;
-
-Input::Gamepad *Input::GetInput()
+namespace Input
 {
-    // Get the gamepad state
-    XINPUT_STATE state = {};
-    DWORD result = XInputGetState(0, &state);
 
-    // If the first controller is not connected, just return early
-    if (result != ERROR_SUCCESS)
-        return &s_Gamepad;
+static Gamepad s_Gamepads[XUSER_MAX_COUNT];
 
-    // Copy the gamepad to the local structure
-    memcpy_s(&s_Gamepad, sizeof(Input::Gamepad), &state.Gamepad, sizeof(XINPUT_GAMEPAD));
-
-    // Save the buttons pressed at the previous frame to set the currently pressed buttons only if
-    // they were not already pressed at the previous frame, we need to do this because pressing
-    // then releasing a button (even done really fast) takes multiple frames.
-    s_Gamepad.PressedButtons = (s_Gamepad.LastButtons ^ s_Gamepad.wButtons) & s_Gamepad.wButtons;
-    s_Gamepad.LastButtons = s_Gamepad.wButtons;
-
-    // Get the keystrokes
-    XINPUT_KEYSTROKE keystroke = {};
-    result = XInputGetKeystroke(0, XINPUT_FLAG_GAMEPAD, &keystroke);
-
-    // If no button is pressed, just return early
-    if (result != ERROR_SUCCESS)
-        return &s_Gamepad;
-
-    // If a key is being held, add it to the pressed buttons even if it was already pressed at the previous frame
-    if (keystroke.Flags & XINPUT_KEYSTROKE_REPEAT)
-        s_Gamepad.PressedButtons |= ButtonForVirtualKey(keystroke.VirtualKey);
-
-    // Check if the left trigger is pressed
-    bool leftTriggerPressed = (s_Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
-    if (leftTriggerPressed)
-        s_Gamepad.PressedLeftTrigger = !s_Gamepad.LastLeftTrigger;
-    else
-        s_Gamepad.PressedLeftTrigger = false;
-
-    // Store the left trigger state for next time
-    s_Gamepad.LastLeftTrigger = leftTriggerPressed;
-
-    // Check if the left trigger is pressed
-    bool rightTriggerPressed = (s_Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
-    if (rightTriggerPressed)
-        s_Gamepad.PressedRightTrigger = !s_Gamepad.LastRightTrigger;
-    else
-        s_Gamepad.PressedRightTrigger = false;
-
-    // Store the left trigger state for next time
-    s_Gamepad.LastRightTrigger = leftTriggerPressed;
-
-    return &s_Gamepad;
+Gamepad::Gamepad()
+    : LastButtons(0), LastLeftTrigger(false), LastRightTrigger(false), PressedButtons(0), PressedLeftTrigger(false), PressedRightTrigger(false)
+{
 }
 
-uint16_t Input::ButtonForVirtualKey(uint16_t virtualKey)
+static uint16_t ButtonForVirtualKey(uint16_t virtualKey)
 {
     switch (virtualKey)
     {
@@ -92,4 +46,80 @@ uint16_t Input::ButtonForVirtualKey(uint16_t virtualKey)
     default:
         return 0;
     }
+}
+
+static float ConvertThumbstickValue(int16_t thumbstickValue, int16_t deadZone)
+{
+    if (thumbstickValue > +deadZone)
+        return (thumbstickValue - deadZone) / (32767.0f - deadZone);
+    if (thumbstickValue < -deadZone)
+        return (thumbstickValue + deadZone + 1.0f) / (32767.0f - deadZone);
+
+    return 0.0f;
+}
+
+Gamepad *GetInput(uint32_t userIndex)
+{
+    // Get the gamepad state
+    XINPUT_STATE state = {};
+    uint32_t result = XInputGetState(userIndex, &state);
+
+    XASSERT(userIndex < XUSER_MAX_COUNT);
+
+    Gamepad &gamepad = s_Gamepads[userIndex];
+
+    // If the first controller is not connected, just return early
+    if (result != ERROR_SUCCESS)
+        return &gamepad;
+
+    // Copy the gamepad to the local structure
+    memcpy_s(&gamepad, sizeof(Gamepad), &state.Gamepad, sizeof(XINPUT_GAMEPAD));
+
+    // Save the buttons pressed at the previous frame to set the currently pressed buttons only if
+    // they were not already pressed at the previous frame, we need to do this because pressing
+    // then releasing a button (even done really fast) takes multiple frames.
+    gamepad.PressedButtons = (gamepad.LastButtons ^ gamepad.wButtons) & gamepad.wButtons;
+    gamepad.LastButtons = gamepad.wButtons;
+
+    // Convert thumbstick values coming from XINPUT to a [-1;+1] space
+    gamepad.ThumbLeftX = ConvertThumbstickValue(gamepad.sThumbLX, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+    gamepad.ThumbLeftY = ConvertThumbstickValue(gamepad.sThumbLY, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+    gamepad.ThumbRightX = ConvertThumbstickValue(gamepad.sThumbRX, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+    gamepad.ThumbRightY = ConvertThumbstickValue(gamepad.sThumbRY, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+
+    // Get the keystrokes
+    XINPUT_KEYSTROKE keystroke = {};
+    result = XInputGetKeystroke(userIndex, XINPUT_FLAG_GAMEPAD, &keystroke);
+
+    // If no button is pressed, just return early
+    if (result != ERROR_SUCCESS)
+        return &gamepad;
+
+    // If a key is being held, add it to the pressed buttons even if it was already pressed at the previous frame
+    if (keystroke.Flags & XINPUT_KEYSTROKE_REPEAT)
+        gamepad.PressedButtons |= ButtonForVirtualKey(keystroke.VirtualKey);
+
+    // Check if the left trigger is pressed
+    bool leftTriggerPressed = (gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+    if (leftTriggerPressed)
+        gamepad.PressedLeftTrigger = !gamepad.LastLeftTrigger;
+    else
+        gamepad.PressedLeftTrigger = false;
+
+    // Store the left trigger state for next time
+    gamepad.LastLeftTrigger = leftTriggerPressed;
+
+    // Check if the left trigger is pressed
+    bool rightTriggerPressed = (gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+    if (rightTriggerPressed)
+        gamepad.PressedRightTrigger = !gamepad.LastRightTrigger;
+    else
+        gamepad.PressedRightTrigger = false;
+
+    // Store the left trigger state for next time
+    gamepad.LastRightTrigger = leftTriggerPressed;
+
+    return &gamepad;
+}
+
 }

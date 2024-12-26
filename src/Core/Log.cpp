@@ -3,47 +3,53 @@
 
 #include "UI/Console.h"
 
-void Log::Info(const char *message, ...)
+namespace Log
 {
-    // Get the variadic arguments
+
+void Print(const char *format, ...)
+{
+    XASSERT(format != nullptr);
+
     va_list args;
-    va_start(args, message);
+    va_start(args, format);
 
-    // Print
-    std::string fullMessage = "Info: ";
-    fullMessage += message;
-    Print(fullMessage.c_str(), args);
-
-    // Free the variadic arguments
-    va_end(args);
-}
-
-void Log::Error(const char *message, ...)
-{
-    // Get the variadic arguments
-    va_list args;
-    va_start(args, message);
-
-    // Print
-    std::string fullMessage = "Error: ";
-    fullMessage += message;
-    Print(fullMessage.c_str(), args);
-
-    // Free the variadic arguments
-    va_end(args);
-}
-
-void Log::Print(const char *format, const va_list args)
-{
-    // Build the string with the format
     char buffer[2048] = {};
     vsnprintf_s(buffer, _TRUNCATE, format, args);
 
-    // Convert the narrow string to a wide string
+    std::cout << buffer << '\n';
+
+    // Convert the narrow string to a wide string and log it to in-game console
     wchar_t wideBuffer[2048] = {};
     mbstowcs_s(nullptr, wideBuffer, buffer, _TRUNCATE);
-
-    // Print to stdout and the in-app console
-    puts(buffer);
     g_Console.Log(wideBuffer);
+
+    va_end(args);
+}
+
+void Print(const std::string &message)
+{
+    Print(message.c_str());
+}
+
+void Print(const wchar_t *format, ...)
+{
+    XASSERT(format != nullptr);
+
+    va_list args;
+    va_start(args, format);
+
+    wchar_t buffer[2048] = {};
+    _vsnwprintf_s(buffer, _TRUNCATE, format, args);
+
+    std::wcout << buffer << '\n';
+    g_Console.Log(buffer);
+
+    va_end(args);
+}
+
+void Print(const std::wstring &message)
+{
+    Print(message.c_str());
+}
+
 }

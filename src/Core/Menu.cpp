@@ -34,6 +34,8 @@ void Menu::Init(const std::vector<OptionGroup> &optionGroups)
 
 void Menu::Update(Input::Gamepad *pGamepad)
 {
+    XASSERT(pGamepad != nullptr);
+
     // Allow the user to change the current option group with LB/RB
     if (pGamepad->PressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
     {

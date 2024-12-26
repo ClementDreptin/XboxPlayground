@@ -21,6 +21,8 @@ ColorPickerOption::ColorPickerOption(const std::wstring &name, const ValueOrPtr<
 
 bool ColorPickerOption::Update(Input::Gamepad *pGamepad)
 {
+    XASSERT(pGamepad != nullptr);
+
     // Call the parent Update method and return early if the sub option group is not open
     bool open = SubOptionGroup::Update(pGamepad);
     if (!open)

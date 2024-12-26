@@ -27,17 +27,10 @@ App::App()
 
 HRESULT App::Initialize()
 {
-    HRESULT hr = S_OK;
-
-    // Create the font
-    hr = g_Font.Create("game:\\Media\\Fonts\\Arial_16.xpr");
+    HRESULT hr = g_Font.Create("game:\\Media\\Fonts\\Arial_16.xpr");
     if (FAILED(hr))
-    {
-        Log::Error("Couldn't create the font");
-        return hr;
-    }
+        ATG::FatalError("Couldn't create the font: %x\n", hr);
 
-    // Create the menu
     InitMenu();
 
     return hr;
@@ -48,6 +41,8 @@ HRESULT App::Update()
     HRESULT hr = S_OK;
 
     Input::Gamepad *pGamepad = Input::GetInput();
+
+    XASSERT(pGamepad != nullptr);
 
     // Toggle the menu by pressing LT and DPAD LEFT
     if (pGamepad->LastLeftTrigger && pGamepad->PressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)
@@ -64,7 +59,6 @@ HRESULT App::Update()
 
 HRESULT App::Render()
 {
-    // Clear the viewport
     m_pd3dDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
     if (m_MenuOpen)
@@ -73,13 +67,10 @@ HRESULT App::Render()
     if (g_ShowControlsTexts)
         RenderControlsTexts();
 
-    // Render the frame rate text
     RenderFrameRateText();
 
-    // Render the console
     g_Console.Render(10.0f, 300.0f);
 
-    // Present the scene
     m_pd3dDevice->Present(nullptr, nullptr, nullptr, nullptr);
 
     return S_OK;
