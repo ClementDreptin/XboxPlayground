@@ -14,7 +14,7 @@ void Print(const std::wstring &message);
 }
 
 #ifndef NDEBUG
-    #define DebugPrint(format, ...) XexUtils::Log::Print(format, __VA_ARGS__)
+    #define DebugPrint(format, ...) Log::Print(format, __VA_ARGS__)
 #else
     #define DebugPrint(format, ...)
 #endif
